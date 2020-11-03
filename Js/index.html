@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<canvas id="box" style="background: #FFFFFF;"></canvas>
+	<img id='bgImg' class="poster_img" :src="posterUrl" alt="" srcset="">
+</body>
+<!-- <script src="index.js"></script> -->
+<script src="./microTask-macroTask.js"></script>
+<script>
+	setTimeout(function () {
+		alert(' ui 已经渲染完毕了吗？ ');
+		console.log('timeout1');
+		new Promise(function (resolve) {
+			console.log('promise3');
+			resolve();
+			console.log('promise4');
+		}).then(function () {
+			alert(' 为什么这里ui已经渲染成finally了 ');
+			console.log('then2');
+		})
+		document.getElementById('div').innerHTML = 'finally';
+	})
+	new Promise(function (resolve) {
+		console.log('promise1');
+		resolve();
+		console.log('promise2');
+	}).then(function () {
+		console.log('then1');
+		alert(' ui 开始渲染? ');
+		console.log(document.getElementById('div').innerHTML)
+		alert(' ui 开始渲染 ');
+	})
+	console.log('global1');
+	document.getElementById('div').innerHTML = 'end';
+	console.log(document.getElementById('div').innerHTML)
+</script>
+
+</html>
+
+promise1 ---   promise2--global1---end--  then1--- ui 开始渲染? ---  ui 开始渲染---- ui 已经渲染完毕了吗？ ---timeout1---promise3---promise4----为什么这里ui已经渲染成finally了----then2
