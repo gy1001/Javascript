@@ -1,0 +1,213 @@
+<!--
+ * @Author: gaoyuan
+ * @Date: 2021-03-18 21:43:17
+ * @LastEditors: gaoyuan
+ * @LastEditTime: 2021-04-08 09:52:45
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS高阶</title>
+</head>
+
+<style>
+</style>
+
+<body>
+</body>
+<script>
+"use strict";
+
+//function extend(sub, sup){
+//  sub.prototype = Object.create(sup.prototype)
+//  sub.prototype.constructor = sub
+//}
+
+//function User(name, age){
+//  this.name = name
+//  this.age = age
+//}
+//User.prototype.show = function(){
+//  console.log(this.name, this.age)
+//}
+//const Request = {
+//  ajax(){
+//    return "请求后台"
+//  }
+//}
+//const Credit = {
+//  __proto__: Request,
+//  total(){
+//    console.log(super.ajax() + ",统计积分")
+//  }
+//}
+
+//const obj = {
+//  count :0,
+//  Gen(time){
+//    return new Promise((resolve,reject) => {
+//      setTimeout(() => {
+//        resolve({done: false, value: time})
+//      }, time);
+//    })
+//  },
+//  [Symbol.asyncIterator](){
+//    let self = this
+//    return  {
+//      next(){
+//        self.count++
+//        if(self.count < 4){
+//          return self.Gen(Math.random()*1000)
+//        }
+//        return Promise.resolve({
+//          done: true,
+//          value: ''
+//        })
+//      }
+//    }
+//  }
+//}
+//async function test (){
+//  console.log(obj)
+//  for await (const item of obj) {
+//    console.log(Date.now(), item)
+//  }
+//}
+//test()
+//// 1620960662443 125.4574893382916
+//// 1620960662793 349.7359631575776
+//// 1620960663485 687.0452797571263
+
+
+//const Gen = (time) => {
+//  return new Promise((resolve,reject) => {
+//    setTimeout(() => {
+//      if(time<0.5){
+//        reject(time)
+//      }else{
+//        resolve(time)
+//      }
+//    }, time);
+//  })
+//} 
+//Gen(Math.random())
+//.then(val => console.log('resolve', val))
+//.catch(err => console.error('reject', err))
+//.finally(()=>{console.log("finish")})
+
+
+
+//const input ={
+//  a: 1,
+//  b: 2
+//}
+//const output ={
+//  ...input,
+//  c: 3
+//}
+//console.log(input, output)
+//input.a =4
+//// 后续改变input的值不会更改output中的值
+//console.log(input, output)
+//const input = {a:1,b:2,c:3,d:4,e:5}
+//const {a,b,...rest} =input
+//console.log(a,b,rest)
+
+
+//. 匹配的除'\n'以外所有字符,所以下行表达式为false
+//console.log(/foo.bar/.test('foo\nbar')) // false
+//// DOTALL 模式
+//console.log(/foo.bar/s.test('foo\nbar')) // true
+//const regexp = /foo.bar/sg
+//console.log(regexp.dotAll) // true 代表开启了dotAll模式
+//console.log(regexp.flags) // gs 可以通过判断是否修饰符含所有s来达到要求
+
+//const t = "2019-08-09".match(/(\d{4})-(\d{2})-(\d{2})/)
+//console.log(t)
+//  ["2019-08-09", "2019", "08", "09", index: 0, input: "2019-08-09", groups: undefined]
+//const t1 = "2019-08-09".match(/(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/)
+//console.log(t1)
+//["2019-08-09", "2019", "08", "09", index: 0, input: "2019-08-09", groups:{year: "2019", month: "08", day: "09"}]
+
+
+//let test = "hello world"
+//// 先行断言 判断hello后面是否能匹配到world
+//console.log(test.match(/hello(?=\sworld)/))
+//// ["hello", index: 0, input: "hello world", groups: undefined]
+//console.log(test.match(/hello(?=\swarld)/))
+//// null
+//// 后行断言 判断world前面是否可以匹配到hello
+//console.log(test.match(/(?<=hello)\sworld/))
+//// [" world", index: 5, input: "hello world", groups: undefined]
+//console.log(test.match(/(?<=hells)\sworld/))
+//// null
+//// 不等于
+//console.log(test.match(/(?<!hells)\sworld/))
+//// [" world", index: 5, input: "hello world", groups: undefined]
+
+//const str = "$foo %foo foo"
+////console.log(str.replace(/\$foo/g,"$bar"))
+//console.log(str.replace(/(?<=\$)foo/,"bar"))
+
+//const str1="$1 is worth about ￥123"
+//const regexp1 = /(?<=\$)\d+/g
+//console.log(regexp1.exec(str1)) 
+//// ["1", index: 1, input: "$1 is worth about ￥123", groups: undefined]
+
+// 之前的一个bug 0xD800-0xDFFF之间的字符在es10之前会出现编译错误
+//console.log(JSON.stringify('\u{D800}')) // "\ud800"
+
+//let arr = [1,[2,3],[4,5,[6,7]]]
+//// flat 方法会按照一个可指定的深度递归遍历数组，并将所有元素与遍历到的子数组中的元素合并为一个
+//console.log(arr.flat())  // [1, 2, 3, 4, 5, Array(2)]
+//console.log(arr.flat(2)) // [1, 2, 3, 4, 5, 6, 7]
+
+//// flatMap  
+//// 方法首先使用映射函数映射每个元素，然后将结果压缩成一个新数组。它与 map 连着深度值为1的 flat 几乎相同，但 flatMap 通常在合并成一种方法的效率稍微高一些。
+//const arr1 = [1,2,3,4]
+//console.log(arr1.map(item => item * 2)) // [2, 4, 6, 8]
+//console.log(arr1.map(item => [item*2]).flat()) 
+//// (4) [2, 4, 6, 8]
+//console.log(arr1.flatMap(item => [item*2]))
+//// (4) [2, 4, 6, 8]
+
+
+//let str = "   foo    "
+//console.log(str.replace(/^\s+|\s+$/g,"__")) // __foo__
+//console.log(str.trim())
+//// 去除前面的空格
+//console.log(str.trimStart()) 
+//console.log(str.trimLeft()) 
+//// 去除后面的空格
+//console.log(str.trimEnd())
+//console.log(str.trimRight())
+
+
+//const arr = [['foo',1],['bar',2]]
+//console.log(arr[1][1])
+//console.log(Object.fromEntries(arr)) // {foo: 1, bar: 2}
+
+//const obj = {
+//  abc: 1,
+//  def: 2,
+//  gh: 3
+//}
+//// Object.fromEntries()  方法把键值对列表转换为一个对象。
+//const res = Object.fromEntries(Object.entries(obj).filter(([key,val]) =>key.length === 3 ))
+//console.log(res)// {abc: 1, def: 2}
+
+//try {
+  
+//} catch {
+  
+//}
+
+
+
+
+</script>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="root">
+    <p>{{name}}-{{message}}</p>
+    <p>{{gender}}</p>
+    <p>{{mine.age}}:{{mine.name}}</p>
+    <p>{{a.b.c.d.e.f}}</p>
+  </div>
+</body>
+<script src="./my-vue02.js"></script>
+<script>
+  // my-vue01
+//let rootEl = document.getElementById("root")
+//const generateNode = rootEl.cloneNode(true)
+//const data = {
+//  name: '孙悟空',
+//  message: '我是齐天大圣',
+//  gender: '男'
+//}
+//console.log(rootEl)
+//compiler(generateNode, data)
+//console.log(generateNode)
+//rootEl.parentNode.replaceChild(generateNode, rootEl)
+
+
+// my-vue02
+let app = new MVue({
+  data: {
+    name: '孙悟空',
+    message: '我是齐天大圣',
+    gender: '男',
+    mine: {
+      age: 30,
+      name: '唐僧'
+    },
+    a:{
+      b:{
+        c:{
+          d:{
+            e:{
+              f:'i am e of inner'
+            }
+          }
+        }
+      }
+    }
+  },
+  el: '#root',
+  methods: {},
+  props: {},
+  // ...
+})
+
+
+
+var add = function(){
+  console.log(arguments)
+  let args = Array.prototype.slice.call(arguments)
+  const adder = function(){
+    args = Array.prototype.concat.apply(args, arguments)
+    return adder
+  }
+  adder.toString = function(){
+    return args.reduce((currentVal,nextItem) => {
+      return +currentVal + nextItem
+    }, 0)
+  }
+  return adder
+}
+
+
+console.log(add(1, 2, 3)(4))   // 10
+//add(1)(2)(3)(4)(5)          // 15
+//add(2, 6)(1)                // 9
+
+
+</script>
+</html>

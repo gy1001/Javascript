@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script src=""></script>
+<script>
+  //let i= 0
+  //while(++i){
+  //  if(i === 5){
+  //    console.log(i)
+  //    continue
+  //  }
+  //  if(i===7){
+  //    break
+  //  }
+  //  console.log(111)
+  //}
+
+  const callbacks = []
+  let pending = false
+  
+  function flushCallbacks () {
+    pending = false
+    const copies = callbacks.slice(0)
+    callbacks.length = 0
+    for (let i = 0; i < copies.length; i++) {
+      copies[i]()
+    }
+  }
+  
+  let microTimerFunc
+  const p = Promise.resolve()
+  microTimerFunc = () => {
+    p.then(flushCallbacks)
+  }
+
+  function nextTick (cb, ctx) {
+    callbacks.push(() => {
+      if (cb) {
+        cb.call(ctx)
+      }
+    })
+    if (!pending) {
+      pending = true
+      microTimerFunc()
+    }
+  }
+  
+  nextTick(function () {
+    console.log(this.name) // Berwin
+  }, {name: 'Berwin'})
+</script>
+</htm

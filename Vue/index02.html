@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="root">
+    <p class="1" your="2" mine="3">{{a.b.c}}</p>
+    <div>
+      <div>2222</div>
+      <div>3333</div>
+      <div>44444</div>
+      <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
+    </div>
+  </div>
+</body>
+<script>
+  class VNode{
+    // type: 1 元素 3；文本
+    constructor(tag,data,value, type){
+      this.tag = tag && tag.toLowerCase()
+      this.data = data
+      this.value = value
+      this.type = type
+      this.childNodes = []
+    }
+    addNode(node){
+      this.childNodes.push(node)
+    }
+  }
+
+  function getNode(node){
+    let nodeType = node.nodeType
+    let _vnode = null
+    if(nodeType === 1){
+      // 元素
+      let nodeName = node.nodeName
+      let attrs = node.attributes // 伪数组
+      let attrsObj = {}
+      for (let index = 0; index < attrs.length; index++) {
+        const element = attrs[index]; // 这里是属性节点
+        attrsObj[element.nodeName] = element.nodeValue
+      }
+      _vnode = new VNode(nodeName,attrsObj,undefined,nodeType)
+      // 考虑node 的子元素
+      let childNodes = node.childNodes;
+      for (let index = 0; index < childNodes.length; index++) {
+        const element = childNodes[index];
+        _vnode.addNode(getNode(element))
+      }
+    }else{
+      // 文本节点
+      _vnode = new VNode(undefined, undefined, node.nodeValue,nodeType)
+    } 
+    return _vnode
+  }
+
+  let root = document.getElementById('root')
+  let rootNodes = getNode(root)
+
+
+  // 将VNode 转换为真实的DOM
+  function parseVNode(vNode){
+    // 创建真实的DOM
+    let type = vNode.type
+    let _node = null
+    if(type === 3){
+      return document.createTextNode(vNode.value) // 创建文本节点
+    }else{
+      _node = document.createElement(vNode.tag)
+      // 属性
+      var data = vNode.data // 现在是一种键值对的形式
+      Object.keys(data).forEach(key => {
+         let attrName = key
+         let attrValue = data[key]
+         _node.setAttribute(attrName, attrValue)
+      })
+      // 子元素
+      let childNodes = vNode.childNodes
+      childNodes.forEach(subVNode => {
+        _node.appendChild(parseVNode(subVNode)) // 递归转换子元素（虚拟DOM）
+      })
+      return _node
+    }
+  }
+
+  let dom2 = parseVNode(rootNodes)
+  console.log(dom2)
+
+
+
+</script>
+</html>
