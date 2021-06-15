@@ -16,7 +16,7 @@ ARRAY_METHOD.forEach(method => {
     // 循环 arguments ，变为响应式
     for (let index = 0; index < arguments.length; index++) {
       const element = arguments[index];
-      reactify(element)
+      observe(element, 'xxxx') // 这里得不到vm实例，等到watcher 后完成
     }  
     // 调用原来的方法
     let res =  Array.prototype[method].apply(this, arguments)
@@ -29,9 +29,9 @@ ARRAY_METHOD.forEach(method => {
 // 响应式化的部分
 function defineReactive(target,key,value,enumerable){
   let that = this
-  if(typeof value === "object" && value !== null && !Array.isArray(value)){
+  if(typeof value === "object" && value !== null){
     // 是一个非数组的引用类型
-    reactify(value)  // 递归调用 
+    observe(value)  // 递归调用 
   }
   // 函数内部就是一个局部作用域，这个value就只限于函数内使用的变量（闭包）
   Object.defineProperty(target, key, {
@@ -44,38 +44,63 @@ function defineReactive(target,key,value,enumerable){
     set(newValue){
       console.log(`设置了${key}属性为${newValue}`)
       value = newValue
-      // 这个方法暂时只是过渡，不安全
+      // 目的，将重新赋值的数据进行响应式，因此如果传入的是对象类型，那么就需要使用 observe 函数将其转换为 响应式
       if(typeof newValue === "object" && newValue !== null){
-        reactify(newValue)
+        observe(newValue)
       }
       // 这里进行模板刷新(即可实现界面响应化，这里是假的，只是演示)
       // vue实例中是利用watcher，这里暂时没有
-      that.mountComponent()
+      // 因为 数组现在没有传入实例 
+      typeof that.mountComponent === "function" && that.mountComponent()
       return true
     }
   })
 }
 
 // 将对象 obj 响应式化
-function reactify(obj, vm){
-  let keys = Object.keys(obj)
-  for (let index = 0; index < keys.length; index++) {
-    const key = keys[index]; // 属性名
-    const value = obj[key]
-    if(Array.isArray(value)){
-      value.__proto__ = array_method // 这样数组就通过响应式拦截器变为响应式了
-      for (let j = 0; j < value.length; j++) {
-        const element = value[j];
-        reactify(element) // 递归
-      }
-    }else{
-      // 对象或者值类型
-      defineReactive.call(vm, obj, key, value, true)
+//function reactify(obj, vm){
+//  let keys = Object.keys(obj)
+//  for (let index = 0; index < keys.length; index++) {
+//    const key = keys[index]; // 属性名
+//    const value = obj[key]
+//    if(Array.isArray(value)){
+//      value.__proto__ = array_method // 这样数组就通过响应式拦截器变为响应式了
+//      for (let j = 0; j < value.length; j++) {
+//        const element = value[j];
+//        reactify(element) // 递归
+//      }
+//    }else{
+//      // 对象或者值类型
+//      defineReactive.call(vm, obj, key, value, true)
+//    }
+//    // 在这里添加代理即可*（问题：在这类写的代码会递归）
+//    // 如果在这里将属性映射到 vue 实例上，那么就表示vue实例可以使用属性 key
+//  }
+//}
+
+// 将对象o变成响应式，vm就是vue实例，为了调用时处理上下文
+function observe(obj, vm){
+  // 之前没有对 o 本身进行操作，这一次直接对 o 进行判断
+  if(Array.isArray(obj)){
+    // 对其每一个元素进行处理
+    obj.__proto__ = array_method
+    for (let index = 0; index < obj.length; index++) {
+      const element = obj[index];
+      observe(obj[i], vm) // 递归每一个数组元素
     }
-    // 在这里添加代理即可*（问题：在这类写的代码会递归）
-    // 如果在这里将属性映射到 vue 实例上，那么就表示vue实例可以使用属性 key
+  }else{
+    // 对其成员处理
+    let keys = Object.keys(obj)
+    for (let index = 0; index < keys.length; index++) {
+      const key = keys[index]; // 属性名
+      defineReactive.call(vm, obj, key, obj[key], true)
+    }
   }
 }
+
+
+
+
 
 // 将 某一个对象的属性访问 映射到 对象的某一个属性成员上
 function proxy(target, prop, key){
@@ -95,7 +120,7 @@ function proxy(target, prop, key){
 JGVue.prototype.initData = function(){
   // 遍历 this._data 的成员 将属性转换为响应式的，将直接属性 代理到实力上
   let keys = Object.keys(this._data)
-  reactify(this._data, this)
+  observe(this._data, this)
   // 响应式
   for (let index = 0; index < keys.length; index++) {
     // 这里将对象 this._data[Keys[index]] 变成响应式的
