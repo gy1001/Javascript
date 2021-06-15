@@ -37,3 +37,40 @@
 我们之前处理的 reactify 方法已经不行了，我们需要一个新的方法进行处理
 提供一个 Observer 方法，在方法中对属性进行处理
 可以将这个方法封装到 intData 方法中
+
+### 解释 proxy
+> 在vue中，不希望访问 _开头的私有数据
+> 在vue中，潜规则：_开头的数据是私有数据， $开头的数据是只读数据
+ 重点： 在访问 app.xxx 属性时候就是访问 app._data.xxx 属性
+ ```js
+ Object.defineProperty(app, key, {
+   get(){
+     return app._data[key]
+   },
+   set(newValue){
+     app._data[key] = newValue
+     return true
+   }
+ })
+ ```
+ 问题： 
+ 在 vue 中 不仅仅是只有data 属性，诸如 props，methods，computed 等属性都会挂载在 vue 实例上
+ 优化如下
+ ```js
+ function proxy(app, prop, key){
+   Object.defineProperty(app, key, {
+     get(){
+       return app.[prop][key]
+     },
+     set(newValue){
+       app.[prop][key] = newValue
+       return true
+     }
+   })
+ }
+ ```
+// 将 _data 挂载在实例上
+proxy(实例, '_data', 属性名)
+// 将 _properties 挂载在实例上
+proxy(实例, '_properties', 属性名)
+...等

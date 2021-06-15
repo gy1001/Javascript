@@ -70,11 +70,63 @@
   class MVue{
     constructor(options){
       this._data = options.data
-      reactify(this._data, this /* 这里将 VUe实例传入，折中的处理方式,后续修改 */) // 将数据变为响应式的
       this._template = document.querySelector(options.el) // vue中是字符串，这里是 dom
       this._parent = document.querySelector(options.el).parentNode
+      this.intData() // 将data进行响应式转换，进行代理
       this.mount() // 挂载
     }
+
+    intData(){
+      // 遍历 this._data 的成员 将属性转换为响应式的，将直接属性 代理到实力上
+      let keys = Object.keys(this._data)
+      reactify(this._data, this)
+      // 响应式
+      for (let index = 0; index < keys.length; index++) {
+        // 这里将对象 this._data[Keys[index]] 变成响应式的
+        //const key = keys[index];
+        //reactify(this._data[key], this)
+        //this.observer(this._data, keys[i])
+      }
+      // 代理
+      for (let index = 0; index < keys.length; index++) {
+        // 这里将 this._data[keys[i]] 映射到 this[keys[i]] 上
+        const elementKey = keys[index];
+        this.proxy(this, "_data", elementKey)
+      }
+    }
+
+    // 将 某一个对象的属性访问 映射到 对象的某一个属性成员上
+    proxy(target, prop, key){
+      Object.defineProperty(target,key, {
+        enumerable: true,
+        configurable: true,
+        get(){
+          return target[prop][key]
+        },
+        set(newValue){
+          target[prop][key] = newValue
+          return true
+        }
+      })
+    }
+
+    // 取代原来的 reactify 方法  将对象 obj 的 keyName 转换为响应式的
+    observer(obj, keyName, vm){
+      // 1. 在这里调用 defineReactive 方法
+      // 2. 在这里查看对象的成员，递归
+      if(Array.isArray(obj[keyName])){
+        let arr = obj[keyName]
+        for (let index = 0; index < arr.length; index++) {
+          const element = arr[index];
+          
+        }
+      }else{
+
+      }
+      // 开始对 obj 调用 defineReactive 方法
+
+    }
+
 
     mount(){
       // 需要提供一个 render 方法: 生成虚拟 dom 
@@ -184,7 +236,6 @@
     if(typeof value === "object" && value !== null && !Array.isArray(value)){
       // 是一个非数组的引用类型
       reactify(value)  // 递归调用 
-      return
     }
     // 函数内部就是一个局部作用域，这个value就只限于函数内使用的变量（闭包）
     Object.defineProperty(target, key, {
@@ -197,7 +248,10 @@
       set(newValue){
         console.log(`设置了${key}属性为${newValue}`)
         value = newValue
-        reactify(newValue)
+        // 这个方法暂时只是过渡，不安全
+        if(typeof newValue === "object" && newValue !== null){
+          reactify(newValue)
+        }
         // 这里进行模板刷新(即可实现界面响应化，这里是假的，只是演示)
         // vue实例中是利用watcher，这里暂时没有
         that.mountComponent()
@@ -224,7 +278,6 @@
       }
       // 在这里添加代理即可*（问题：在这类写的代码会递归）
       // 如果在这里将属性映射到 vue 实例上，那么就表示vue实例可以使用属性 key
-      
     }
   }
 
