@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>结构优化</title>
+</head>
+<body>
+  <div id="root">
+    <p class="1" your="2" mine="3">{{a.b.c}}</p>
+    <div>
+      <div>{{name}}</div>
+      <div>{{gender}}</div>
+      <div>{{age}}</div>
+      <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
+    </div>
+  </div>
+</body>
+<script src="./js/vnode.js"></script>
+<script src="./js/compiler.js"></script>
+<script src="./js/jgvue.js"></script>
+<script src="./js/initrender.js"></script>
+<script src="./js/initdata.js"></script>
+<script>
+  console.log(JGVue.prototype)
+  let app = new JGVue({
+    el: '#root',
+    data: {
+      a: {
+        b: {
+          c: '我是c'
+        }
+      },
+      name: '名字',
+      age: '姓名',
+      gender: '男',
+      objs:[{info:'男'},{info:'真的很难'},{info:'练习一下'}]
+    }
+  })
+</script>
+</html>
