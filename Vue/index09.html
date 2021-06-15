@@ -174,7 +174,7 @@
           _node.appendChild(this.parseVNode(subVNode)) // 递归转换子元素（虚拟DOM）
         })
         return _node
-      }
+      } 
     }
   }
 
@@ -197,6 +197,7 @@
       set(newValue){
         console.log(`设置了${key}属性为${newValue}`)
         value = newValue
+        reactify(newValue)
         // 这里进行模板刷新(即可实现界面响应化，这里是假的，只是演示)
         // vue实例中是利用watcher，这里暂时没有
         that.mountComponent()
@@ -221,6 +222,9 @@
         // 对象或者值类型
         defineReactive.call(vm, obj, key, value, true)
       }
+      // 在这里添加代理即可*（问题：在这类写的代码会递归）
+      // 如果在这里将属性映射到 vue 实例上，那么就表示vue实例可以使用属性 key
+      
     }
   }
 
