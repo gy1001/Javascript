@@ -1,4 +1,5 @@
 // watcher 观察者，用来发射 更新的行为
+let watcherId = 0
 class Watcher{
   /**
    * 
@@ -9,6 +10,7 @@ class Watcher{
   constructor(vm,expOrFn,cb){
     this.vm = vm
     this.getter = expOrFn
+    this.watcherId = watcherId++
 
     this.deps= [] // 依赖项
     this.depIds = {} // 是一个set类型，用于保证依赖性的唯一性(简化代码暂时不实现)
@@ -18,7 +20,9 @@ class Watcher{
   }
 
   get(){
+    pushTarget(this)
     this.getter.call(this.vm, this.vm) // 上下文的问题就就解决了
+    popTarget()
   }
 
   // 执行，并判断是懒加载，还是同步执行，还是异步执行
@@ -34,6 +38,11 @@ class Watcher{
   // 清空依赖队列
   cleanupDep(){
     
+  }
+
+  addDep(dep){
+    // 将当前的 dep 与当前 的watcher 关联
+    this.deps.push(dep)
   }
 
 }

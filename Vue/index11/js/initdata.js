@@ -33,11 +33,13 @@ function defineReactive(target,key,value,enumerable){
     // 是一个非数组的引用类型
     observe(value)  // 递归调用 
   }
+  let dep = new Dep()
   // 函数内部就是一个局部作用域，这个value就只限于函数内使用的变量（闭包）
   Object.defineProperty(target, key, {
     configurable: true,
     enumerable: !!enumerable,
     get(){
+      dep.depend()
       console.log(`读取了${key}属性`)
       return value
     },

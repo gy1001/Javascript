@@ -9,8 +9,8 @@ JGVue.prototype.mountComponent = function(){
   let mount = () =>   {
     this.update(this.render())
   }
-  //mount.call(this) // 本质上应该交给watcher 这里还没讲到这里
-  Dep.target = new Watcher(this, mount) // 相当于这里调用了mount
+  // 这个 watcher 就是全局的watcher 在任何一个位置都可以调用他了(简化的写法)
+  new Watcher(this, mount) // 相当于这里调用了mount
 }
 
 JGVue.prototype.createRenderFn = function(){
