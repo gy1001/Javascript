@@ -57,27 +57,6 @@ function defineReactive(target,key,value,enumerable){
   })
 }
 
-// 将对象 obj 响应式化
-//function reactify(obj, vm){
-//  let keys = Object.keys(obj)
-//  for (let index = 0; index < keys.length; index++) {
-//    const key = keys[index]; // 属性名
-//    const value = obj[key]
-//    if(Array.isArray(value)){
-//      value.__proto__ = array_method // 这样数组就通过响应式拦截器变为响应式了
-//      for (let j = 0; j < value.length; j++) {
-//        const element = value[j];
-//        reactify(element) // 递归
-//      }
-//    }else{
-//      // 对象或者值类型
-//      defineReactive.call(vm, obj, key, value, true)
-//    }
-//    // 在这里添加代理即可*（问题：在这类写的代码会递归）
-//    // 如果在这里将属性映射到 vue 实例上，那么就表示vue实例可以使用属性 key
-//  }
-//}
-
 // 将对象o变成响应式，vm就是vue实例，为了调用时处理上下文
 function observe(obj, vm){
   // 之前没有对 o 本身进行操作，这一次直接对 o 进行判断
@@ -86,7 +65,7 @@ function observe(obj, vm){
     obj.__proto__ = array_method
     for (let index = 0; index < obj.length; index++) {
       const element = obj[index];
-      observe(obj[i], vm) // 递归每一个数组元素
+      observe(obj[index], vm) // 递归每一个数组元素
     }
   }else{
     // 对其成员处理
