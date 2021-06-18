@@ -9,32 +9,19 @@
 </head>
 <body>
   <h1>我是页面</h1>
-  <div>
-    <ol>
-      <!--{{#student}}-->
-        <li>
-          学生{{item.name}}的爱好是
-          <ol>
-            <!--{{#item.hobbies}}-->
-            <li>{{.}}</li>
-            {{/item.hobbies}}
-          </ol>
-        </li>
-      <!--{{/student}}-->
-    </ol>
-  </div>
 </body>
 <script src="/xuni/bundle.js"></script>
 <script>
   var templateStr =`
     <div>
+      <div>{{name}}</div>
       <ol>
         {{#student}}
           <li>
             学生{{item.name}}的爱好是
             <ol>
               {{#item.hobbies}}
-              <li>{{.}}</li>
+                <li>{{.}}</li>
               {{/item.hobbies}}
             </ol>
           </li>
@@ -42,7 +29,14 @@
       </ol>
     </div>
   `
-  var data = {}
+  var data = {
+    name: '齐天大圣',
+    students: [
+      {name:'小明', hobbies: ['游泳','健身']},
+      {name:'小红', hobbies: ['足球','篮球', '羽毛球']},
+      {name:'小强', hobbies: ['吃饭','睡觉']}
+    ]
+  }
   SSG_TemplateEngine.render(templateStr, data)
 </script>
 </html>

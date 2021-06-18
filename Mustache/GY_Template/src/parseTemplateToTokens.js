@@ -18,9 +18,9 @@ export default function parseTemplateToTokens(templateStr){
         }else if(word[0] === "/"){
           tokens.push(['/', word.substr(1)])
         }else{          
-          tokens.push(['text', word])
+          tokens.push(['name', word])
         }
-      }
+      } 
       scanner.scan("}}")
     }
     return nestToken(tokens)
