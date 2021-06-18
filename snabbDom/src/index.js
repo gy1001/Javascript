@@ -8,6 +8,7 @@ import {
   h,
 } from "snabbdom";
 
+// diff 算法核心函数
 const patch = init([
   // Init patch function with chosen modules
   classModule, // makes it easy to toggle classes
@@ -16,32 +17,34 @@ const patch = init([
   eventListenersModule, // attaches event listeners
 ]);
 
-const container = document.getElementById("container");
+var myNode = h("a",
+  {
+    props: {
+      href:'http:www.baidu.com',
+      target: "_blank"
+    }
+  },
+  '百度一下')
+ console.log(myNode)
 
-const vnode = h("div#container.two.classes", { on: { click: function(){
+const myNode2 = h("div", {
+  class: { box:'true' },
+  props: {}
+}, "我是一个空盒子")
 
-} } }, [
-  h("span", { style: { fontWeight: "bold" } }, "This is bold"),
-  " and this is just normal text",
-  h("a", { props: { href: "/foo" } }, "I'll take you places!"),
-]);
-// Patch into empty DOM element – this modifies the DOM as a side effect
-patch(container, vnode);
+const myNode3 = h("div", "我是一个空盒子")
 
-const newVnode = h(
-  "div#container.two.classes",
-  { on: { click: function(){
+// h 函数也可以进行嵌套
+const myNode4 = h('ul',"我是副元素",[
+  h("li",[
+    h("h1","我又来来")
+  ]),
+  h("li","栗子"),
+  h("li","葡萄"),
+  h("li","香蕉"),
+  h("li",h("h2","我是不带[]进来的")),
+])
 
-  } } },
-  [
-    h(
-      "span",
-      { style: { fontWeight: "normal", fontStyle: "italic" } },
-      "This is now italic type"
-    ),
-    " and this is still just normal text",
-    h("a", { props: { href: "/bar" } }, "I'll take you places!"),
-  ]
-);
-// Second `patch` invocation
-patch(vnode, newVnode); // Snabbdom efficiently updates the old view to the new state
+ // 让虚拟节点上树
+ var container = document.getElementById("container")
+ patch(container, myNode4)
