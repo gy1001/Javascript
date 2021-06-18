@@ -9,6 +9,7 @@
 </head>
 <body>
   <h1>我是页面</h1>
+  <div id="root"></div>
 </body>
 <script src="/xuni/bundle.js"></script>
 <script>
@@ -16,16 +17,16 @@
     <div>
       <div>{{name}}</div>
       <ol>
-        {{#student}}
+        {{#students}}
           <li>
-            学生{{item.name}}的爱好是
+            学生{{name}}的爱好是
             <ol>
-              {{#item.hobbies}}
+              {{#hobbies}}
                 <li>{{.}}</li>
-              {{/item.hobbies}}
+              {{/hobbies}}
             </ol>
           </li>
-        {{/student}}
+        {{/students}}
       </ol>
     </div>
   `
@@ -37,6 +38,7 @@
       {name:'小强', hobbies: ['吃饭','睡觉']}
     ]
   }
-  SSG_TemplateEngine.render(templateStr, data)
+  document.getElementById("root").innerHTML = SSG_TemplateEngine.render(templateStr, data)
+  
 </script>
 </html>

@@ -5,7 +5,7 @@
  */
 
 export default function lookUp(dataObj, keyName){
-  if(keyName.indexOf('.') !==-1){
+  if(keyName.indexOf('.') !==-1 && keyName !== "."){
     var temp = dataObj
     var keys = keyName.split('.')
     for (let index = 0; index < keys.length; index++) {
