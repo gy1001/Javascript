@@ -23,7 +23,7 @@ export default function nestToken(tokens){
         break
       case '/':
         // 出栈 pop 会返回刚刚弹出的项
-        let section_top = sections.pop()
+        sections.pop()
         // 改变收集器为栈结构队尾(队尾就是栈顶) 那项下标为2的数组
         collector = sections.length > 0 ? sections[sections.length-1][2] : nestTokens
         break
