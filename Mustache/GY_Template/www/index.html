@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>我是页面</h1>
+  <div>
+    <ol>
+      <!--{{#student}}-->
+        <li>
+          学生{{item.name}}的爱好是
+          <ol>
+            <!--{{#item.hobbies}}-->
+            <li>{{.}}</li>
+            {{/item.hobbies}}
+          </ol>
+        </li>
+      <!--{{/student}}-->
+    </ol>
+  </div>
+</body>
+<script src="/xuni/bundle.js"></script>
+<script>
+  var templateStr =`
+    <div>
+      <ol>
+        {{#student}}
+          <li>
+            学生{{item.name}}的爱好是
+            <ol>
+              {{#item.hobbies}}
+              <li>{{.}}</li>
+              {{/item.hobbies}}
+            </ol>
+          </li>
+        {{/student}}
+      </ol>
+    </div>
+  `
+  var data = {}
+  SSG_TemplateEngine.render(templateStr, data)
+</script>
+</html>
