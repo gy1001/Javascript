@@ -14,7 +14,7 @@ op4=>operation: op4:需要把 elm 中的 innerText 改变为
 newVNode 中的 text,
 结束(注意：如果oldVNode中的有children属性没有text属性，
 一旦更改innerText，老节点的children属性会被删除),结束
-op5=>operation: op5:意味着有children
+op5=>operation: op5:意味着newVNode有children
 cond6=>condition: cond6:oldValue 中有没有 children
 op6=>operation: op6:意味着oldVNode中有text,
 需要做1：清空oldVNode中的text,
