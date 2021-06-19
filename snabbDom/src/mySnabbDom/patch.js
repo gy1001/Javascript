@@ -9,7 +9,30 @@ export default function (oldVNode, newVNode){
   }
   // 判断oldVNode 和newVnode 是不是同一个节点
   if(newVNode.key === oldVNode.key && oldVNode.sel === newVNode.sel){
-    console.log("是同一个节点")
+    // 判断新旧VNode 是不是同一个对象
+    if(oldVNode === newVNode){
+      return 
+    }
+    // 判断 newVNNode 里面有没有 text属性
+    if(newVNode.text !== undefined &&(newVNode.children === undefined || newVNode.children.length == 0)){
+      // newVNode 有text属性
+      if(newVNode.text !== oldVNode.text ){
+        oldVNode.elm.innerText = newVNode.text
+      }
+    }else {
+      // newVNode 没有 text 属性,即有children 属性
+      // 判断 oldVNode 有没有 children
+      if(oldVNode.children !== undefined && oldVNode.children.length >0){
+        // 老的有children 此时就是最复杂的情况，就是 newVNode, oldVNode 都有children 
+      }else{
+        // oldVNode 没有children,newVNode 有children
+        oldVNode.elm.innerText = ""
+        newVNode.children.forEach(item => {
+          let domNode = creatElement(item)
+          oldVNode.elm.appendChild(domNode)
+        })
+      }
+    }
   }else{
     // 不是同一个节点，需要 暴力插入新的，删除旧的
     // 在这里进行页面插入到老节点之前

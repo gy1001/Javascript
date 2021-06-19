@@ -1,5 +1,6 @@
 // 真正创建节点，将 vNode,是孤儿节点不进行插入
 export default function createElement(vNode){
+  console.log(22222, vNode)
   let domNode = document.createElement(vNode.sel)
   // 有子节点还是有文本？
   if (vNode.text !== '' && (vNode.children == undefined || vNode.children.length === 0 )){
