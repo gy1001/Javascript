@@ -1,5 +1,5 @@
 
-import h from "./h"
+import h from "./mySnabbDom/h"
 
 var myNode1 = h("li", {}, "栗子")
 myNode1 = h("ul",{}, [

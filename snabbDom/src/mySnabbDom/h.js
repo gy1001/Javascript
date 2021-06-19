@@ -1,4 +1,4 @@
-import vNode from './vnode'
+import vNode from '../vnode'
 
 // 形态1： h("div", {} ,"文字")
 // 形态2：h("div", {} , [])
