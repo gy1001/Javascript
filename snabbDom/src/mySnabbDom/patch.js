@@ -1,6 +1,7 @@
 import creatElement from "./createElement";
 import vNode from "./vnode";
 import patchVNode from './patchVnode'
+import { checkSameNode } from "./updateChildren"
 
 export default function (oldVNode, newVNode){
   // 判断传入的第一个参数，是Dom节点还是虚拟节点
@@ -9,7 +10,7 @@ export default function (oldVNode, newVNode){
     oldVNode = vNode(oldVNode.tagName.toLowerCase(), {}, [], undefined, oldVNode)
   }
   // 判断oldVNode 和newVnode 是不是同一个节点
-  if(newVNode.key === oldVNode.key && oldVNode.sel === newVNode.sel){
+  if(checkSameNode(newVNode, oldVNode)){
     patchVNode(oldVNode, newVNode)
   }else{
     // 不是同一个节点，需要 暴力插入新的，删除旧的
