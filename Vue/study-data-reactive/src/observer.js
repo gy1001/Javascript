@@ -1,6 +1,7 @@
 import { def } from "./utils"
 import defineReactive from "./defineReactive"
 import { arrayMethods } from './array'
+import { observe } from "./observe"
 
 export default class Observer{
   constructor(value){
@@ -11,6 +12,8 @@ export default class Observer{
     if(Array.isArray(value)){
       // 如果是数组，要将这个数组的原型 指向 arrayMethods
       Object.setPrototypeOf(value, arrayMethods)
+      // 让数组变为响应式
+      this.observeArray(value)
     }else{
       this.walk(value)
     }
@@ -20,6 +23,14 @@ export default class Observer{
   walk(value){
     for (const key in value) {
       defineReactive(value, key)
+    }
+  }
+
+  // 数组的特殊遍历
+  observeArray(arr){
+    for (let index = 0, l=arr.length; index <l; index++) {
+      // 逐项进行遍历
+      observe(arr[index])
     }
   }
 }
