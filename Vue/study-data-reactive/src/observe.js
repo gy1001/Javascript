@@ -1,4 +1,5 @@
 import Observer from "./observer"
+import array from "./array"
 export const observe = function(value){
   // 创建 observer 函数，注意函数的名字没有r
   if(typeof value !== 'object'){
