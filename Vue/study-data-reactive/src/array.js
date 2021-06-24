@@ -35,6 +35,7 @@ methodsNeedChange.forEach(methodName => {
       ob.observeArray(inserted)
     }
     console.log(`调用了${methodName}方法`)  
+    ob.dep.notify()
     return result
   }, false)
 })
