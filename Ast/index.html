@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>部分算法知识</title>
+</head>
+<body>
+  
+</body>
+<script>
+  // 找出字符中，连续重复此处最多的字符
+  var str = "aaaaaaaaababbbbbbbbbbbcccccccdddsadsfsdde33eeeeee"
+  // 指针就是下标，不是c语言中的指针，C语言中的指针可以操作内存，js中的指针就是一个下标位置
+  // i=0;j=1
+  // 如果 i 和 j 所指的字一样，那么i不动，j后移
+  // 如果 i 和 j 所指的字不一样，此时说明他们之间的字都是连续相同的,让 i追上j，j后移
+  var i =0;var j = 1;
+  var maxNum=0;var maxWord=""
+  // 当i还在范围内的时候，还需要继续查找
+  while(i<=str.length - 1){
+    //if(str[i] === str[j]){
+    //}else{
+    //  i = j
+    //}
+    if(str[i] !== str[j]){
+      console.log(`${i}和${j}之间的文字是相同的，都是${str[i]},重复${j-i}次`)
+      if(j-i > maxNum){
+        maxNum = j - i
+        maxWord = str[i]
+      }
+      i = j
+    }
+    j++
+  }
+
+  // 试着输出菲波那切数列的前10项，即 1 2 3 5 8 13 21 34 55 等，然后请思考，代码里是否有大量重复的计算，应该如何解决重复计算的问题？
+
+  function fib(n){
+    if(n<=1){
+      return 1
+    }
+    return fib(n-1) + fib(n-2)
+  }
+
+
+  // 优化
+  // 缓存对象
+  var cache = {}
+
+  function fib(n){
+    //if(n in cache){
+    // 如果缓存里有这个值就返回
+    if(cache.hasOwnProperty(n)){
+      console.log("命中缓存了")
+      return cache[n]
+    }
+    let result = n<=1 ? 1 :(fib(n-1) + fib(n-2))
+    // 写入缓存,每次计算一个值，就要把这个值缓存
+    cache[n] = result
+    return result
+  }
+
+  for (let index = 0; index < 10; index++) {
+    console.log(fib(index))
+  }
+
+
+
+</script>
+</html>
