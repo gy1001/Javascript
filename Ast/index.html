@@ -132,6 +132,63 @@
   // 写法1 是遇到数组才进行递归，写法2 数组中任何一项就会递归，所以 写法1 中的递归次数是 远远小于写法2 的，
   // 更加推荐写法2
 
+  // 试着编写 “智能重复” smartRepeat 函数，实现
+  // 1. 将 3[abc]  变为 abcabcabc
+  // 2. 将 3[2[a]2[b]]变为aabbaabbaabb
+  // 3. 将 2[1[a]3[b]2[3[c]4[d]]] 变为 abbbcccddddcccddddabbbcccddddcccdddd
+
+  // 不用考虑输入字符串是非法的情况，比如
+  // 2[a3[b]]是错误的，应该补一个1，即2[1[a]3[b]]
+  // [abc]是错误的，应该补一个1 即 1[abc]
+
+  // 这里的解题思路是利用栈
+  // 如下： (准备两个栈，一个存放数字，一个存放字符串) 遍历每一个字符，如果当前字符是数字，那么就把这个数字压栈
+  // 遇到 [ 把空字符串 压栈
+  // 如果当前字符是字母，那么此时就把栈顶的字符串这项改为这个字母
+  // 如果当前字符是 ], 就把当前数字弹栈，就把字符串栈的栈顶的元素重复指定次数(并且弹栈), 拼接到新的栈顶上
+
+  // 小 tips: match到某个正则表达式中，增加括号表示 捕获，捕获的结果会出现在下标为1的结果上
+  // 例如 '34[abc]'.match(/^\d+\[/)   ['34[', index:0, input: "34[abc]", groups: undefined ]
+  //     '34[abc]'.match(/^(\d+)\[/) ['34[', '34', index:0, input: "34[abc]", groups: undefined ]
+
+  console.log('----------------------------------------------------------------------')
+  function smartRepeat(strTemplate){
+    var index = 0   // 指针
+    var stack1 = [] // 栈1 存放数字
+    var stack2 = [] // 栈2 存放字符串
+    var rest = strTemplate // 剩余部分
+    while(index < strTemplate.length - 1){
+      rest = strTemplate.substring(index)
+      // 看看剩余部分是不是以数字和[开头的
+      if(/^\d+\[/.test(rest)){
+        // 得到这个数字
+        let times = Number(rest.match(/^(\d+)\[/)[1])
+        // 这里加上数字的长度以及数字后面的那个[的长度
+        index += String(times).length + 1
+        stack1.push(times)
+        stack2.push("")
+      }else if(/^\w+\]/.test(rest)){
+        console.log(rest)
+        let word = rest.match(/^(\w+)\]/)[1]
+        // 如果这个字符是字母，那么此时就把栈顶这项改为这个字母
+        stack2[stack2.length - 1] = word
+        // 移动指针的位置，word 有几位就 移动几位
+        index+= String(word).length
+      }else if(rest[0] == ']'){
+        // 如果字符是] ，数字栈顶要进行弹栈，字符串栈顶的字母要进行弹栈，并重复刚才的次数，然后拼接到新的栈顶上
+        var number = stack1.pop()
+        var word = stack2.pop()
+        stack2[stack2.length-1] = (stack2[stack2.length-1]||"") + String(word).repeat(Number(number))
+        index++
+      }
+    }
+    // while结束以后，stack1 stack2 肯定还少一项，如果剩的个数不对，那就是用户输入的格式错误,方括号没有对应闭合等原因
+    return String(stack2[0]).repeat(stack1[0])
+  }
+  var string = '10[2[a]2[b]]'
+  var string = '10[2[7a]2[b]]'
+  console.log(smartRepeat(string))
+  console.log('----------------------------------------------------------------------')
 
 </script>
 </html>
