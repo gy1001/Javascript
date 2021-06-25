@@ -66,6 +66,71 @@
     console.log(fib(index))
   }
 
+  // 小技巧：只要出现了 **规则复现**，就要想到利用递归
+
+  // 试着将高维数组 [1,2,[3,[4,5],6],7,[8],9] 变为图中所示的对象
+  //{
+  //  children: [
+  //    {value:1},
+  //    {value:2},
+  //    {
+  //      children: [
+  //        {value: 3},
+  //        {
+  //          children: [
+  //            {value: 4},
+  //            {value: 5}
+  //          ]
+  //        },
+  //        {value:6}
+  //      ]
+  //    },
+  //    {value: 7},
+  //    {
+  //      children: [
+  //        {value:8},
+  //        {value:9}
+  //      ]
+  //    }
+  //  ]
+  //}
+
+  // 转换函数
+  function covert(arr){
+    var result = []
+    for (let index = 0; index < arr.length; index++) {
+      const element = arr[index];
+      if(Array.isArray(element)){
+        result.push({
+          children: covert(element)
+        })
+      }else{
+        result.push({
+          value: element
+        })
+      }
+    }
+    return {
+      children: result
+    }
+  }
+  const arr = [1,2,[3,[4,5],6],7,[8],9]
+  console.log(covert(arr))
+  // 第二种写法
+  function covert2(item){
+    if(typeof item === "number"){
+      return {
+        value: item
+      }
+    }else if(Array.isArray(item)){
+      return {
+        children: item.map(_item => covert2(_item))
+      }
+    }
+  }
+  console.log(covert2(arr))
+  // 写法1 是遇到数组才进行递归，写法2 数组中任何一项就会递归，所以 写法1 中的递归次数是 远远小于写法2 的，
+  // 更加推荐写法2
 
 
 </script>
