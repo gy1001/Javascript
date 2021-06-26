@@ -7,12 +7,38 @@
   <title>study-directive</title>
 </head>
 <body>
-  <div id="container"></div>
+  <div id="container">
+    <p class="box" id="mine" >{{name}}-{{message}}</p>
+    <p>{{gender}}</p>
+    <p>{{mine.age}}:{{mine.name}}</p>
+    <p>{{a.b.c.d.e.f}}</p>
+    我是文本节点
+  </div>
 </body>
 <script src="/xuni/bundle.js"></script>
 <script>
   new Vue({
-    
+    el: '#container',
+    data: {
+      name:'名字',
+      message: '信息',
+      gender: '性别',
+      mine: {
+        age: 500,
+        name: '孙悟空'
+      },
+      a: {
+        b: {
+          c: {
+            d: {
+              e: {
+                f: '我是内部信息'
+              }
+            }
+          }
+        }
+      }
+    }
   })
 </script>
 </html>

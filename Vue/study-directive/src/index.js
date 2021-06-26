@@ -1,7 +1,2 @@
-class Vue{
-  constructor(){
-    console.log('i am Vue')
-  }
-}
-
+import Vue from './Vue'
 window.Vue = Vue
