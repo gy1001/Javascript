@@ -9,20 +9,24 @@
 <body>
   <div id="container">
     <p class="box" id="mine" >{{name}}-{{message}}</p>
+    {{inputNum}}
+    <input type="text" v-model="inputNum">
     <p>{{gender}}</p>
     <p>{{mine.age}}:{{mine.name}}</p>
     <p>{{a.b.c.d.e.f}}</p>
-    我是文本节点
+    <!--我是文本节点{{name}}我是后面的文本{{message}}-->
+    {{name}}
   </div>
 </body>
 <script src="/xuni/bundle.js"></script>
 <script>
-  new Vue({
+  var vm = new Vue({
     el: '#container',
     data: {
       name:'名字',
       message: '信息',
       gender: '性别',
+      inputNum: 100,
       mine: {
         age: 500,
         name: '孙悟空'
@@ -37,6 +41,11 @@
             }
           }
         }
+      }
+    },
+    watch: {
+      name(newValue,oldValue){
+        console.log('name watch变化了', newValue)
       }
     }
   })
