@@ -2,7 +2,7 @@ import parse from "./parse"
 
 var templateStr = `
   <div>
-    <h3>你好</h3>
+    <h3 class="mine aa bb cc" id="his">你好</h3>
     <ul>
       <li>A</li>
       <li>B</li>

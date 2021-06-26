@@ -1,10 +1,11 @@
+import parseAttrs from "./parseAttrs"
 export default function parse(templateString){
   // 指针
   var index = 0
   // 剩余部分
   var rest = ""
   // 开始标记
-  var startRegexp = /^\<([a-z]+[1-6]?)\>/
+  var startRegexp = /^\<([a-z]+[1-6]?)(\s[^\<]+)?\>/
   // 结束标记
   var endRegexp = /^\<\/([a-z]+[1-6]?)\>/
   // 抓取结束标签前的文字
@@ -18,13 +19,15 @@ export default function parse(templateString){
     // 识别遍历到的这个字符，是不是一个开始标签
     if(startRegexp.test(rest)){
       let tag = rest.match(startRegexp)[1]
+      let attrStr = rest.match(startRegexp)[2] || ""
       console.log("检测到开始标记", tag)
+      console.log("检测到属性文本", attrStr)
       // 将开始标签推入栈1中
       stack1.push(tag)
       // 将空数组推入栈2中
-      stack2.push({ tag, children: [] })
+      stack2.push({ tag, children: [], attrs: parseAttrs(attrStr) })
       // 为什么加2，因为<>占了来个那个位
-      index += tag.length + 2
+      index += tag.length + 2 + attrStr.length
     }else if(endRegexp.test(rest)){
       // 因为又加了一个/的长度
       let tag = rest.match(endRegexp)[1]
@@ -38,7 +41,7 @@ export default function parse(templateString){
           stack2[stack2.length - 1].children.push(pop_arr)
         }
       }else{
-        throw new Error(`标签${pop_tag}没有对应封闭标签`)
+        throw new Error(`标签${tag}没有对应封闭标签`)
       }
       index += tag.length + 3
     }else if(wordRegexp.test(rest)) {
