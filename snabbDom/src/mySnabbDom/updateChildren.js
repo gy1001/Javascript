@@ -55,6 +55,7 @@ export default function updateChildren(parentElm, oldChildren, newChildren){
       console.log("③新后与旧前相同")
       patchVNode(oldStartVNode, newEndVNode)
       // 当新后与旧前命中的时候，此时需要移动节点，移动 新前 指向的这个节点到老节点的旧后的后面
+      // TODO疑问：为什么这里不用设置undefined? insertBefore移动后 节点会被删除是否有影响？？
       parentElm.insertBefore(oldStartVNode.elm, oldEndVNNode.elm.nextSibling)
       oldStartVNode = oldChildren[++oldStartIndex]
       newEndVNode = newChildren[--newEndIndex]
@@ -63,6 +64,8 @@ export default function updateChildren(parentElm, oldChildren, newChildren){
       console.log("④新前与旧后相同")
       // 此时要移动节点，移动新前节点到老节点的旧前的前面
       patchVNode(oldEndVNNode, newStartVNode)
+      // TODO疑问：为什么这里不用设置undefined? insertBefore移动后 节点会被删除是否有影响？？
+      // 注意 insertBefore 已有的节点会 删除原来位置的节点信息
       parentElm.insertBefore(oldEndVNNode.elm, oldStartVNode.elm)
       oldEndVNNode = oldChildren[--oldEndIndex]
       newStartVNode = newChildren[++newStartIndex]
@@ -103,7 +106,6 @@ export default function updateChildren(parentElm, oldChildren, newChildren){
   if(newStartIndex <= newEndIndex){
     console.log('新节点需要有新增的')
     for (let index = newStartIndex; index <= newEndIndex; index++) {
-      // 插入的标杆
       parentElm.insertBefore(createElement(newChildren[index]), oldStartVNode.elm)
     }
   }else if(oldStartIndex <= oldEndIndex){

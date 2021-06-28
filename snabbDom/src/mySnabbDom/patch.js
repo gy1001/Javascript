@@ -9,7 +9,7 @@ export default function (oldVNode, newVNode){
     // 传入的第一个参数是DOM节点，此时要包装为虚拟节点
     oldVNode = vNode(oldVNode.tagName.toLowerCase(), {}, [], undefined, oldVNode)
   }
-  // 判断oldVNode 和newVnode 是不是同一个节点
+  // 判断oldVNode 和newVNode 是不是同一个节点
   if(checkSameNode(newVNode, oldVNode)){
     patchVNode(oldVNode, newVNode)
   }else{
