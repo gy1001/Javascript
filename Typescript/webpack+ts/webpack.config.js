@@ -1,5 +1,6 @@
 const path = require('path')
 const HTMLWEBPAKPLUGIN = require("html-webpack-plugin")
+// clean-webpack-plugin 插件可以每次编译前先删除dist目录
 
 module.exports = {
   mode: 'development',
@@ -21,5 +22,9 @@ module.exports = {
     new HTMLWEBPAKPLUGIN({
       template: './src/index.html'
     })
-  ]
+  ],
+  // 用来设置引用模块
+  resolve: {
+    extensions: [".ts", ".js"]
+  }
 }

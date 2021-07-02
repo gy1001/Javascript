@@ -1,0 +1,1 @@
+export const m = "我是引入的变量"
