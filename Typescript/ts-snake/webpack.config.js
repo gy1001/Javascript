@@ -51,6 +51,23 @@ module.exports = {
         use: [
           "style-loader",
           "css-loader",
+          // 引入postcss
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [
+                  [
+                    "postcss-preset-env",
+                    {
+                      // Options
+                      browsers: 'last 2 versions'
+                    }
+                  ]
+                ]
+              }
+            }
+          },
           "less-loader"
         ]
       }
