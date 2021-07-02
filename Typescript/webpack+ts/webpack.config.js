@@ -1,4 +1,5 @@
 const path = require('path')
+const HTMLWEBPAKPLUGIN = require("html-webpack-plugin")
 
 module.exports = {
   mode: 'development',
@@ -15,5 +16,10 @@ module.exports = {
         exclude: /node_modules/
       }
     ]
-  }
+  },
+  plugins: [
+    new HTMLWEBPAKPLUGIN({
+      template: './src/index.html'
+    })
+  ]
 }
