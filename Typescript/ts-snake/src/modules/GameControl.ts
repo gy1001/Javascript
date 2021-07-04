@@ -16,19 +16,18 @@ class GameControl {
     this.snake = new Snake()
     this.scorePanel = new ScorePanel()
     this.init()
-    this.run()
   }
 
   init(){
     // 绑定事件
     document.addEventListener("keydown", this.keyDownHandler.bind(this))
+    this.run()
   }
 
   // 
   keyDownHandler(event: KeyboardEvent){
     console.log(event.key)
     this.direction = event.key
-    this.run()
   }
 
   run(){
@@ -56,11 +55,30 @@ class GameControl {
         y-=10
         break
     }
-    this.snake.X= x 
-    this.snake.Y= y
+    this.checkEat(x, y)
+    try {
+      this.snake.X = x
+      this.snake.Y = y
+    } catch (error) {
+      alert(error.message)
+      this.isLive = false
+    }    
+      
     // 开启一个定时调用
     if(this.isLive){
       setTimeout(this.run.bind(this), 300 - (this.scorePanel.level-1) * 30);
+    }
+  }
+
+  checkEat(x:number,y:number){
+    if(x === this.food.X && y === this.food.Y){
+      console.log("吃到食物了")
+      // 食物的位置要重置
+      this.food.change()
+      // 分数要+1
+      this.scorePanel.addScore()
+      // 蛇的body 加1
+      this.snake.addBodies()
     }
   }
 

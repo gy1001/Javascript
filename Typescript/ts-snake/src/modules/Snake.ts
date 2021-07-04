@@ -21,10 +21,28 @@ class Snake{
   }
 
   set X(value:number){
+    if(this.X === value){
+      return 
+    }
+    if(value < 0 || value > 290){
+      this.gameOver()
+      return 
+    }
     this.head.style.left = value +"px"
   }
 
+  gameOver(){
+    throw new Error("蛇撞墙了")
+  }
+
   set Y(value:number){
+    if(this.Y === value){
+      return
+    }
+    if(value < 0 || value > 290){
+      this.gameOver()
+      return 
+    }
     this.head.style.top = value +"px"
   }
 
