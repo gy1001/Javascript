@@ -4,16 +4,18 @@ class ScorePanel{
   scoreEle: HTMLElement
   levelEle: HTMLElement
   maxLevel: number
-  constructor(maxLevel: number = 10){
+  upScore: number
+  constructor(maxLevel: number = 10, upScore:number = 10){
     this.maxLevel = maxLevel
     this.scoreEle = document.getElementById('score')!
     this.levelEle = document.getElementById('level')!
+    this.upScore = upScore
   }
 
   // 加分犯法
   addScore(){
     this.scoreEle.innerHTML = ++this.score + ""
-    if(this.score % 10 === 0){
+    if(this.score % this.upScore === 0){
       this.levelUp()
     }
   }

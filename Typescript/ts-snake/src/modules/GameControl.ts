@@ -14,7 +14,7 @@ class GameControl {
   constructor(){
     this.food = new Food()
     this.snake = new Snake()
-    this.scorePanel = new ScorePanel()
+    this.scorePanel = new ScorePanel(10,1)
     this.init()
   }
 
