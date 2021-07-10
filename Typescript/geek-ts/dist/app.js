@@ -1,0 +1,1 @@
+(()=>{"use strict";document.getElementsByClassName("app")[0].innerHTML="hello ts"})();
