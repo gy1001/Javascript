@@ -1,3 +1,4 @@
+import "./enum"
 // 原始类型
 let bool:boolean= true
 let num:number = 123
@@ -50,3 +51,6 @@ let error = () => {
 let noEnd = () => {
   while(true){}
 }
+
+
+// 枚举的一个例子
