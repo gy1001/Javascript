@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { Button } from 'antd'
 
 interface Greeting{
-  name: string,
-  firstName: string,
-  lastName: string
+  name?: string,
+  firstName?: string,
+  lastName?: string
 }
 interface State {
   count: number
