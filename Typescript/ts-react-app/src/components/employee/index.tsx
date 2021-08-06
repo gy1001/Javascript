@@ -1,17 +1,26 @@
-import React, {Component} from "react"
+import React, {Component } from "react"
 import {Table} from "antd"
+import { connect } from 'react-redux';
 import "./index.css"
 import QueryForm from "./QueryForm"
 import { employeeColumns } from "./colums"
-import {EmployeeResponse,} from "../../interface/employee"
+import {  EmployeeResponse, EmployeeRequest } from "../../interface/employee"
+import {bindActionCreators, Dispatch} from "redux"
+import { getEmployee, createEmployee, deleteEmployee, updateEmployee } from "../../redux/employee"
 
 interface State{
-  employee: EmployeeResponse
+  employee: EmployeeResponse,
+  loading: boolean
 }
 
-class Employee extends Component<{},State> {
+interface Props{
+  employeeList: EmployeeResponse,
+  onGetEmployee(param: EmployeeRequest, callback:() => void):void
+}
+class Employee extends Component<Props,State> {
   state: State = {
-    employee: undefined
+    employee: undefined,
+    loading: false,
   }
 
   getTotal(){
@@ -30,14 +39,34 @@ class Employee extends Component<{},State> {
     })
   }
 
+  setLoading = (loading: boolean) => {
+    this.setState({
+        loading
+    })
+  }
+
   render(){
+    const { employeeList, onGetEmployee } = this.props
     return (
       <>
-        <QueryForm onDataChange={this.setEmployee} />
+        <QueryForm getData={onGetEmployee} setLoading={this.setLoading} />
         {this.getTotal()}
-        <Table columns={employeeColumns} dataSource={this.state.employee} className="table"></Table>
+        <Table loading={this.state.loading} columns={employeeColumns} dataSource={employeeList} className="table"></Table>
       </>
     )
   }
 }
-export default Employee
+
+const mapStateToProps = (state:any) => {
+  return {
+    employeeList: state.employee.employeeList
+  }
+}
+
+const mapDispatchToProps = (dispatch:Dispatch) => bindActionCreators({
+  onGetEmployee: getEmployee,
+  onCreateEmployee: createEmployee,
+  onDeleteEmployee: deleteEmployee,
+  onUpdateEmployee: updateEmployee
+},dispatch)
+export default connect( mapStateToProps, mapDispatchToProps)(Employee)

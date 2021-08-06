@@ -1,6 +1,6 @@
+import React from "react"
 import { Layout, Menu, ConfigProvider } from 'antd';
 import { Route, Link } from "react-router-dom"
-import React from "react"
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import './App.css';
 import Employee from "./employee"

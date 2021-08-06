@@ -1,6 +1,6 @@
 import React,{Component} from "react"
 import {Form,Input, Select, Button } from "antd"
-import {EmployeeRequest, EmployeeResponse} from "../../interface/employee"
+import {EmployeeRequest } from "../../interface/employee"
 import {get} from "../../utils/request"
 import { GET_EMPLOYEE_URL } from "../../constants/urls"
 import { FormProps } from "antd/lib/form"
@@ -9,7 +9,9 @@ const { Option} = Select
 
 
 interface Props extends FormProps{
-  onDataChange(data:EmployeeResponse): void
+  //onDataChange(data:EmployeeResponse): void,
+  getData(param: EmployeeRequest, callback: () => void): void;
+  setLoading(loading: boolean): void
 }
 
 class QueryForm extends Component<Props,EmployeeRequest> {
@@ -40,7 +42,11 @@ class QueryForm extends Component<Props,EmployeeRequest> {
 
   queryEmployee(param:EmployeeRequest){
     get(GET_EMPLOYEE_URL, param).then(response => {
-      this.props.onDataChange(response.data)
+      //this.props.onDataChange(response.data)
+      this.props.setLoading(true);
+      this.props.getData(param, () => {
+        this.props.setLoading(false)
+      })
     })
   }
 
