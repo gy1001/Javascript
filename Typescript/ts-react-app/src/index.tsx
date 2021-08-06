@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import Root from "./routers"
 ReactDOM.render(
     <React.StrictMode>
-      <Root/>
+        <Root />
       {/*<Hello name="TypeScript" firstName="1" lastName="2" ></Hello>
       <HelloClass name="helloClass"></HelloClass>
       <HelloHoc loading={true}></HelloHoc>
