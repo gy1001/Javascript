@@ -5,15 +5,16 @@ import reportWebVitals from './reportWebVitals';
 //import HelloClass from "./components/demo/HelloClass"
 //import HelloHoc from "./components/demo/HelloHoc"
 //import HelloHooks from "./components/demo/HelloHooks"
-import App from "./components/App"
+//import App from "./components/App"
+import Root from "./routers"
 ReactDOM.render(
-  <React.StrictMode>
+    <React.StrictMode>
+      <Root/>
       {/*<Hello name="TypeScript" firstName="1" lastName="2" ></Hello>
       <HelloClass name="helloClass"></HelloClass>
       <HelloHoc loading={true}></HelloHoc>
       <HelloHooks name="REACT HOOKS"></HelloHooks>*/}
-      <App></App>
     </React.StrictMode>,
-  document.getElementById('root')
-);
-reportWebVitals();
+  document.getElementById('root'));
+  reportWebVitals();
+  
