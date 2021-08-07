@@ -1,11 +1,11 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+import createError from "http-errors";
+import express from 'express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+import indexRouter from './routes/index';
+import usersRouter from './routes/users';
 
 var app = express();
 
@@ -36,6 +36,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
+} as express.ErrorRequestHandler); // 这里需要查看声明文件，找到这个use的类型定义，里面用到了函数重载，找到拥有4个参数的定义类型，运用类型断言即可
 
-module.exports = app;
+export default app;
