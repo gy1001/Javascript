@@ -3,15 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "build": "tsc"
+    "start": "node ./dist/bin/server.js",
+    "watch": "nodemon ./dist/bin/server.js",
+    "build-ts": "tsc",
+    "copy-static": "ts-node copyStatic.ts",
+    "build": "npm run build-ts && npm run copy-static"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
-    "jade": "^0.31.2",
+    "jade": "^0.29.0",
     "morgan": "~1.9.1"
   },
   "devDependencies": {
@@ -21,6 +24,10 @@
     "@types/http-errors": "^1.8.1",
     "@types/morgan": "^1.9.3",
     "@types/node": "^16.4.13",
+    "@types/shelljs": "^0.8.9",
+    "nodemon": "^2.0.12",
+    "shelljs": "^0.8.4",
+    "ts-node": "^10.1.0",
     "typescript": "^4.3.5"
   }
 }

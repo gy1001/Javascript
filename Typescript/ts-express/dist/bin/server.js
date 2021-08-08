@@ -23,7 +23,9 @@ var server = http_1.default.createServer(app_1.default);
 /**
  * Listen on provided port, on all network interfaces.
  */
-server.listen(port);
+server.listen(port, function () {
+    console.log('服务启动了');
+});
 server.on('error', onError);
 server.on('listening', onListening);
 /**
