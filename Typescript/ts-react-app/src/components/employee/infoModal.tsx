@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Form, Input, Select, DatePicker } from 'antd';
-import {FormProps}  from 'antd/lib/form';
+import {FormProps, FormInstance}  from 'antd/lib/form';
 import moment from 'moment';
-
 import { EmployeeInfo, CreateRequest, UpdateRequest } from '../../interface/employee';
 const { Option } = Select;
 
@@ -18,13 +17,42 @@ interface Props extends FormProps {
 interface State {
   confirmLoading: boolean
 }
-
 class InfoModal extends Component<Props, State> {
-  state = {
-    confirmLoading: false
+  constructor(props:any){
+    super(props)
+    this.state = {
+      confirmLoading: false
+    }
   }
-  handleOk = () => {}
-  handleCancel = () => {}
+  formRef = React.createRef<FormInstance>();
+
+  handleOk = () => {
+    const currentForm = this.formRef.current
+    currentForm?.validateFields().then((values) => {
+      this.setState({
+        confirmLoading: true
+      });
+      let param = values;
+      param.hiredate = param.hiredate.format('YYYY-MM-DD');
+      if (!this.props.edit) {
+        this.props.createData(param as CreateRequest, this.close);
+      } else {
+        param.id = this.props.rowData.id;
+        this.props.updateData(param as UpdateRequest, this.close);
+      }
+    }).catch(errorInfo => {
+      console.log(errorInfo)
+    })
+  }
+  handleCancel = () => {
+    this.props.hide()
+  }
+  close = () => {
+    this.props.hide();
+    this.setState({
+      confirmLoading: false
+    });
+  }
   render() {
     let title = this.props.edit ? '编辑' : '添加新员工';
     let { name, departmentId, hiredate, levelId } = this.props.rowData;
@@ -37,7 +65,7 @@ class InfoModal extends Component<Props, State> {
         confirmLoading={this.state.confirmLoading}
         destroyOnClose={true}
       >
-        <Form name='employee_info'>
+        <Form name='employee_info' scrollToFirstError preserve={false} ref={this.formRef}>
           <Form.Item name="name" initialValue={name} rules={[{ required: true, whitespace: true, message: '请输入姓名' }]}>
             <Input
               placeholder="姓名"

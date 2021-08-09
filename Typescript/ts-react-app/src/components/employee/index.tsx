@@ -54,12 +54,16 @@ class Employee extends Component<Props,State> {
   
   handleDownload = () => {}
 
-  hideModal = () => {}
+  hideModal = () => {
+    this.setState({
+      showModal: false
+    })
+  }
 
   handleUpdate = ()=>{}
 
   handleDelete = () => {
-
+    
   }
 
   render(){
