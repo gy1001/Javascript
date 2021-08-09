@@ -40,7 +40,7 @@ const getColumns = (
               title={`确定删除 ${record.name} 吗？`}
               onConfirm={() => {handleDelete({id: record.id})}}
             >
-              <Button type="primary" size="small" icon={<DeleteOutlined/>}>删除</Button>
+              <Button type="primary" danger size="small" icon={<DeleteOutlined/>}>删除</Button>
           </Popconfirm>
         </span>
       )

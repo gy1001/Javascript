@@ -23,15 +23,32 @@ router.get("/getEmployee", async (req,res) => {
       data: result
     })
   } catch (error) {
-    console.log(error)
+    res.json({
+      flag: 1,
+      msg: error.toString()
+    })
   }
 })
 
-router.post("/createEmployee", (req,res) => {
-  res.json({
-    flag: 1,
-    msg: 'NO DB'
-  })
+router.post("/createEmployee",async (req,res) => {
+  const {name, departmentId, hiredate,levelId} = req.body
+  let sql = `INSERT INTO employee (name,departmentId,hiredate,levelId) 
+      VALUES ('${name}','${departmentId}','${hiredate}','${levelId}' )`
+  try {
+    let result = await query(sql)
+    res.json({
+      flag: 0,
+      data: {
+        key: result.insertId,
+        id: result.insertId
+      }
+    })
+  } catch (error) {
+    res.json({
+      flag: 1,
+      msg: error.toString()
+    })
+  }
 })
 
 export default router

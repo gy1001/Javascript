@@ -70,16 +70,45 @@ router.get("/getEmployee", function (req, res) { return __awaiter(void 0, void 0
                 return [3 /*break*/, 4];
             case 3:
                 error_1 = _c.sent();
-                console.log(error_1);
+                res.json({
+                    flag: 1,
+                    msg: error_1.toString()
+                });
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); });
-router.post("/createEmployee", function (req, res) {
-    res.json({
-        flag: 1,
-        msg: 'NO DB'
+router.post("/createEmployee", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, name, departmentId, hiredate, levelId, sql, result, error_2;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = req.body, name = _a.name, departmentId = _a.departmentId, hiredate = _a.hiredate, levelId = _a.levelId;
+                sql = "INSERT INTO employee (name,departmentId,hiredate,levelId) \n      VALUES ('" + name + "','" + departmentId + "','" + hiredate + "','" + levelId + "' )";
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, query_1.default(sql)];
+            case 2:
+                result = _b.sent();
+                res.json({
+                    flag: 0,
+                    data: {
+                        key: result.insertId,
+                        id: result.insertId
+                    }
+                });
+                return [3 /*break*/, 4];
+            case 3:
+                error_2 = _b.sent();
+                res.json({
+                    flag: 1,
+                    msg: error_2.toString()
+                });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
     });
-});
+}); });
 exports.default = router;
