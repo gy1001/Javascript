@@ -5,3 +5,6 @@
 .toolbar {
   margin: 20px 0;
 }
+.right {
+  float: right;
+}

@@ -9,16 +9,18 @@ import reportWebVitals from './reportWebVitals';
 import Root from "./routers"
 import {Provider} from "react-redux"
 import store from "./redux/store"
+
+{/*<Hello name="TypeScript" firstName="1" lastName="2" ></Hello>
+<HelloClass name="helloClass"></HelloClass>
+<HelloHoc loading={true}></HelloHoc>
+<HelloHooks name="REACT HOOKS"></HelloHooks>*/}
+
 ReactDOM.render(
-    <React.StrictMode>
-      <Provider store={store}>
-        <Root />
-      </Provider>
-      {/*<Hello name="TypeScript" firstName="1" lastName="2" ></Hello>
-      <HelloClass name="helloClass"></HelloClass>
-      <HelloHoc loading={true}></HelloHoc>
-      <HelloHooks name="REACT HOOKS"></HelloHooks>*/}
-    </React.StrictMode>,
+  <React.Fragment>
+    <Provider store={store}>
+      <Root />
+    </Provider>
+  </React.Fragment>,
   document.getElementById('root'));
   reportWebVitals();
   
