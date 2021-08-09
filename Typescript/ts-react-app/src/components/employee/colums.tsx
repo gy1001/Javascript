@@ -1,7 +1,6 @@
-import React from "react"
 import { Button, Divider, Popconfirm } from "antd"
 import { DeleteRequest, EmployeeInfo } from "../../interface/employee";
-
+import { EditOutlined,DeleteOutlined } from '@ant-design/icons'
 //export const employeeColumns = 
 
 const getColumns = (
@@ -35,13 +34,13 @@ const getColumns = (
       key: 'action',
       render: (text: string, record: EmployeeInfo) => (
         <span>
-          <Button size="small" icon="edit" onClick={() => {handleUpdate(record)}}>编辑</Button>
+          <Button type="primary" size="small" icon={<EditOutlined/>} onClick={() => {handleUpdate(record)}}>编辑</Button>
           <Divider type="vertical" />
             <Popconfirm
               title={`确定删除 ${record.name} 吗？`}
               onConfirm={() => {handleDelete({id: record.id})}}
             >
-              <Button size="small" type="ghost" icon="delete">删除</Button>
+              <Button type="primary" size="small" icon={<DeleteOutlined/>}>删除</Button>
           </Popconfirm>
         </span>
       )
