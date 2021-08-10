@@ -147,4 +147,33 @@ router.get('/downloadEmployee', function (req, res) { return __awaiter(void 0, v
         }
     });
 }); });
+router.post('/deleteEmployee', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, sql, result, e_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                id = req.body.id;
+                sql = "DELETE FROM employee WHERE id=" + id;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, query_1.default(sql)];
+            case 2:
+                result = _a.sent();
+                res.json({
+                    flag: 0,
+                    msg: "删除成功"
+                });
+                return [3 /*break*/, 4];
+            case 3:
+                e_1 = _a.sent();
+                res.json({
+                    flag: 1,
+                    msg: e_1.toString()
+                });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
 exports.default = router;

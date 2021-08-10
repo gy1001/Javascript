@@ -6,7 +6,7 @@ import {bindActionCreators, Dispatch} from "redux"
 import "./index.css"
 import QueryForm from "./QueryForm"
 import getColumns from "./colums"
-import {  EmployeeResponse, EmployeeRequest, UpdateRequest, CreateRequest, EmployeeInfo } from "../../interface/employee"
+import {  EmployeeResponse, EmployeeRequest, UpdateRequest, CreateRequest, EmployeeInfo, DeleteRequest } from "../../interface/employee"
 import { getEmployee, createEmployee, deleteEmployee, updateEmployee } from "../../redux/employee"
 import InfoModal from "./infoModal"
 import { DOWNLOAD_EMPLOYEE_URL } from "../../constants/urls";
@@ -22,7 +22,8 @@ interface Props{
   employeeList: EmployeeResponse,
   onGetEmployee(param: EmployeeRequest, callback:() => void):void,
   onCreateEmployee(param:CreateRequest, callback: () => void):void,
-  onUpdateEmployee(param:UpdateRequest, callback: () => void):void
+  onUpdateEmployee(param:UpdateRequest, callback: () => void):void,
+  onDeleteEmployee(param:DeleteRequest):void
 }
 class Employee extends Component<Props,State> {
   state: State = {
@@ -65,8 +66,9 @@ class Employee extends Component<Props,State> {
 
   handleUpdate = ()=>{}
 
-  handleDelete = () => {
-    
+  handleDelete = (param:DeleteRequest) => {
+    console.log(param)
+    this.props.onDeleteEmployee(param)
   }
 
   render(){

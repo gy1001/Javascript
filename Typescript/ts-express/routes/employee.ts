@@ -79,4 +79,21 @@ router.get('/downloadEmployee', async(req,res) => {
   }
 })
 
+router.post('/deleteEmployee', async(req,res) => {
+  const {id} = req.body
+  let sql = `DELETE FROM employee WHERE id=${id}`;
+  try {
+    let result = await query(sql);
+    res.json({
+      flag: 0,
+      msg: "删除成功"
+    })
+  } catch (e) {
+    res.json({
+      flag: 1,
+      msg: e.toString()
+    })
+  }
+})
+
 export default router
