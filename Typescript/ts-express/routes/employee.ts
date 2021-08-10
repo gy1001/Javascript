@@ -1,5 +1,6 @@
 import express from "express"
 import query from "../models/query"
+import excelExport from 'excel-export';
 
 const router = express.Router()
 const QUERY_ALL_LIST = `SELECT employee.*, level.level, department.department FROM employee, level, department
@@ -48,6 +49,33 @@ router.post("/createEmployee",async (req,res) => {
       flag: 1,
       msg: error.toString()
     })
+  }
+})
+
+let conf:excelExport.Config = {
+  cols: [
+    { caption:'员工ID', type:'number'},
+    { caption:'姓名', type:'string'},
+    { caption:'部门', type:'string' },
+    { caption:'入职时间', type:'string' },
+    { caption:'职级', type:'string'}
+  ],
+  rows: []
+}
+
+router.get('/downloadEmployee', async(req,res) => {
+  try {
+    let result = await query(QUERY_ALL_LIST);
+    conf.rows = result.map((i: any) => {
+      return [i.id, i.name, i.department, i.hiredate, i.level];
+    });
+    let excel = excelExport.execute(conf);
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+    res.setHeader('Content-Disposition', 'attachment; filename=Employee.xlsx');
+    res.end(excel, 'binary');
+
+  } catch (error) {
+    res.send(error.toString());
   }
 })
 

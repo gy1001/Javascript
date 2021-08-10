@@ -2,13 +2,14 @@ import React, {Component } from "react"
 import {Table,Button} from "antd"
 import { PlusOutlined,DownloadOutlined} from '@ant-design/icons';
 import { connect } from 'react-redux';
+import {bindActionCreators, Dispatch} from "redux"
 import "./index.css"
 import QueryForm from "./QueryForm"
 import getColumns from "./colums"
 import {  EmployeeResponse, EmployeeRequest, UpdateRequest, CreateRequest, EmployeeInfo } from "../../interface/employee"
-import {bindActionCreators, Dispatch} from "redux"
 import { getEmployee, createEmployee, deleteEmployee, updateEmployee } from "../../redux/employee"
 import InfoModal from "./infoModal"
+import { DOWNLOAD_EMPLOYEE_URL } from "../../constants/urls";
 interface State{
   employee: EmployeeResponse,
   loading: boolean,
@@ -52,7 +53,9 @@ class Employee extends Component<Props,State> {
     });
   }
   
-  handleDownload = () => {}
+  handleDownload = () => {
+    window.open(DOWNLOAD_EMPLOYEE_URL)
+  }
 
   hideModal = () => {
     this.setState({

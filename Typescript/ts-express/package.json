@@ -26,6 +26,7 @@
     "@types/mysql": "^2.15.19",
     "@types/node": "^16.4.13",
     "@types/shelljs": "^0.8.9",
+    "excel-export": "^0.5.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.12",
     "shelljs": "^0.8.4",

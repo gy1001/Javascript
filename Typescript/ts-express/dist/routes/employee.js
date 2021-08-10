@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var query_1 = __importDefault(require("../models/query"));
+var excel_export_1 = __importDefault(require("excel-export"));
 var router = express_1.default.Router();
 var QUERY_ALL_LIST = "SELECT employee.*, level.level, department.department FROM employee, level, department\n  WHERE \n    employee.levelId = level.id AND employee.departmentId = department.id";
 router.get("/getEmployee", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -108,6 +109,41 @@ router.post("/createEmployee", function (req, res) { return __awaiter(void 0, vo
                 });
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
+        }
+    });
+}); });
+var conf = {
+    cols: [
+        { caption: '员工ID', type: 'number' },
+        { caption: '姓名', type: 'string' },
+        { caption: '部门', type: 'string' },
+        { caption: '入职时间', type: 'string' },
+        { caption: '职级', type: 'string' }
+    ],
+    rows: []
+};
+router.get('/downloadEmployee', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var result, excel, error_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, query_1.default(QUERY_ALL_LIST)];
+            case 1:
+                result = _a.sent();
+                conf.rows = result.map(function (i) {
+                    return [i.id, i.name, i.department, i.hiredate, i.level];
+                });
+                excel = excel_export_1.default.execute(conf);
+                res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+                res.setHeader('Content-Disposition', 'attachment; filename=Employee.xlsx');
+                res.end(excel, 'binary');
+                return [3 /*break*/, 3];
+            case 2:
+                error_3 = _a.sent();
+                res.send(error_3.toString());
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); });
