@@ -64,10 +64,15 @@ class Employee extends Component<Props,State> {
     })
   }
 
-  handleUpdate = ()=>{}
+  handleUpdate = (record:EmployeeInfo) =>{  
+    this.setState({
+      showModal: true,
+      rowData: record,
+      edit: true
+    })
+  }
 
   handleDelete = (param:DeleteRequest) => {
-    console.log(param)
     this.props.onDeleteEmployee(param)
   }
 

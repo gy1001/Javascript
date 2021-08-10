@@ -96,4 +96,23 @@ router.post('/deleteEmployee', async(req,res) => {
   }
 })
 
+// 更新
+router.post("/updateEmployee", async(req,res) => {
+  const {name,id,departmentId,hiredate,levelId} = req.body
+  let sql = `UPDATE employee SET name='${name}',departmentId=${departmentId},
+  hiredate='${hiredate}',
+  levelId=${levelId} WHERE id=${id}`
+  try {
+    let result = await query(sql)
+    res.json({
+      flag: 0,
+      msg: "更新成功"
+    })
+  } catch (error) {
+    res.json({
+      flag: 1,
+      msg: error.toString()
+    })
+  }
+})
 export default router

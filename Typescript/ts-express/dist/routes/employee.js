@@ -176,4 +176,34 @@ router.post('/deleteEmployee', function (req, res) { return __awaiter(void 0, vo
         }
     });
 }); });
+// 更新
+router.post("/updateEmployee", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, name, id, departmentId, hiredate, levelId, sql, result, error_4;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = req.body, name = _a.name, id = _a.id, departmentId = _a.departmentId, hiredate = _a.hiredate, levelId = _a.levelId;
+                sql = "UPDATE employee SET name='" + name + "',departmentId=" + departmentId + ",\n  hiredate='" + hiredate + "',\n  levelId=" + levelId + " WHERE id=" + id;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, query_1.default(sql)];
+            case 2:
+                result = _b.sent();
+                res.json({
+                    flag: 0,
+                    msg: "更新成功"
+                });
+                return [3 /*break*/, 4];
+            case 3:
+                error_4 = _b.sent();
+                res.json({
+                    flag: 1,
+                    msg: error_4.toString()
+                });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
 exports.default = router;
