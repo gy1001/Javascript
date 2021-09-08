@@ -1,4 +1,6 @@
 const {getAst,getCode,getDeps} = require("./parser")
+const fs = require("fs")
+const path = require("path")
 class Compiler{
   constructor(options){
     // webpack中 的配置
@@ -60,7 +62,8 @@ class Compiler{
          }
        }
     }, {})
-    console.log(depsGraph)
+    //console.log(depsGraph)
+    this.generate(depsGraph)
   }
 
   // 开始构建
@@ -80,6 +83,46 @@ class Compiler{
       // 当期那文件解析后的代码
       code
     }
+  }
+
+  // 生成输出资源
+  generate(depsGraph){
+    const bundle = `
+      (function(objectGraph){
+        // require 目的： 加载入口文件
+        function require(module){
+
+          // eval(objectGraph[module].code)
+          
+          // 定义模块内部的 require 函数
+          function localRequire(relativePath){
+            // 引入当前模块的绝对路径，通过require 加载
+            return require(objectGraph[module].deps[relativePath])
+          }
+
+          // 定义暴露对象，(将来我们模块要暴露的内容)
+          var exports = {};
+
+          (function (require, exports, code){
+            eval(code)
+          })(localRequire, exports, objectGraph[module].code)
+
+          // 作为 requires 函数的返回值返回出去
+          // 使后面的 require 函数能得到暴露的内容
+          return exports
+        }
+
+        // 加载入口文件
+        require('${this.options.entry}');
+
+
+      })(${JSON.stringify(depsGraph)})
+    ` 
+
+    // 生成输出文件的绝对路径
+    const filePath = path.resolve(this.options.output.path, this.options.output.filename)
+    // 写入文件
+    fs.writeFileSync(filePath, bundle, 'utf-8')
   }
 }
 
