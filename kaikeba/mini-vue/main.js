@@ -32,4 +32,5 @@ console.log('main.js')
 // 第二小步进行升级
 
 import { createApp } from './core/index.js'
+import { App } from './App.js'
 createApp(App).mount('#app')
