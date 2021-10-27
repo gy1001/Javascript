@@ -34,3 +34,7 @@ console.log('main.js')
 import { createApp } from './core/index.js'
 import { App } from './App.js'
 createApp(App).mount('#app')
+
+setTimeout(() => {
+  count.value++
+}, 3000)
