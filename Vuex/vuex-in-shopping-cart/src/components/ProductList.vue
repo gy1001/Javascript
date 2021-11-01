@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   computed: mapState({
     productList: state => state.products.all
@@ -20,8 +20,14 @@ export default {
     this.$store.dispatch('products/getAllProducts')
   },
   methods: {
-    addToCart() {}
+    ...mapActions('cart', ['addToCart'])
   }
+  // 相当于
+  // methods: {
+  //   addProductToCart(product){
+  //     this.$store.dispatch('cart/addProductToCart', product)
+  //   }
+  // },
 }
 </script>
 

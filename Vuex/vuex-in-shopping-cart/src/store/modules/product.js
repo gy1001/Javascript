@@ -10,7 +10,7 @@ export default {
     set_products(state, payload) {
       state.all = payload
     },
-    decrement_product_inventory(state, payload) {
+    decreaseProductInventory(state, payload) {
       const product = state.all.find(item => item.id === payload.id)
       product && product.inventory--
     }
