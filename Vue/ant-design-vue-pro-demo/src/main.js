@@ -4,10 +4,25 @@ import router from './router';
 import store from './store';
 //import Button from 'ant-design-vue/lib/button'
 //import 'ant-design-vue/lib/button/style'
-import { Button, Result } from 'ant-design-vue';
+import {
+  Button,
+  Result,
+  Layout,
+  Breadcrumb,
+  Menu,
+  Icon,
+  Drawer,
+  Radio,
+} from 'ant-design-vue';
 Vue.config.productionTip = false;
 Vue.use(Button);
 Vue.use(Result);
+Vue.use(Layout);
+Vue.use(Breadcrumb);
+Vue.use(Menu);
+Vue.use(Icon);
+Vue.use(Drawer);
+Vue.use(Radio);
 
 new Vue({
   router,
