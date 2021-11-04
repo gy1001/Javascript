@@ -1,34 +1,98 @@
 <template>
-  <!--<a-menu theme="dark" :default-selected-keys="['1']" mode="inline">
-    <a-menu-item key="1">
-      <a-icon type="pie-chart" />
-      <span>Option 1</span>
-    </a-menu-item>
-    <a-menu-item key="2">
-      <a-icon type="desktop" />
-      <span>Option 2</span>
-    </a-menu-item>
-    <a-sub-menu key="sub1">
-      <span slot="title"><a-icon type="user" /><span>User</span></span>
-      <a-menu-item key="3"> Tom </a-menu-item>
-      <a-menu-item key="4"> Bill </a-menu-item>
-      <a-menu-item key="5"> Alex </a-menu-item>
-    </a-sub-menu>
-    <a-sub-menu key="sub2">
-      <span slot="title"><a-icon type="team" /><span>Team</span></span>
-      <a-menu-item key="6"> Team 1 </a-menu-item>
-      <a-menu-item key="8"> Team 2 </a-menu-item>
-    </a-sub-menu>
-    <a-menu-item key="9">
-      <a-icon type="file" />
-      <span>File</span>
-    </a-menu-item>
-  </a-menu>-->
-  <div>SiderMenu</div>
+  <div style="width: 256px">
+    <a-menu
+      mode="inline"
+      :theme="theme"
+      :selectedKeys="selectedKeys"
+      :openKeys.sync="openKeys"
+    >
+      <template v-for="item in menuData">
+        <a-menu-item
+          v-if="!item.children"
+          :key="item.path"
+          @click="handleRouter(item)"
+        >
+          <a-icon v-if="item.meta.icon" :type="item.meta.icon" />
+          <span>{{ item.meta.title }}-{{ item.path }}</span>
+        </a-menu-item>
+        <sub-menu
+          v-else
+          :key="item.path"
+          :menu-info="item"
+          :handleRouter="handleRouter"
+        />
+      </template>
+    </a-menu>
+  </div>
 </template>
-
 <script>
-export default {};
-</script>
+import SubMenu from './SubMenu.vue'
+export default {
+  props: {
+    theme: {
+      type: String,
+      default: 'dark',
+    },
+  },
+  components: {
+    'sub-menu': SubMenu,
+  },
+  watch: {
+    '$route.path': {
+      handler(newValue) {
+        this.selectedKeys = this.selelctedKeysMap[newValue]
+        this.openKeys = this.openKeysMap[newValue]
+      },
+    },
+  },
+  data() {
+    return {
+      openKeysMap: {},
+      selelctedKeysMap: {},
+      //selectedKeys: ['/dashboard/workplace'],
+      selectedKeys: [],
+      openKeys: [],
+      //openKeys: ['/dashboard'],
+      menuData: [],
+    }
+  },
+  created() {
+    this.menuData = this.getMenuData(this.$router.options.routes)
+    const currentPath = this.$route.path
+    this.openKeys = this.openKeysMap[currentPath]
+    this.selectedKeys = this.selelctedKeysMap[currentPath]
+  },
+  methods: {
+    getMenuData(routes, parentKey) {
+      const menuData = []
+      routes.forEach((item) => {
+        const newItem = { ...item }
+        if (item.name && !item.hideInMenu) {
+          this.openKeysMap[item.path] = [parentKey || item.path]
+          this.selelctedKeysMap[item.path] = [item.path]
+          if (item.children) {
+            delete newItem.children
+            newItem.children = this.getMenuData(
+              item.children,
+              parentKey || item.path
+            )
+          }
+          menuData.push(newItem)
+        } else if (
+          item.children &&
+          !item.hideInMenu &&
+          !item.hideChildrenInMenu
+        ) {
+          // 首页没有 name
+          menuData.push(...this.getMenuData(item.children))
+        }
+      })
+      return menuData
+    },
 
-<style lang="less" scoped></style>
+    handleRouter(item) {
+      console.log(item)
+    },
+  },
+}
+</script>

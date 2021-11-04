@@ -1,18 +1,19 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 //import RenderRouterView from '../components/RenderRouterView.vue'
 //import { bxAnaalyse } from '@/core/icons';
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
-Vue.use(VueRouter);
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+Vue.use(VueRouter)
 const RouteView = {
   name: 'RouteView',
   render: (h) => h('router-view'),
-};
+}
 
 const routes = [
   {
     path: '/user',
+    hideInMenu: true,
     redirect: '/user/login',
     //component: RenderRouterView,
     //component: { render: h => h('router-view') },
@@ -20,13 +21,13 @@ const routes = [
       import(/* webpackChunkName: "user" */ '../layout/UserLayout'),
     children: [
       {
-        path: 'login',
+        path: '/user/login',
         name: 'login',
         component: () =>
           import(/* webpackChunkName: "user" */ '../views/User/Login'),
       },
       {
-        path: 'register',
+        path: '/user/register',
         name: 'register',
         component: () =>
           import(/* webpackChunkName: "user" */ '../views/User/Register'),
@@ -35,10 +36,9 @@ const routes = [
   },
   {
     path: '/',
-    name: 'index',
     component: () =>
       import(/* webpackChunkName: "basic" */ '../layout/BasicLayout'),
-    meta: { title: 'menu.home' },
+    meta: { title: '首页' },
     redirect: '/dashboard/workplace',
     children: [
       // dashboard
@@ -48,36 +48,42 @@ const routes = [
         redirect: '/dashboard/workplace',
         component: RouteView,
         meta: {
-          title: 'menu.dashboard',
-          keepAlive: true,
-          //icon: bxAnaalyse,
+          title: '仪表盘',
+          icon: 'dashboard',
           permission: ['dashboard'],
         },
         children: [
           {
-            path: '/dashboard/analysis/:pageNo([1-9]\\d*)?',
+            path: '/dashboard/analysis',
+            //path: '/dashboard/analysis/:pageNo([1-9]\\d*)?',
             name: 'Analysis',
             component: () => import('@/views/dashboard/Analysis'),
             meta: {
-              title: 'menu.dashboard.analysis',
-              keepAlive: false,
-              permission: ['dashboard'],
+              title: '分析页',
             },
+            children: [
+              {
+                path: '/dashboard/analysis1',
+                name: 'Analysis1',
+                component: () => import('@/views/dashboard/Analysis'),
+                meta: {
+                  title: '测试分析页',
+                },
+              },
+            ],
           },
           // 外部链接
           {
             path: 'https://www.baidu.com/',
             name: 'Monitor',
-            meta: { title: 'menu.dashboard.monitor', target: '_blank' },
+            meta: { title: '监视器', target: '_blank' },
           },
           {
             path: '/dashboard/workplace',
             name: 'Workplace',
             component: () => import('@/views/dashboard/Workplace'),
             meta: {
-              title: 'menu.dashboard.workplace',
-              keepAlive: true,
-              permission: ['dashboard'],
+              title: '工作空间',
             },
           },
         ],
@@ -87,26 +93,24 @@ const routes = [
         path: '/form',
         redirect: '/form/base-form',
         component: RouteView,
-        meta: { title: 'menu.form', icon: 'form', permission: ['form'] },
+        name: 'form',
+        meta: { title: '表单', icon: 'form' },
         children: [
           {
             path: '/form/base-form',
             name: 'BaseForm',
             component: () => import('@/views/forms/BasicForm'),
             meta: {
-              title: 'menu.form.basic-form',
-              keepAlive: true,
-              permission: ['form'],
+              title: '基础表单',
             },
           },
           {
             path: '/form/step-form',
             name: 'StepForm',
+            hideChildrenMenu: true,
             component: () => import('@/views/forms/stepForm/StepForm'),
             meta: {
-              title: 'menu.form.step-form',
-              keepAlive: true,
-              permission: ['form'],
+              title: '分布表单',
             },
           },
           {
@@ -114,9 +118,7 @@ const routes = [
             name: 'AdvanceForm',
             component: () => import('@/views/forms/advancedForm/AdvancedForm'),
             meta: {
-              title: 'menu.form.advanced-form',
-              keepAlive: true,
-              permission: ['form'],
+              title: '高级表单',
             },
           },
         ],
@@ -124,31 +126,41 @@ const routes = [
     ],
   },
   {
-    path: '*',
-    redirect: '/404',
-    hidden: true,
-  },
-  {
     path: '/404',
+    meta: { title: '异常404' },
+    name: '404',
+    hideInMenu: true,
     component: () =>
       import(/* webpackChunkName: "fail" */ '@/views/exception/404'),
   },
-];
+  {
+    path: '*',
+    redirect: '/404',
+    hideInMenu: true,
+  },
+]
+// hack router push callback
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject)
+    return originalPush.call(this, location, onResolve, onReject)
+  return originalPush.call(this, location).catch((err) => err)
+}
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
-});
+})
 
 router.beforeEach((to, from, next) => {
   if (from.path !== to.path) {
-    NProgress.start();
+    NProgress.start()
   }
-  next();
-});
+  next()
+})
 router.afterEach(() => {
-  NProgress.done();
-});
+  NProgress.done()
+})
 
-export default router;
+export default router

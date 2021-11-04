@@ -8,9 +8,10 @@
         collapsible
         :theme="navTheme"
         v-if="navLayout === 'left'"
+        width="256"
       >
         <div class="logo">Ant design Vue</div>
-        <SiderMenu />
+        <SiderMenu :theme="navTheme" />
       </a-layout-sider>
       <a-layout>
         <a-layout-header style="background: #fff; padding: 0">
