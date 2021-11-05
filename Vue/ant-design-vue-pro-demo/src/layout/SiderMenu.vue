@@ -27,6 +27,7 @@
 </template>
 <script>
 import SubMenu from './SubMenu.vue'
+import { check } from '../utils/auth'
 export default {
   props: {
     theme: {
@@ -65,7 +66,11 @@ export default {
   methods: {
     getMenuData(routes, parentKey) {
       const menuData = []
-      routes.forEach((item) => {
+      for (let item of routes) {
+        if (item.meta && item.meta.authority && !check(item.meta.authority)) {
+          break
+        }
+        //routes.forEach((item) => {
         const newItem = { ...item }
         if (item.name && !item.hideInMenu) {
           this.openKeysMap[item.path] = [parentKey || item.path]
@@ -86,7 +91,8 @@ export default {
           // 首页没有 name
           menuData.push(...this.getMenuData(item.children))
         }
-      })
+        //})
+      }
       return menuData
     },
 

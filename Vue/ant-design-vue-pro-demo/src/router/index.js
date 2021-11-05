@@ -1,5 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import { notification } from 'ant-design-vue'
+import findLast from 'lodash/findLast'
+import { check, isLogin } from '../utils/auth'
+import Auth from '../directives/auth'
+Vue.use(Auth)
 //import RenderRouterView from '../components/RenderRouterView.vue'
 //import { bxAnaalyse } from '@/core/icons';
 import NProgress from 'nprogress'
@@ -38,7 +43,7 @@ const routes = [
     path: '/',
     component: () =>
       import(/* webpackChunkName: "basic" */ '../layout/BasicLayout'),
-    meta: { title: '首页' },
+    meta: { authority: ['user', 'admin'] },
     redirect: '/dashboard/workplace',
     children: [
       // dashboard
@@ -72,12 +77,6 @@ const routes = [
               },
             ],
           },
-          // 外部链接
-          {
-            path: 'https://www.baidu.com/',
-            name: 'Monitor',
-            meta: { title: '监视器', target: '_blank' },
-          },
           {
             path: '/dashboard/workplace',
             name: 'Workplace',
@@ -94,7 +93,7 @@ const routes = [
         redirect: '/form/base-form',
         component: RouteView,
         name: 'form',
-        meta: { title: '表单', icon: 'form' },
+        meta: { title: '表单', icon: 'form', authority: ['admin'] },
         children: [
           {
             path: '/form/base-form',
@@ -156,6 +155,19 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (from.path !== to.path) {
     NProgress.start()
+  }
+  const record = findLast(to.matched, (record) => record.meta.authority)
+  if (record && !check(record.meta.authority)) {
+    if (!isLogin() && to.path !== '/user/login') {
+      next({ path: '/user/login' })
+    } else if (to.path !== '/404') {
+      notification.error({
+        message: '403',
+        description: '请联系管理员开通权限',
+      })
+      next({ path: '/404' })
+    }
+    NProgress.done()
   }
   next()
 })

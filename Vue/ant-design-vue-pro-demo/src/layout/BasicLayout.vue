@@ -1,6 +1,9 @@
 <template>
   <div :class="[`nav-theme-${navTheme}`, `nav-layout-${navLayout}`]">
-    <SettingDrawer />
+    <!--<my-authority :authority="['admin']">
+      <SettingDrawer />
+    </my-authority>-->
+
     <a-layout id="components-layout-demo-side" style="min-height: 100vh">
       <a-layout-sider
         :trigger="null"
@@ -16,6 +19,7 @@
       <a-layout>
         <a-layout-header style="background: #fff; padding: 0">
           <a-icon
+            v-auth="['admin']"
             class="trigger-icon"
             :type="collapsed ? 'menu-unfold' : 'menu-fold'"
             @click="collapsed = !collapsed"
@@ -38,10 +42,10 @@
 </template>
 
 <script>
-import Header from './Header.vue';
-import SiderMenu from './SiderMenu.vue';
-import Footer from './Footer.vue';
-import SettingDrawer from '../components/settingDrawer';
+import Header from './Header.vue'
+import SiderMenu from './SiderMenu.vue'
+import Footer from './Footer.vue'
+import SettingDrawer from '../components/settingDrawer'
 export default {
   components: {
     Header,
@@ -51,38 +55,38 @@ export default {
   },
   computed: {
     navTheme() {
-      return this.$route.query.navTheme || 'dark';
+      return this.$route.query.navTheme || 'dark'
     },
     navLayout() {
-      return this.$route.query.navLayout || 'left';
+      return this.$route.query.navLayout || 'left'
     },
   },
   data() {
     return {
       collapsed: false,
-    };
+    }
   },
-};
+}
 </script>
 
 <style lang="less" scoped>
-.trigger-icon{
+.trigger-icon {
   padding: 0 20px;
-  line-height:64px;
+  line-height: 64px;
   font-size: 20px;
-  &:hover{
+  &:hover {
     background-color: #eee;
   }
 }
-.logo{
+.logo {
   height: 64px;
   line-height: 64px;
   text-align: center;
   overflow: hidden;
 }
-.nav-theme-dark{
-  /deep/ .logo{
-    color:#fff
+.nav-theme-dark {
+  /deep/ .logo {
+    color: #fff;
   }
 }
 </style>
