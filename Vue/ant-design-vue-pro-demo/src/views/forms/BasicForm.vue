@@ -1,5 +1,5 @@
 <template>
-  <a-form :layout="formLayout">
+  <a-form :layout="formLayout" :form="form">
     <a-form-item
       label="Form Layout"
       :label-col="formItemLayout.labelCol"
@@ -18,17 +18,22 @@
       label="Field A"
       :label-col="formItemLayout.labelCol"
       :wrapper-col="formItemLayout.wrapperCol"
-      :validateStatus="filedAStatus"
-      :help="filedAHelp"
     >
-      <a-input placeholder="input placeholder" v-model="filedA" />
+      <a-input
+        placeholder="input placeholder"
+        v-decorator="[
+          'fieldA',
+          {
+            initialValue: filedA,
+            rules: [{ required: true, message: '必须大于5个字符', min: 6 }],
+          },
+        ]"
+      />
     </a-form-item>
     <a-form-item
       label="Field B"
       :label-col="formItemLayout.labelCol"
       :wrapper-col="formItemLayout.wrapperCol"
-      :validateStatus="filedBStatus"
-      :help="filedBHelp"
     >
       <a-input placeholder="input placeholder" v-model="filedB" />
     </a-form-item>
@@ -41,14 +46,11 @@
 <script>
 export default {
   data() {
+    this.form = this.$form.createForm(this)
     return {
       formLayout: 'horizontal',
-      filedA: '',
-      filedAStatus: '',
-      filedAHelp: '',
+      filedA: '我是fieldA初始值',
       filedB: '',
-      filedBStatus: '',
-      filedBHelp: '',
     }
   },
   watch: {
@@ -82,12 +84,11 @@ export default {
     },
 
     handleSubmit() {
-      if (this.filedA.length <= 5) {
-        this.filedAStatus = 'error'
-        this.filedAHelp = '必须大于5个字符'
-      } else {
-        console.log(this.filedA, this.filedB)
-      }
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          console.log(values)
+        }
+      })
     },
   },
 }
