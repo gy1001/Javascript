@@ -1,8 +1,8 @@
 <template>
   <div :class="[`nav-theme-${navTheme}`, `nav-layout-${navLayout}`]">
-    <!--<my-authority :authority="['admin']">
+    <my-authority :authority="['admin']">
       <SettingDrawer />
-    </my-authority>-->
+    </my-authority>
 
     <a-layout id="components-layout-demo-side" style="min-height: 100vh">
       <a-layout-sider
