@@ -7,8 +7,17 @@
 
 <script>
 import Charts from '../../components/Chart.vue'
+//import axios from 'axios'
 export default {
   components: { Charts },
+
+  mounted() {
+    this.getChartData()
+  },
+
+  methods: {
+    getChartData() {},
+  },
 }
 </script>
 
