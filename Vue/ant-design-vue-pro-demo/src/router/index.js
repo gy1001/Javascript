@@ -106,11 +106,28 @@ const routes = [
           {
             path: '/form/step-form',
             name: 'StepForm',
-            hideChildrenMenu: true,
+            hideChildrenInMenu: true,
             component: () => import('@/views/forms/stepForm/StepForm'),
             meta: {
               title: '分布表单',
             },
+            children: [
+              {
+                path: '/form/step-form/info',
+                name: 'Step1',
+                component: () => import('@/views/forms/stepForm/Step1'),
+              },
+              {
+                path: '/form/step-form/confirm',
+                name: 'Step2',
+                component: () => import('@/views/forms/stepForm/Step2'),
+              },
+              {
+                path: '/form/step-form/result',
+                name: 'Step3',
+                component: () => import('@/views/forms/stepForm/Step3'),
+              },
+            ],
           },
           {
             path: '/form/advanced-form',

@@ -1,9 +1,9 @@
 <template>
-  <div>step3</div>
+  <div>操作成功</div>
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
 <style lang="scss" scoped></style>

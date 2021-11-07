@@ -1,12 +1,12 @@
 <template>
   <div>
-    StepForm.vue
+    <h2>分布表单：</h2>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
 <style lang="scss" scoped></style>

@@ -64,7 +64,7 @@ export default {
     this.selectedKeys = this.selelctedKeysMap[currentPath]
   },
   methods: {
-    getMenuData(routes, parentKey) {
+    getMenuData(routes, parentKey, selectedKeys) {
       const menuData = []
       for (let item of routes) {
         if (item.meta && item.meta.authority && !check(item.meta.authority)) {
@@ -74,13 +74,17 @@ export default {
         const newItem = { ...item }
         if (item.name && !item.hideInMenu) {
           this.openKeysMap[item.path] = [parentKey || item.path]
-          this.selelctedKeysMap[item.path] = [item.path]
+          this.selelctedKeysMap[item.path] = [selectedKeys || item.path]
           if (item.children) {
             delete newItem.children
-            newItem.children = this.getMenuData(
-              item.children,
-              parentKey || item.path
-            )
+            if (!item.hideChildrenInMenu) {
+              newItem.children = this.getMenuData(
+                item.children,
+                parentKey || item.path
+              )
+            } else {
+              this.getMenuData(item.children, parentKey || item.path, item.path)
+            }
           }
           menuData.push(newItem)
         } else if (
