@@ -23,6 +23,7 @@ import {
   Popconfirm,
   DatePicker,
 } from 'ant-design-vue'
+import VueHeighLightJs from 'vue-highlightjs'
 Vue.config.productionTip = false
 Vue.use(Button)
 Vue.use(Result)
@@ -39,6 +40,10 @@ Vue.use(ConfigProvider)
 Vue.use(Table)
 Vue.use(Popconfirm)
 Vue.use(DatePicker)
+Vue.use(VueHeighLightJs)
+import 'highlight.js/styles/monokai.css'
+//import 'highlight.js/styles/github.css'
+
 const IconFont = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_2318519_r587004hai.js', // 在 iconfont.cn 上生成
 })
