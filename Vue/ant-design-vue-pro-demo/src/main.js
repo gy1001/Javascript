@@ -17,6 +17,7 @@ import {
   Radio,
   Form,
   Input,
+  Select,
 } from 'ant-design-vue'
 Vue.config.productionTip = false
 Vue.use(Button)
@@ -29,6 +30,7 @@ Vue.use(Drawer)
 Vue.use(Radio)
 Vue.use(Form)
 Vue.use(Input)
+Vue.use(Select)
 
 new Vue({
   router,

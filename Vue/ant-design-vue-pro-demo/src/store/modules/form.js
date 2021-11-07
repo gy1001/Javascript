@@ -1,6 +1,10 @@
 const state = {
   step: {
     payAccount: '123456',
+    receiveAccount: {
+      type: 'alipay',
+      number: '137@qq.com',
+    },
   },
 }
 
