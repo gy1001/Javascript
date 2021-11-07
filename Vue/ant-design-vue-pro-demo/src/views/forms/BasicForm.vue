@@ -31,6 +31,13 @@
       />
     </a-form-item>
     <a-form-item
+      label="Field C"
+      :label-col="formItemLayout.labelCol"
+      :wrapper-col="formItemLayout.wrapperCol"
+    >
+      <a-date-picker v-decorator="['fieldC']" />
+    </a-form-item>
+    <a-form-item
       label="Field B"
       :label-col="formItemLayout.labelCol"
       :wrapper-col="formItemLayout.wrapperCol"

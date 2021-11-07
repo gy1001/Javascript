@@ -18,6 +18,10 @@ import {
   Form,
   Input,
   Select,
+  ConfigProvider,
+  Table,
+  Popconfirm,
+  DatePicker,
 } from 'ant-design-vue'
 Vue.config.productionTip = false
 Vue.use(Button)
@@ -31,6 +35,10 @@ Vue.use(Radio)
 Vue.use(Form)
 Vue.use(Input)
 Vue.use(Select)
+Vue.use(ConfigProvider)
+Vue.use(Table)
+Vue.use(Popconfirm)
+Vue.use(DatePicker)
 const IconFont = Icon.createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_2318519_r587004hai.js', // 在 iconfont.cn 上生成
 })

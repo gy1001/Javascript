@@ -13,7 +13,7 @@
           @click="handleRouter(item)"
         >
           <a-icon v-if="item.meta.icon" :type="item.meta.icon" />
-          <span>{{ item.meta.title }}-{{ item.path }}</span>
+          <span>{{ item.meta.title }}</span>
         </a-menu-item>
         <sub-menu
           v-else

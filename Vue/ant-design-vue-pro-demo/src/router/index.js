@@ -139,6 +139,14 @@ const routes = [
           },
         ],
       },
+      {
+        path: '/table/basic-table',
+        name: 'basic-table',
+        component: () => import('@/views/tables/BasicTable'),
+        meta: {
+          title: '普通表格',
+        },
+      },
     ],
   },
   {

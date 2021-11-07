@@ -34,7 +34,6 @@
       <h2>设置主题</h2>
       <a-radio-group
         @change="(e) => handlerThemeChange(e.target.value)"
-        name="navLayout"
         default-value="#1890ff"
       >
         <a-radio value="#1890ff" style="color: #1890ff"> 蓝色 </a-radio>
@@ -42,6 +41,14 @@
         <a-radio value="red" style="color: red"> 红色 </a-radio>
         <a-radio value="#333" style="color: #333"> 黑色 </a-radio>
         <a-radio value="purple" style="color: purple"> 紫色 </a-radio>
+      </a-radio-group>
+      <h2>设置语言</h2>
+      <a-radio-group
+        @change="(e) => handlerLanguageChange(e.target.value)"
+        default-value="CN"
+      >
+        <a-radio value="CN" style="color: #1890ff"> 中文 </a-radio>
+        <a-radio value="EN" style="color: purple"> English </a-radio>
       </a-radio-group>
     </a-drawer>
   </div>
@@ -85,6 +92,10 @@ export default {
           alert('失败')
           console.log(error)
         })
+    },
+
+    handlerLanguageChange(languages) {
+      this.$store.commit('changeLang', languages)
     },
   },
 }
