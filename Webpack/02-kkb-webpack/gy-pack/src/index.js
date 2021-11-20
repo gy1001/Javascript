@@ -18,7 +18,6 @@ class GYPack {
     this.entry = config.entry
     this.root = process.cwd() // 当前根目录
     this.modules = {} // 存储所有代码
-    this.template = ''
   }
 
   parse(code, parent) {
@@ -26,12 +25,17 @@ class GYPack {
     // 解析文件内容中的require('xxx')格式的依赖
     let regexp = /require\('(.*)'\)/g
     // require 替换为 __gy__require__
-    code = code.replace(regexp, function (match, arg) {
-      // 获取依赖路径
-      const resultPath = path.join(parent, arg.replace(/'|"/g, ''))
-      deps.push(resultPath)
-      return `__gy__require__("./${resultPath}")`
-    })
+    // 处理其中的换行符号
+    code = code
+      .replace(regexp, function (match, arg) {
+        // 获取依赖路径
+        const resultPath = path.join(parent, arg.replace(/'|"/g, ''))
+        deps.push(resultPath)
+        return `__gy__require__("./${resultPath}")`
+      })
+      .replace(/\r\n/g, '\\n')
+      .replace(/\n/g, '\\n')
+
     return { code, deps }
   }
 
@@ -53,11 +57,11 @@ class GYPack {
       path.resolve(__dirname, './template.js'),
       'utf-8'
     )
-    this.template = template
+    template = template
       .replace('__entry__', this.entry)
       .replace('__module__content__', this.generateModuleStr())
 
-    fs.writeFileSync('./dist/' + this.config.output.filename, this.template)
+    fs.writeFileSync('./dist/' + this.config.output.filename, template)
   }
 
   generateModuleStr() {
@@ -72,7 +76,6 @@ class GYPack {
     const entryPath = path.resolve(this.root, this.entry)
     console.log('开始解析文件依赖', entryPath)
     this.createModule(entryPath, this.entry)
-    console.log(this.modules)
     // 生成新文件
     this.generateFile()
   }

@@ -9,9 +9,14 @@
     let module = (installModules[moduleId] = {
       exports: {}
     })
-    module[moduleId].call(module.exports, module, exports, __gy__require__)
+    modules[moduleId].call(
+      module.exports,
+      module,
+      module.exports,
+      __gy__require__
+    )
     return module.exports
   }
   // 入口
   return __gy__require__('__entry__')
-})('__module__content__')
+})({ __module__content__ })
