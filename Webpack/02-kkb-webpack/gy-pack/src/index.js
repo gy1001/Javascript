@@ -19,13 +19,25 @@ class GYPack {
     this.root = process.cwd() // 当前根目录
   }
 
-  parse() {
+  parse(code, parent) {
+    const deps = []
     // 解析文件内容中的require('xxx')格式的依赖
+    let regexp = /require\('(.*)'\)/g
+    // require 替换为 __gy__require__
+    code = code.replace(regexp, function (match, arg) {
+      // 获取依赖路径
+      const resultPath = path.join(parent, arg.replace(/'|"/g, ''))
+      deps.push(resultPath)
+      return `__gy__require__("./${resultPath}")`
+    })
+    return { code, deps }
   }
 
   createModule(modulePath, name) {
-    const code = fs.readFileSync(modulePath, 'utf-8')
-    console.log(code, name)
+    const fileCode = fs.readFileSync(modulePath, 'utf-8')
+    // 替换后的代码和依赖数组
+    const { code, deps } = this.parse(fileCode, path.dirname(name))
+    console.log(code, deps)
   }
 
   start() {
