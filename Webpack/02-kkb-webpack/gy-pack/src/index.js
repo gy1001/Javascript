@@ -18,6 +18,7 @@ class GYPack {
     this.entry = config.entry
     this.root = process.cwd() // 当前根目录
     this.modules = {} // 存储所有代码
+    this.template = ''
   }
 
   parse(code, parent) {
@@ -47,11 +48,33 @@ class GYPack {
     })
   }
 
+  generateFile() {
+    let template = fs.readFileSync(
+      path.resolve(__dirname, './template.js'),
+      'utf-8'
+    )
+    this.template = template
+      .replace('__entry__', this.entry)
+      .replace('__module__content__', this.generateModuleStr())
+
+    fs.writeFileSync('./dist/' + this.config.output.filename, this.template)
+  }
+
+  generateModuleStr() {
+    let fnTemp = ''
+    Object.keys(this.modules).forEach(name => {
+      fnTemp += `"${name}":${this.modules[name]},`
+    })
+    return fnTemp
+  }
+
   start() {
     const entryPath = path.resolve(this.root, this.entry)
     console.log('开始解析文件依赖', entryPath)
     this.createModule(entryPath, this.entry)
     console.log(this.modules)
+    // 生成新文件
+    this.generateFile()
   }
 }
 
