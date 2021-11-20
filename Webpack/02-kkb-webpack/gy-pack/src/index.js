@@ -17,6 +17,7 @@ class GYPack {
     this.config = config
     this.entry = config.entry
     this.root = process.cwd() // 当前根目录
+    this.modules = {} // 存储所有代码
   }
 
   parse(code, parent) {
@@ -37,13 +38,20 @@ class GYPack {
     const fileCode = fs.readFileSync(modulePath, 'utf-8')
     // 替换后的代码和依赖数组
     const { code, deps } = this.parse(fileCode, path.dirname(name))
-    console.log(code, deps)
+    this.modules[name] = `function(module, exports, __gy__require__){
+      eval(\'${code}'\)
+    }`
+    // 循环获取依赖的数组的内容
+    deps.forEach(dep => {
+      this.createModule(path.join(this.root, dep), './' + dep)
+    })
   }
 
   start() {
     const entryPath = path.resolve(this.root, this.entry)
     console.log('开始解析文件依赖', entryPath)
     this.createModule(entryPath, this.entry)
+    console.log(this.modules)
   }
 }
 
