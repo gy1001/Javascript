@@ -1,3 +1,5 @@
+[TOC]
+
 ## 什么是vite
 
 1. 尤大随Vu e3正式版一起发布，起初是专为vue服务
@@ -30,7 +32,37 @@
 
 * dev server
 * 各类 loader
-* build 命令
+* build 命令	
 
-​	
+## 优势
 
+* 上手非常简单
+* 开发效率极高
+* 社区成本低（兼容rollup插件）
+* 没有复杂晦涩的配置
+
+### 更合理的类比
+
+* Vue-cli
+* Create-react-app
+
+### 你修改配置还是要碰webpack
+
+* Create-react-app需要 run eject
+* Vue-cli 中的configureWebpack 和 chainWebpack
+
+### Vite 有自身的插件系统
+
+### 生态：兼容 rollup 插件
+
+### 最大优势：快
+
+### 传统的打包过程
+
+<img src="/Users/gaoyuan/Library/Application Support/typora-user-images/image-20211124230554486.png" alt="image-20211124230554486" style="zoom:50%;" />
+
+### vite打包过程
+
+> 另外也是得益于 ESM 的支持
+
+<img src="/Users/gaoyuan/Library/Application Support/typora-user-images/image-20211124230629362.png" alt="image-20211124230629362" style="zoom:50%;" />
