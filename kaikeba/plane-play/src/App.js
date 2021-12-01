@@ -1,6 +1,15 @@
 import { defineComponent, h } from '@vue/runtime-core'
+import Circle from './component/Circle'
 export default defineComponent({
   render() {
-    return h('react')
+    // 创建vnode
+    // <rect  x=100 y=100 >我的头发是真的！！</rect>
+    // const vnode = h('rect', { x: 100, y: 100 }, '我的头发是真的！！')
+    //return h('rect', { x: 100, y: 100 }, '我的头发是真的！！')
+    return h('rect', { x: 100, y: 100 }, [
+      '我的头发是真的！！',
+      h('circle', { x: 150, y: 150 }),
+      h(Circle),
+    ])
   },
 })
