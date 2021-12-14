@@ -35,7 +35,6 @@ const renderer = createRenderer({
   },
 
   insert(el, parent) {
-    console.log('el-parent', el, parent)
     parent.addChild(el)
   },
 
@@ -69,7 +68,6 @@ const renderer = createRenderer({
 
   patchProp(el, key, prevValue, nextValue) {
     // PIXI el.x = value el.y = value
-    console.log(el, key, prevValue, nextValue)
     switch (key) {
       case 'texture':
         el.texture = Texture.from(nextValue)

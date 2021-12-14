@@ -31,7 +31,6 @@ export default defineComponent({
     return h('Container', [
       h(ctx.currentPage, {
         onChangePage(page) {
-          console.log(page)
           ctx.currentPageName = page
         },
       }),
