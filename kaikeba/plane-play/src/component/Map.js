@@ -4,7 +4,7 @@ import { game } from '../Game'
 export default defineComponent({
   // setup 作为vue3的入口函数
   setup(props, ctx) {
-    const viewHeight = 1000
+    const viewHeight = 990
     const mapY1 = ref(0)
     const mapY2 = ref(-viewHeight)
     // pixi.js
