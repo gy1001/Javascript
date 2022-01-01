@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS如何让超宽文本替换为省略号</title>
+</head>
+<style>
+  /*
+  1. 设置宽度
+  2. 强制文本在一行显示
+  3. 隐藏溢出内容
+  4. 溢出进行省略
+*/
+  .div1 {
+    width: 200px;
+    height: 200px;
+    border: solid 1px red;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+</style>
+
+<body>
+  <div class="div1">
+    我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是
+    我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是
+    我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是
+    我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是我是
+    我是我是我是我是我是我是我是我是</div>
+</body>
+
+</html>
