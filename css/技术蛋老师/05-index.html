@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css:清除浮动的多种方式</title>
+</head>
+<style>
+  div.div1 {
+    width: 300px;
+    padding: 10px;
+    background-color: #fae8c8;
+  }
+
+  div span {
+    /*display: inline-block;*/
+    width: 25%;
+    float: left;
+  }
+
+  /* 第一种：底部添加元素并进行清除浮动 */
+  div p {
+    color: white;
+    background: lightblue;
+    text-align: center;
+    clear: both;
+  }
+
+  /* 第二种：BFC：
+  父元素添加属性 overflow: hidden;或者 overflow: auto;
+   */
+  div.div1 {
+    /*overflow: hidden;*/
+    /* overflow: auto; */
+  }
+
+
+  /* 第三种：父元素也进行浮动 */
+  div.div1 {
+    /*float: left;*/
+    /*float: right;*/
+  }
+
+  /* 第四种：伪元素 */
+  div.div1::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+</style>
+
+<body>
+  <div class="div1">
+    <h2><a class="title1">求职简历</a></h2>
+    <span><a>销售</a></span>
+    <span><a>导购</a></span>
+    <span><a>厨师</a></span>
+    <span><a>房产经纪</a></span>
+    <span><a>文员</a></span>
+    <span><a>收银</a></span>
+    <span><a>配菜</a></span>
+    <span><a>保险经纪</a></span>
+    <span><a>前台</a></span>
+    <span><a>营业员</a></span>
+    <span><a>服务员</a></span>
+    <span><a>人事/行政</a></span>
+    <span><a>客服</a></span>
+    <span><a>保安</a></span>
+    <span><a>平面设计</a></span>
+    <span><a>会计</a></span>
+    <span><a>电工</a></span>
+    <span><a>迎宾</a></span>
+    <span><a>仓库管理</a></span>
+    <!--<p>这里有个p，用来清除浮动</p>-->
+  </div>
+</body>
+
+</html>
