@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css:伪类和伪元素的区别</title>
+</head>
+<style>
+  body {
+    background-color: #b7472a;
+    color: #fff2e5;
+  }
+
+  input {
+    font-size: 3em;
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+  }
+
+  input:out-of-range {
+    background-color: green;
+  }
+
+  /* 输入数字过大并且获得焦点时候背景色加重。chrome 均生效 */
+  input:out-of-range:focus {
+    background-color: gold;
+  }
+
+  input:out-of-range+h2:after {
+    content: "输入内容过大";
+  }
+
+  input[type="checkbox"] {
+    /*margin: auto 300px 40px auto;*/
+    width: 100px;
+    height: 100px;
+    display: block;
+  }
+
+  input::after {
+    content: "已勾选";
+    display: none;
+    width: 150px;
+    height: 50px;
+    margin-left: 110px;
+  }
+
+  input:checked::after {
+    display: block;
+  }
+
+  input::after {
+    color: red;
+  }
+
+  li:nth-child(2n+1) {
+    color: greenyellow;
+  }
+
+  p::first-letter {
+    color: darkred;
+  }
+</style>
+
+<body>
+  <h1>请输入数字</h1>
+  <input type="number" max="10" min="1">
+  <h2>结果：</h2>
+  <hr />
+  <input type="checkbox">
+  <input type="checkbox">
+  <input type="checkbox">
+
+  <ol>
+    <li>第一个</li>
+    <li>第二个</li>
+    <li>第三个</li>
+    <li>第四个</li>
+    <li>第五个</li>
+    <li>第六个</li>
+  </ol>
+  <p>一二三四</p>
+</body>
+
+</html>
