@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS:line-height</title>
+</head>
+<style>
+  /*
+  行距 = line-height 和 font-size 之差
+  行距>0:  line-height > font-size
+  行距=0:  line-height = font-size
+  行距<0:  line-height < font-size
+  */
+  .div1 {
+    background-color: aqua;
+    line-height: 0;
+    height: 500px;
+  }
+
+  .div2 {
+    line-height: 500px;
+    height: 0;
+    background-color: yellowgreen;
+  }
+</style>
+
+<body>
+  <div class="div1">我是div1</div>
+  <div class="div2">我是div1</div>
+</body>
+
+</html>
