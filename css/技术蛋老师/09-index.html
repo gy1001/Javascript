@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS:rem和em的区别</title>
+</head>
+<style>
+  /* rem: 其中的r代表root */
+  html {
+    font-size: 50px;
+  }
+
+  .div1 {
+    font-size: 20px;
+    border: solid 1px red;
+  }
+
+  .div2 {
+    font-size: 1em;
+  }
+
+  .div3 {
+    font-size: 1rem;
+  }
+
+  .div4 {
+    font-size: 100%;
+  }
+</style>
+
+<body>
+  <div class="div2">1em：我根据父级元素大小</div>
+  <div class="div3">1rem:我跟随html大小</div>
+  <div class="div4">100%：我根据父级元素大小</div>
+  <div class="div1">
+    <div class="div2">1em：我根据父级元素大小</div>
+    <div class="div3">1rem:我跟随html大小</div>
+    <div class="div4">100%：我根据父级元素大小</div>
+  </div>
+</body>
+
+</html>
