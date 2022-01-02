@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS:外边距塌陷</title>
+</head>
+<style>
+  /* 
+  外边距塌陷
+    发生在垂直方向，而不是水平方向 
+    是发生在块级元素身上，不是行内元素，也不是行内块级元素
+  外边距计算
+  1：正数 && 正数： 就取最大的值
+  2：负数 && 负数： 就取绝对值最大的值
+  
+  解决方法
+  1. 绝对定位，可以使用margin-xx或者top、bottom
+  2. 把元素变为行内块元素，因为行内块元素不会产生外边距塌陷
+  3. 相对定位: n
+  4. BFC: BFC(Block formatting context)直译为"块级格式化上下文"
+      overflow: hidden;
+      或者设置 padding
+      或者边框
+  5. 空元素创建
+  */
+  body {
+    background-color: lightgray;
+    padding: 0;
+    margin: 0;
+  }
+
+  p {
+    background-color: lightyellow;
+    margin: 0;
+  }
+
+  div {
+    margin-top: 10px;
+    background-color: white;
+    margin-bottom: 10px;
+  }
+
+  .div2 {
+    padding-top: 20px;
+  }
+
+  .div3 {
+    width: 50px;
+    height: 50px;
+    background-color: lightgreen;
+    /* 父元素设置padding 后，子元素在进行margin,就会进行计算 */
+    /*margin-top: 30px;*/
+  }
+</style>
+
+<body>
+  <p>我是顶部</p>
+  <div class="div1">我是div1</div>
+  <div class="div2">
+    <div class="div3">我是div3</div>
+  </div>
+  <p>我是底部</p>
+</body>
+
+</html>
