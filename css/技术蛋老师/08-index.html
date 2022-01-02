@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS:圣杯布局和双飞翼布局</title>
+</head>
+<style>
+  .container-1 {
+    background-color: aqua;
+  }
+
+  .header,
+  .header2 {
+    background-color: lightblue;
+  }
+
+  .content {
+    padding: 0 100px;
+  }
+
+  .left,
+  .middle,
+  .right {
+    float: left
+  }
+
+  .middle {
+    width: 100%;
+    background-color: blue;
+    color: white;
+  }
+
+  .left {
+    width: 100px;
+    margin-left: -100%;
+    position: relative;
+    left: -100px;
+  }
+
+  .right {
+    width: 100px;
+    margin-left: -100px;
+    position: relative;
+    right: -100px;
+  }
+
+  .content::after {
+    content: '';
+    clear: both;
+    display: block;
+  }
+
+  .bottom,
+  .bottom2 {
+    background-color: lightyellow;
+  }
+
+  .center2 {
+    /*height: 200px;*/
+    margin: 0 100px;
+  }
+
+  .wrapper2 {
+    width: 100%;
+    float: left;
+  }
+
+  .left2 {
+    width: 100px;
+    float: left;
+    margin-left: -100%;
+  }
+
+  .right2 {
+    width: 100px;
+    float: left;
+    margin-left: -100px;
+  }
+
+  .footer2 {
+    clear: both;
+  }
+</style>
+
+<body>
+  <h1>圣杯布局</h1>
+  <hr />
+  <div class="container-1">
+    <header class="header">我是头部</header>
+    <div class="content">
+      <div class="middle">我是中部</div>
+      <div class="left">我是左部</div>
+      <div class="right">我是右部</div>
+    </div>
+    <footer class="bottom">我是底部</footer>
+  </div>
+  <h1>双飞翼布局</h1>
+  <hr />
+  <header class="header2">我是头部</header>
+  <div class="wrapper2">
+    <div class="center2">我是主区域</div>
+  </div>
+  <div class="left2">左区域</div>
+  <div class="right2">右区域</div>
+  <footer class="bottom2">底部</footer>
+</body>
+
+</html>
