@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css:不用border创建边框</title>
+</head>
+<style>
+  .div1 {
+    width: 100px;
+    height: 100px;
+    /* box-shadow: x轴偏移 y轴偏移 模糊半径 扩散半径 颜色 
+    内阴影需要加 inset
+    */
+    /*box-shadow: 5px 5px #fcf876, -5px 5px #fcf876, 5px -5px #fcf876, -5px -5px #fcf876;*/
+    box-shadow: 0 0 0 5px #fcf876;
+  }
+</style>
+
+<body>
+  <div class="div1">我是文本</div>
+</body>
+
+</html>
