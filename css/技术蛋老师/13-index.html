@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS：多行省略</title>
+</head>
+<style>
+  /*
+  方法1
+  优点：简洁明了
+  缺点：私有属性
+  */
+  p {
+    overflow: hidden;
+    border: solid 1px red;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+  }
+
+  /* 第二种
+    使用前后伪元素，一个显示...一个显示背景颜色将其覆盖，设置一定距离
+    优点：符合css规范
+    缺点：背景需要是纯色，如果是背景图，就无法使用
+   */
+  .div1 {
+    height: 70px;
+    overflow: hidden;
+    border: solid 1px red;
+    position: relative;
+    text-align: justify;
+    padding: 20px;
+  }
+
+  .div1::before {
+    content: "...";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+
+  .div1::after {
+    content: '';
+    background-color: blue;
+    width: 1em;
+    height: 1em;
+    position: absolute;
+    display: inline;
+    right: 0;
+    margin-top: 0.5em;
+  }
+
+  /*
+  方法三: 使用渐变色在最后
+  优点：css规范
+  缺点：背景有限制，同上述方法
+  */
+  .div2 {
+    height: 110px;
+    overflow: hidden;
+    border: solid 1px red;
+    position: relative;
+    text-align: justify;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .div2::after {
+    content: "";
+    position: absolute;
+    height: 1.2em;
+    width: 20%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), #f6acc8 80%);
+    right: 0;
+    bottom: 0;
+    margin-bottom: 0.2em;
+  }
+</style>
+
+<body>
+  <p>
+    我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话
+    我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话
+    我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话
+  </p>
+  <hr />
+  <div class="div1">
+    我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是我是一
+    我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是我是一
+    我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是我是一
+    我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是我是一
+    我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是我是一
+  </div>
+  <hr />
+  <div class="div2">
+    我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是我是一
+    我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是我是一
+    我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是我是一
+    我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是我是一
+    我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是我是一
+    我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是一段话我是我是一
+  </div>
+</body>
+
+</html>
