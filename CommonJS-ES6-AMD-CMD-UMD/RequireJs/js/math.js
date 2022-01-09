@@ -1,7 +1,7 @@
-define('math',[], function () {
+define('math', [], function () {
   return {
-      add2: function(x,y){
-          return x + y;
-      }
-  };
-});
+    add2: function (x, y) {
+      return x + y
+    },
+  }
+})
