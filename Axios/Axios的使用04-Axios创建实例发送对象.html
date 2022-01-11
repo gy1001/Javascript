@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axios创建实例发送对象</title>
+</head>
+
+<body>
+  <button class="btn">发送get请求</button>
+  <button class="btn">发送post请求</button>
+  <button class="btn">发送put请求</button>
+  <button class="btn">发送delete请求</button>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.24.0/axios.min.js"></script>
+<script>
+  const btns = document.querySelectorAll("button")
+  // 发送get请求
+
+  const aInstance = axios.create({
+    baseURL: 'http://localhost:3000',
+    timeout: 2000,
+  })
+
+  // 可以创建不同实例，进行不同服务器的请求
+  //const anotherInstance = axios.create({
+  //  baseURL: '',
+  //  timeout: 2000
+  //})
+
+  // aInstance 与 axios 对象功能几乎是一致的
+  aInstance({
+    url: '/comments'
+  }).then(res => {
+    console.log(res.data)
+  })
+
+
+
+</script>
+
+</html>
