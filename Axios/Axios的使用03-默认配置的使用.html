@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axios默认配置</title>
+</head>
+
+<body>
+  <button class="btn">发送get请求</button>
+  <button class="btn">发送post请求</button>
+  <button class="btn">发送put请求</button>
+  <button class="btn">发送delete请求</button>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.24.0/axios.min.js"></script>
+<script>
+  const btns = document.querySelectorAll("button")
+  console.log(btns)
+  // 发送get请求
+  axios.defaults.method = "get"
+  axios.defaults.baseURL = "http://localhost:3000"
+  axios.defaults.timeout = 3000
+  // 等等，也可以设置其他默认值
+  btns[0].onclick = function () {
+    axios.request({
+      url: '/comments'
+    }).then(res => {
+      console.log(res.data)
+    })
+  }
+
+</script>
+
+</html>
