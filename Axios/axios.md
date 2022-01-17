@@ -12,7 +12,7 @@
 
 #### 1.3 使用 JSON-SERVER 搭建一个服务
 
-1. [github地址](https://github.com/typicode/json-server)
+1. [github 地址](https://github.com/typicode/json-server)
 
 2. 执行命令
 
@@ -20,21 +20,15 @@
    npm install json-server -D
    ```
 
-3. 创建db.json文件
+3. 创建 db.json 文件
 
    ```json
    {
-     "posts": [
-       { "id": 1, "title": "json-server", "author": "typicode" }
-     ],
-     "comments": [
-       { "id": 1, "body": "some comment", "postId": 1 }
-     ],
+     "posts": [{ "id": 1, "title": "json-server", "author": "typicode" }],
+     "comments": [{ "id": 1, "body": "some comment", "postId": 1 }],
      "profile": { "name": "typicode" }
    }
    ```
-
-   
 
 4. Start JSON Server
 
@@ -48,5 +42,4 @@
    { "id": 1, "title": "json-server", "author": "typicode" }
    ```
 
-   
-
+## 查看源码
