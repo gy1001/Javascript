@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axios模拟请求</title>
+</head>
+
+<body>
+</body>
+<script>
+
+  function Axios(config) {
+    this.config = config
+  }
+
+  Axios.prototype.request = function (config) {
+    let promise = Promise.resolve(config)
+    let chains = [dispatchRequest, undefined]
+    let result = promise.then(chains[0], chains[1])
+    return result
+  }
+
+  function dispatchRequest(config) {
+    return xhrAdapter(config).then(response => {
+      console.log('这里对响应结果作特殊处理')
+      return response
+    }, error => {
+    })
+  }
+
+  function xhrAdapter(config) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest()
+      xhr.open(config.method, config.url)
+      xhr.send()
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            // 成功的状态
+            resolve({
+              config: config,
+              data: xhr.response,
+              headers: xhr.getAllResponseHeaders(), // 这是字符串，未作特殊处理
+              request: xhr,
+              status: xhr.status,
+              statusText: xhr.statusText
+            })
+          } else {
+            // 失败的回调
+            reject()
+          }
+        }
+      }
+    })
+  }
+
+  let axios = Axios.prototype.request.bind(null)
+
+
+  axios({
+    method: 'get',
+    url: 'http://localhost:3000/posts'
+  }).then(res => {
+    console.log(res, 222)
+  })
+</script>
+
+</html>
