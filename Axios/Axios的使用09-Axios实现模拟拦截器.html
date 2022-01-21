@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axios模拟拦截器</title>
+</head>
+
+<body>
+</body>
+<script>
+
+  // 拦截器管理构造函数
+  function InterceptorsManager() {
+    this.handlers = []
+  }
+  InterceptorsManager.prototype.use = function (fulfilled, rejected) {
+    this.handlers.push({ fulfilled, rejected })
+  }
+
+  InterceptorsManager.prototype.forEach = function (fn) {
+    this.handlers.forEach(handlerItem => {
+      fn(handlerItem)
+    })
+  }
+
+  function Axios(config) {
+    this.config = config
+    this.interceptors = {
+      request: new InterceptorsManager(),
+      response: new InterceptorsManager()
+    }
+  }
+
+  Axios.prototype.request = function (config) {
+    let promise = Promise.resolve(config)
+
+    // 难点
+    const chains = [dispatchRequest, undefined]
+    // 处理拦截器
+    // 将请求拦截器的回调 压入到chain的前面
+    // console.log(this.interceptors)
+    this.interceptors.request.forEach(requestInterceptor => {
+      chains.unshift(requestInterceptor.fulfilled, requestInterceptor.rejected)
+    })
+    this.interceptors.response.forEach(responseInterceptor => {
+      chains.push(responseInterceptor.fulfilled, responseInterceptor.rejected)
+    })
+
+    while (chains.length) {
+      promise = promise.then(chains.shift(), chains.shift())
+    }
+    return promise
+  }
+
+  function dispatchRequest(config) {
+    return xhrAdapter(config).then(response => {
+      console.log('这里对响应结果作特殊处理')
+      return response
+    }, error => {
+    })
+  }
+
+  function xhrAdapter(config) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest()
+      xhr.open(config.method, config.url)
+      xhr.send()
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            // 成功的状态
+            resolve({
+              config: config,
+              data: xhr.response,
+              headers: xhr.getAllResponseHeaders(), // 这是字符串，未作特殊处理
+              request: xhr,
+              status: xhr.status,
+              statusText: xhr.statusText
+            })
+          } else {
+            // 失败的回调
+            reject()
+          }
+        }
+      }
+    })
+  }
+
+  let context = new Axios({})
+  let axios = Axios.prototype.request.bind(context)
+  Object.keys(context).forEach(key => {
+    axios[key] = context[key]
+  })
+
+  // 添加请求拦截器
+  axios.interceptors.request.use(function one(config) {
+    // 在发送请求之前做些什么
+    console.log('请求拦截器 成功')
+    return config;
+  }, function (error) {
+    // 对请求错误做些什么
+    console.log('请求拦截器 失败')
+    return Promise.reject(error);
+  });
+  axios.interceptors.request.use(function two(config) {
+    // 在发送请求之前做些什么
+    console.log('请求拦截器2号 成功')
+    return config;
+  }, function (error) {
+    // 对请求错误做些什么
+    console.log('请求拦截器2号 失败')
+    return Promise.reject(error);
+  });
+
+  // 添加响应拦截器
+  axios.interceptors.response.use(function one(response) {
+    // 对响应数据做点什么
+    console.log('响应拦截器1号成功', response)
+    return response;
+  }, function (error) {
+    // 对响应错误做点什么
+    console.log('响应拦截器 失败')
+    return Promise.reject(error);
+  });
+  axios.interceptors.response.use(function two(response) {
+    // 对响应数据做点什么
+    console.log('响应拦截器2号 成功', response)
+    return response;
+  }, function (error) {
+    // 对响应错误做点什么
+    console.log('响应拦截器2号 失败')
+    return Promise.reject(error);
+  });
+  console.dir(axios)
+  axios({
+    method: 'get',
+    url: 'http://localhost:3000/posts'
+  }).then(res => {
+    console.log(res, 222)
+  })
+</script>
+
+</html>
