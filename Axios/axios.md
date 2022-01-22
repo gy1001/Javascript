@@ -34,6 +34,7 @@
 
    ```code
    npx json server --watch db.json
+   npx json-server --watch db.json --delay 2000 延迟2s返回结果
    ```
 
 5. Now if you go to http://localhost:3000/posts/1, you'll get
