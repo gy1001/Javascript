@@ -13,7 +13,8 @@
   <button class="btn">发送post请求</button>
   <button class="btn">发送put请求</button>
   <button class="btn">发送delete请求</button>
-  <div>路尽隐香处，翩然雪海间；梅花仍犹在，雪海何处寻</div>
+  <button class="btn">使用axios.all</button>
+  <!--<div>路尽隐香处，翩然雪海间；梅花仍犹在，雪海何处寻</div>-->
 </body>
 <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.24.0/axios.min.js"></script>
 <script>
@@ -47,6 +48,30 @@
     }).then(res => {
       console.log(res.data)
     })
+  }
+
+  function requestOne() {
+    return axios({
+      method: 'get',
+      url: 'http://localhost:3000/comments'
+    })
+  }
+
+  function requestTwo() {
+    return axios({
+      method: 'get',
+      url: 'http://localhost:3000/posts'
+    })
+  }
+
+  // 使用axios.all 
+  btns[4].onclick = function () {
+    axios.all([requestOne(), requestTwo()]).then(res => {
+      console.log(res)
+    })
+    axios.all([requestOne(), requestTwo()]).then(axios.spread((resOne, resTwo) => {
+      console.log(resOne, resTwo)
+    }))
   }
 
 
