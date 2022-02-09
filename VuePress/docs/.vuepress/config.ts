@@ -17,11 +17,11 @@ export default defineUserConfig<DefaultThemeOptions>({
 				link: '/skill/front/js',
 			},
 			{
-				text: '美文收藏',
+				text: '美文推荐',
 				link: '/collect',
 			},
 			{
-				text: '其他相关',
+				text: '其他',
 				link: '/other',
 			},
 		],
