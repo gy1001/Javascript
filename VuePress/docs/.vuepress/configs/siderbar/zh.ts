@@ -3,7 +3,7 @@ import type { SidebarConfig } from '@vuepress/theme-default'
 export const sidebarZh: SidebarConfig = {
 	'/skill/front/': [
 		{
-			text: '前端',
+			text: 'HTML5',
 			children: [
 				'/skill/front/',
 				'/skill/front/css.md',
@@ -14,7 +14,14 @@ export const sidebarZh: SidebarConfig = {
 				'/skill/front/axios.md',
 			],
 		},
+		{
+			text: 'mini-前端框架',
+			children: [
+				"/skill/front/mini/vue.md",
+			]
+		}
 	],
+
 	'/collect': [
 		{
 			text: '技术相关',

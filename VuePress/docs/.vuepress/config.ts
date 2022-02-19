@@ -31,4 +31,5 @@ export default defineUserConfig<DefaultThemeOptions>({
 			},
 		},
 	},
+	plugins: ['@vuepress/nprogress', '@vuepress/back-to-top']
 })
