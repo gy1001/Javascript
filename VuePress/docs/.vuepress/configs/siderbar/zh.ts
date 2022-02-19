@@ -25,7 +25,7 @@ export const sidebarZh: SidebarConfig = {
 	'/collect': [
 		{
 			text: '技术相关',
-			collapsible: true,
+			collapsible: false,
 			children: [
 				{
 					text: '简书',
@@ -35,11 +35,24 @@ export const sidebarZh: SidebarConfig = {
 					text: '掘金',
 					children: [],
 				},
+				{
+					text: '其他',
+					children: [
+						{
+							text: "设计模式",
+							link: 'https://refactoringguru.cn/design-patterns'
+						},
+						{
+							text: '设计结构',
+							link: "https://mp.weixin.qq.com/s/PzncE_ofS4M0b6KB9ESWnA"
+						}
+					]
+				}
 			],
 		},
 		{
 			text: '读书笔记',
-			collapsible: true,
+			collapsible: false,
 			children: [
 				{
 					text: '简书',
@@ -55,11 +68,16 @@ export const sidebarZh: SidebarConfig = {
 	'/other': [
 		{
 			text: '视频博主推荐',
-			collapsible: true,
+			collapsible: false,
 			children: [
 				{
 					text: '今日头条',
-					children: [],
+					children: [
+						// {
+						// 	text: '阿斗归来了',
+						// 	link: ''
+						// }
+					],
 				},
 				{
 					text: '哔哩哔哩',

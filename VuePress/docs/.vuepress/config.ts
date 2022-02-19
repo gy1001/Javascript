@@ -24,6 +24,15 @@ export default defineUserConfig<DefaultThemeOptions>({
 				text: '其他',
 				link: '/other',
 			},
+			{
+				text: '休闲娱乐',
+				children: [
+					{
+						text: '更新日志',
+						link: 'https://github.com/vuepress/vuepress-next/blob/main/CHANGELOG.md',
+					},
+				]
+			}
 		],
 		locales: {
 			'/': {
