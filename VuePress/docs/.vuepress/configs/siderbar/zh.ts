@@ -44,7 +44,7 @@ export const sidebarZh: SidebarConfig = {
 							link: 'https://refactoringguru.cn/design-patterns'
 						},
 						{
-							text: '设计结构',
+							text: '数据结构',
 							link: "https://mp.weixin.qq.com/s/PzncE_ofS4M0b6KB9ESWnA"
 						}
 					]

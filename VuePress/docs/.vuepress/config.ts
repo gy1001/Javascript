@@ -15,7 +15,7 @@ export default defineUserConfig<DefaultThemeOptions>({
 		navbar: [
 			{
 				text: '技术相关',
-				link: '/skill/front',
+				link: '/skill/front/',
 			},
 			{
 				text: '美文推荐',
