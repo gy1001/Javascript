@@ -5,7 +5,7 @@ heroText: gyfly.top
 tagline: 随便写写
 actions:
   - text: 立即进入 →
-    link: /skill/front
+    link: /skill/front/
 features:
   - title: 技术相关
     details: 前端知识、日常问题、学习心得记录等
