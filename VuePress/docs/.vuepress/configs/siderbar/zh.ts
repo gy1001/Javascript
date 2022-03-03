@@ -1,13 +1,14 @@
 import type { SidebarConfig } from '@vuepress/theme-default'
 
 export const sidebarZh: SidebarConfig = {
-	'/skill/front/': [
+	'/skill/front': [
 		{
 			text: 'HTML5',
 			children: [
-				'/skill/front/',
+				'/skill/front',
 				'/skill/front/css.md',
 				'/skill/front/html.md',
+				'/skill/front/js.md',
 				'/skill/front/vue.md',
 				'/skill/front/react.md',
 				'/skill/front/webpack.md',

@@ -10,11 +10,12 @@ export default defineUserConfig<DefaultThemeOptions>({
 	theme: '@vuepress/theme-default',
 	themeConfig: {
 		lastUpdated: true,
+		lastUpdatedText: '上次更新',
 		logo: '/images/logo.png',
 		navbar: [
 			{
 				text: '技术相关',
-				link: '/skill/front/js',
+				link: '/skill/front',
 			},
 			{
 				text: '美文推荐',
