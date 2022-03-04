@@ -13,5 +13,5 @@ features:
     details: 经典语录、收藏美文
   - title: 其他
     details: 推荐的视频解说博主、github 大佬等
-footer: MIT Licensed | Copyright © 2022-03-03-present G.Y
+footer: MIT Licensed | Copyright © 2022-03-04-present G.Y
 ---
