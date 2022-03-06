@@ -67,25 +67,32 @@ export const sidebarZh: SidebarConfig = {
 			],
 		},
 	],
-	'/other': [
+	'/other/': [
 		{
-			text: '视频博主推荐',
+			text: '其他推荐',
 			collapsible: false,
 			children: [
-				{
-					text: '今日头条',
-					children: [
-						// {
-						// 	text: '阿斗归来了',
-						// 	link: ''
-						// }
-					],
-				},
-				{
-					text: '哔哩哔哩',
-					children: [],
-				},
-			],
+				'/other/',
+				'/other/video',
+			]
+			// children: [
+			// 	{
+			// 		text: '今日头条',
+			// 		children: [
+			// 			{
+			// 				text: '阿斗归来了',
+			// 				link: 'https://www.toutiao.com/c/user/token/MS4wLjABAAAARTrXWnm9VgIes8jP2-0grbDX3CZPnkN9Wyl9_Xyb-i0/?'
+			// 			},
+			// 			{
+			// 				text: ''
+			// 			}
+			// 		],
+			// 	},
+			// 	{
+			// 		text: '哔哩哔哩',
+			// 		children: [],
+			// 	},
+			// ],
 		},
 	],
 }
