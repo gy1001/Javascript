@@ -12,6 +12,7 @@ export default defineUserConfig<DefaultThemeOptions>({
 	description: '随便写写',
 	theme: '@vuepress/theme-default',
 	themeConfig: {
+		contributors: false,
 		lastUpdated: true,
 		lastUpdatedText: '上次更新',
 		logo: '/images/logo.png',
