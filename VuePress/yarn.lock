@@ -578,6 +578,11 @@
   dependencies:
     vue-demi "*"
 
+"@waline/client@^1.5.4":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@waline/client/-/client-1.6.0.tgz#4de2c6262c4cb8a8554308dd3844c42a17a8d7f9"
+  integrity sha512-nVjNh4l0GiO1D//aJj/6N6oCgFikhRqs4Juc9sbT2g9w+FxeEYosOc5PMlyDvp8JXGGla8uFuzhD8em5o7QZ3g==
+
 ansi-regex@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.1.tgz#082cb2c89c9fe8659a311a53bd6a4dc5301db304"
@@ -2695,6 +2700,19 @@ vue@^3.2.31:
     "@vue/runtime-dom" "3.2.31"
     "@vue/server-renderer" "3.2.31"
     "@vue/shared" "3.2.31"
+
+vuepress-plugin-comment2@^2.0.0-beta.5:
+  version "2.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-comment2/-/vuepress-plugin-comment2-2.0.0-beta.5.tgz#16cf06642ca2806d5982a810bd641f11a18c1b2a"
+  integrity sha512-D2Y9Mta0Rb22VGmMlMVL42ASd6REkJklftXXT4EC77AKeQwT8z1aXMRYbq8gNfBf7y4WMhJJXg4dj5tcSnM23A==
+  dependencies:
+    "@mr-hope/vuepress-shared" "2.0.0-beta.5"
+    "@vuepress/client" "2.0.0-beta.35"
+    "@vuepress/utils" "2.0.0-beta.35"
+    "@waline/client" "^1.5.4"
+    vue "^3.2.31"
+    vue-router "^4.0.13"
+    vuepress-plugin-sass-palette "2.0.0-beta.5"
 
 vuepress-plugin-copy-code2@^2.0.0-beta.5:
   version "2.0.0-beta.5"
