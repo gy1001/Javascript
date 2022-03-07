@@ -1,30 +1,30 @@
 import type { SidebarConfig } from '@vuepress/theme-default'
 
 export const sidebarZh: SidebarConfig = {
-	'/skill/front/': [
+	'/zh/skill/front/': [
 		{
 			text: 'HTML5',
 			children: [
-				'/skill/front/',
-				'/skill/front/html.md',
-				'/skill/front/css.md',
-				'/skill/front/js.md',
-				'/skill/front/vue.md',
-				'/skill/front/react.md',
-				'/skill/front/webpack.md',
-				'/skill/front/axios.md',
-				'/skill/front/todo.md',
+				'/zh/skill/front/',
+				'/zh/skill/front/html.md',
+				'/zh/skill/front/css.md',
+				'/zh/skill/front/js.md',
+				'/zh/skill/front/vue.md',
+				'/zh/skill/front/react.md',
+				'/zh/skill/front/webpack.md',
+				'/zh/skill/front/axios.md',
+				'/zh/skill/front/todo.md',
 			],
 		},
 		{
 			text: 'mini-前端框架',
 			children: [
-				"/skill/front/mini/vue.md",
+				"/zh/skill/front/mini/vue.md",
 			]
 		}
 	],
 
-	'/collect': [
+	'/zh/collect': [
 		{
 			text: '技术相关',
 			collapsible: false,
@@ -67,32 +67,18 @@ export const sidebarZh: SidebarConfig = {
 			],
 		},
 	],
-	'/other/': [
+	'/zh/other/': [
 		{
 			text: '其他推荐',
 			collapsible: false,
 			children: [
-				'/other/',
-				'/other/video',
+				'/zh/other/',
+				'/zh/other/video',
 			]
-			// children: [
-			// 	{
-			// 		text: '今日头条',
-			// 		children: [
-			// 			{
-			// 				text: '阿斗归来了',
-			// 				link: 'https://www.toutiao.com/c/user/token/MS4wLjABAAAARTrXWnm9VgIes8jP2-0grbDX3CZPnkN9Wyl9_Xyb-i0/?'
-			// 			},
-			// 			{
-			// 				text: ''
-			// 			}
-			// 		],
-			// 	},
-			// 	{
-			// 		text: '哔哩哔哩',
-			// 		children: [],
-			// 	},
-			// ],
 		},
 	],
+}
+
+
+export const sidebarEn: SidebarConfig = {
 }

@@ -298,3 +298,5 @@ React 为了引入 JSX，必须需要引入编译，这又间接促成 Babel 与
 [前端开发 20 年变迁史](https://mp.weixin.qq.com/s?__biz=MjM5MjAwODM4MA==&mid=2650721539&idx=1&sn=fd532ad23d12fb5fda25e2dadf8fef7d&chksm=bea6bcd089d135c624447eeff341a78cfd10db0e5947847975350d147da782562292d9bcc8ee&mpshare=1&scene=23&srcid=06078eptd2RzWSzuVrRwRmvS&sharer_sharetime=1587131103974&sharer_shareid=8c68d46351db46e263c89206a9a7edfa#rd)
 
 [雅虎 34 条军规](https://www.cnblogs.com/paul-3/p/5999722.html)
+
+<CommentService />
