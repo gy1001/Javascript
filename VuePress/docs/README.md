@@ -2,7 +2,7 @@
 home: true
 heroImage: /images/logo.png
 heroText: gyfly.top
-tagline: 随便写写
+tagline: 种一棵树最好的时间是十年前，其次就是现在。
 actions:
   - text: 立即进入 →
     link: /skill/front/
