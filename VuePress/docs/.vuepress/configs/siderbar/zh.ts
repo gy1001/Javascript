@@ -87,5 +87,4 @@ export const sidebarZh: SidebarConfig = {
 }
 
 
-export const sidebarEn: SidebarConfig = {
-}
+export const sidebarEn: SidebarConfig = {}

@@ -29,7 +29,8 @@ export default defineUserConfig<DefaultThemeOptions>({
 		logo: '/images/logo.png',
 		locales: {
 			'/': {
-				sidebar: sidebarEn
+				sidebar: sidebarEn,
+				navbar: []
 			},
 			'/zh/': {
 				sidebar: sidebarZh,
