@@ -28,6 +28,12 @@ export const sidebarZh: SidebarConfig = {
 			children: [
 				"/zh/skill/front/mini/vue.md",
 			]
+		},
+		{
+			text: '一些翻译',
+			children: [
+				"/zh/skill/front/translate/require-js.md",
+			]
 		}
 	],
 
