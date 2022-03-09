@@ -6,27 +6,34 @@ export const sidebarZh: SidebarConfig = {
 			text: 'HTML5三剑客',
 			children: [
 				'/zh/skill/front/',
-				'/zh/skill/front/html.md',
-				'/zh/skill/front/css.md',
-				'/zh/skill/front/js.md',
+				'/zh/skill/front/swordsman/html.md',
+				'/zh/skill/front/swordsman/css.md',
+				'/zh/skill/front/swordsman/js.md',
 
 			],
 		},
 		{
 			text: 'JavaScript相关',
 			children: [
-				'/zh/skill/front/module.md',
-				'/zh/skill/front/vue.md',
-				'/zh/skill/front/react.md',
-				'/zh/skill/front/webpack.md',
-				'/zh/skill/front/axios.md',
-				'/zh/skill/front/todo.md',
+				'/zh/skill/front/about/module.md',
+				'/zh/skill/front/about/jquery.md',
+				'/zh/skill/front/about/grunt.md',
+				'/zh/skill/front/about/webpack.md',
+				'/zh/skill/front/about/axios.md',
+				'/zh/skill/front/about/todo.md',
+			]
+		},
+		{
+			text: "前端框架",
+			children: [
+				'/zh/skill/front/frame/vue.md',
+				'/zh/skill/front/frame/react.md',
 			]
 		},
 		{
 			text: 'mini-前端框架',
 			children: [
-				"/zh/skill/front/mini/vue.md",
+				"/zh/skill/front/mini-frame/mini-vue.md",
 			]
 		},
 		{

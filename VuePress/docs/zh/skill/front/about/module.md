@@ -1,4 +1,4 @@
-# 模块化发展史
+# Module-模块化
 
 JavaScript 语言诞生至今，模块规范化之路曲曲折折。社区先后出现了各种解决方案，包括 **AMD、CMD、CommonJS** 等，而后 ECMA 组织在 JavaScript 语言标准层面，增加了模块功能（因为该功能是在 ES2015 版本引入的，所以在下文中将之称为 **ES6 module** ）。
 
