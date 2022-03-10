@@ -194,8 +194,129 @@ It is recommended to store that version info in a separate text file if you want
 This allows you to have the very minimal configuration instead of having to put an entry in the "paths" config for each library.
 For instance, configure "jquery" to be "jquery-1.7.2".
 
+注意作为示例的一部分，类似 jQuery 这样的库供应者在他们的名字中是没有它们的版本号码的。如果你想追踪它，建议你在单独的文本文件中存储下来这个版本信息，或者如果你使用一个类似 volo 的工具，它将在 package.json 文件中 记录下版本信息，但将文件保存在 jquery.js 文件中。这将是你进行最少的配置，而不必在 paths 设置 为每个库都在添加一个入口。例如，设置 jquery 为 jquery-1.7.2
+
 Ideally the scripts you load will be modules that are defined by calling define().
 However, you may need to use some traditional/legacy "browser globals" scripts that do not express their dependencies via define().
 For those, you can use the shim config. To properly express their dependencies.
 
+理想情况下，这些你加载的脚本将会被被称为 define() 的方式被定义为模块。但是，你也许需要使用一些不能通过 define()表达他们的依赖的 传统的、遗留的 浏览器全局的 脚本。对于这种情况，你可以使用 shim 设置项。来正确的表达出他们的依赖
+
 If you do not express the dependencies, you will likely get loading errors since RequireJS loads scripts asynchronously and out of order for speed.
+
+如果你不想表达依赖关系，你可能会遇到加载失败，因为 RequireJS 是异步加载脚本并且会为了速度而导致乱序。
+
+### data-main Entry Point data-main 入口
+
+The data-main attribute is a special attribute that require.js will check to start script loading:
+
+这个 data-main 属性是 require.js 用来检查以开始加载脚本的一个特殊的属性
+
+```html
+<!--when require.js loads it will inject another script tag
+    (with async attribute) for scripts/main.js-->
+<script data-main="scripts/main" src="scripts/require.js"></script>
+```
+
+You will typically use a data-main script to set configuration options and then load the first application module. Note: the script tag require.js generates for your data-main module includes the async attribute. This means that you cannot assume that the load and execution of your data-main script will finish prior to other scripts referenced later in the same page.
+
+你通常会使用一个 data-main 脚本来配置设置选项 ，然后加载第一个应用脚本。注意：这个由 require.js 为你的 data-main 模块生成的脚本标签包含了 async 异步属性. 这意味着你不能假设 这个 data-main 脚本的加载和执行 将在同一个页面引用的其他脚本 之前完成。
+
+For example, this arrangement will fail randomly when the require.config path for the 'foo' module has not been set prior to it being require()'d later:
+
+例如，在为“foo”模块的 require.config 路径未在以后被 require()'d 之前设置时这种安排会随机失败：
+
+```html
+<script data-main="scripts/main" src="scripts/require.js"></script>
+<script src="scripts/other.js"></script>
+```
+
+```javascript
+// contents of main.js:
+require.config({
+	paths: {
+		foo: 'libs/foo-1.1.3',
+	},
+})
+```
+
+```javascript
+// contents of other.js:
+
+// This code might be called before the require.config() in main.js
+// has executed. When that happens, require.js will attempt to
+// load 'scripts/foo.js' instead of 'scripts/libs/foo-1.1.3.js'
+require(['foo'], function (foo) {})
+```
+
+If you want to do require() calls in the HTML page, then it is best to not use data-main. data-main is only intended for use when the page just has one main entry point, the data-main script. For pages that want to do inline require() calls, it is best to nest those inside a require() call for the configuration:
+
+如果你想要在 HTML 页面中使用 require()命令，那么最好不要使用 data-main. data-main 仅仅适用于放页面中仅仅只有一个主入口，即 data-main 脚本的时候。 对于页面中想再行内使用 require.js 命令的，最好是将它们 嵌套在 require() 命令的调用中进行配置。
+
+```javascript
+<script src="scripts/require.js"></script>
+<script>
+require(['scripts/config'], function() {
+    // Configuration loaded now, safe to do other require calls
+    // that depend on that config.
+    require(['foo'], function(foo) {
+
+    });
+});
+</script>
+```
+
+### Define a Module：定义一个模块
+
+A module is different from a traditional script file in that it defines a well-scoped object that avoids polluting the global namespace. It can explicitly list its dependencies and get a handle on those dependencies without needing to refer to global objects, but instead receive the dependencies as arguments to the function that defines the module. Modules in RequireJS are an extension of the Module Pattern, with the benefit of not needing globals to refer to other modules.
+
+一个模块是与传统的脚本文件不同的，并且他定义了一个较好作用域的来避免污染全局空间的对象。它能显示地列出它的依赖项，并且在不需要应用全局对象的情况下获得这些依赖项的把手，并且将这些依赖项作为定义模块函数的参数。 在 RequireJs 的模块 是一个模块模型的扩展，它是带有不需要去全局对象来引用其他模块的好处的。
+
+The RequireJS syntax for modules allows them to be loaded as fast as possible, even out of order, but evaluated in the correct dependency order, and since global variables are not created, it makes it possible to load multiple versions of a module in a page.
+
+这个用于模块的 RequireJs 的结构 允许它们尽可能快的进行加载，即使是乱序的，它也会按照正确的依赖顺序进行评估，并且因为全局的变量没有被创造，它使得在一个页面中加载不同版本的模块成为可能。
+
+(If you are familiar with or are using CommonJS modules, then please also see CommonJS Notes for information on how the RequireJS module format maps to CommonJS modules).
+
+如果你很熟悉或者正在使用 CommonJS 模块，那也请看看 CommonJS 笔记 以了解有关 RequireJS 模块怎么样把格式映射到 CommonJS 模块的信息
+
+There should only be one module definition per file on disk. The modules can be grouped into optimized bundles by the optimization tool.
+
+磁盘上的每个文件应该只有一个模块定义。这些模块将会被优化工具有组织地分到优化后的包中。
+
+> Simple Name/Value Pairs :
+>
+> 简单的 键值对 配对
+
+> If the module does not have any dependencies, and it is just a collection of name/value pairs, then just pass an object literal to define():
+>
+> 如果一个模块 没有任何依赖，并且他仅仅是一个 键值对 集合，那就可以仅仅往 define 里面传递一个对象字面量
+
+```javascript
+// Inside file my/shirt.js:
+define({
+	color: 'black',
+	size: 'unisize',
+})
+```
+
+> Definition Functions
+>
+> 定义一个函数
+
+> If the module does not have dependencies, but needs to use a function to do some setup work, then define itself, pass a function to define():
+>
+> 如果一个模块没有依赖，但是需要一个函数来做一些准备工作，那可以 通过往 define() 传递一个函数来定义它自己
+
+```javascript
+//my/shirt.js now does setup work
+//before returning its module definition.
+define(function () {
+	//Do setup work here
+
+	return {
+		color: 'black',
+		size: 'unisize',
+	}
+})
+```
