@@ -320,3 +320,49 @@ define(function () {
 	}
 })
 ```
+
+> Definition Functions with Dependencies
+>
+> 定义带依赖的函数
+
+> If the module has dependencies, the first argument should be an array of dependency names, and the second argument should be a definition function. The function will be called to define the module once all dependencies have loaded. The function should return an object that defines the module. The dependencies will be passed to the definition function as function arguments, listed in the same order as the order in the dependency array:
+>
+> 如果一个模块有依赖项，第一个参数应该是 依赖项名字组成的数组 ，并且第二个参数应该是一个定义的函数。一旦所有的依赖加载完成，这个函数将会被调用来定义模块。这个函数返回应该一个定义这个模块的对象。这些依赖项目将会被当做函数参数传递给定义个函数，按照与依赖数组中相同的顺序列出。
+
+```javascript
+//my/shirt.js now has some dependencies, a cart and inventory
+//module in the same directory as shirt.js
+define(['./cart', './inventory'], function (cart, inventory) {
+	//return an object to define the "my/shirt" module.
+	return {
+		color: 'blue',
+		size: 'large',
+		addToCart: function () {
+			inventory.decrement(this)
+			cart.add(this)
+		},
+	}
+})
+```
+
+> In this example, a my/shirt module is created. It depends on my/cart and my/inventory. On disk, the files are structured like this:
+>
+> 在这个例子中，一个 my/shirt 模块被创建。它依赖于 my/cart 和 my/inventory。在磁盘上，这些文件结构类似这样
+
+```
+my/cart.js
+my/inventory.js
+my/shirt.js
+```
+
+The function call above specifies two arguments, "cart" and "inventory". These are the modules represented by the "./cart" and "./inventory" module names.
+
+这个函数指定了以上两个参数："cart" and "inventory".这里有被 "./cart" and "./inventory" 模块名字 代表的模块。
+
+The function is not called until the my/cart and my/inventory modules have been loaded, and the function receives the modules as the "cart" and "inventory" arguments.
+
+这个函数在 my/cart 和 my/inventory 都被加载完毕时候会被调用，同时这个函数接收 这个以 "cart" 和 "inventory" 为参数的模块。
+
+Modules that define globals are explicitly discouraged, so that multiple versions of a module can exist in a page at a time (see Advanced Usage). Also, the order of the function arguments should match the order of the dependencies.
+
+The return object from the function call defines the "my/shirt" module. By defining modules in this way, "my/shirt" does not exist as a global object.
