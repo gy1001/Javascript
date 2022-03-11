@@ -206,7 +206,7 @@ If you do not express the dependencies, you will likely get loading errors since
 
 如果你不想表达依赖关系，你可能会遇到加载失败，因为 RequireJS 是异步加载脚本并且会为了速度而导致乱序。
 
-### data-main Entry Point data-main 入口
+### data-main Entry Point
 
 The data-main attribute is a special attribute that require.js will check to start script loading:
 
@@ -266,7 +266,7 @@ require(['scripts/config'], function() {
 </script>
 ```
 
-### Define a Module：定义一个模块
+### Define a Module
 
 A module is different from a traditional script file in that it defines a well-scoped object that avoids polluting the global namespace. It can explicitly list its dependencies and get a handle on those dependencies without needing to refer to global objects, but instead receive the dependencies as arguments to the function that defines the module. Modules in RequireJS are an extension of the Module Pattern, with the benefit of not needing globals to refer to other modules.
 
@@ -284,9 +284,7 @@ There should only be one module definition per file on disk. The modules can be 
 
 磁盘上的每个文件应该只有一个模块定义。这些模块将会被优化工具有组织地分到优化后的包中。
 
-> Simple Name/Value Pairs :
->
-> 简单的 键值对 配对
+#### Simple Name/Value Pairs
 
 > If the module does not have any dependencies, and it is just a collection of name/value pairs, then just pass an object literal to define():
 >
@@ -300,9 +298,7 @@ define({
 })
 ```
 
-> Definition Functions
->
-> 定义一个函数
+#### Definition Functions
 
 > If the module does not have dependencies, but needs to use a function to do some setup work, then define itself, pass a function to define():
 >
@@ -321,9 +317,7 @@ define(function () {
 })
 ```
 
-> Definition Functions with Dependencies
->
-> 定义带依赖的函数
+#### Definition Functions with Dependencies
 
 > If the module has dependencies, the first argument should be an array of dependency names, and the second argument should be a definition function. The function will be called to define the module once all dependencies have loaded. The function should return an object that defines the module. The dependencies will be passed to the definition function as function arguments, listed in the same order as the order in the dependency array:
 >
@@ -365,4 +359,149 @@ The function is not called until the my/cart and my/inventory modules have been 
 
 Modules that define globals are explicitly discouraged, so that multiple versions of a module can exist in a page at a time (see Advanced Usage). Also, the order of the function arguments should match the order of the dependencies.
 
+声明全局的模块是明确不被鼓励的，这样一个模块的多个版本可以同时共存于一个页面(参阅高级用法章节)。同时，这些函数的参数的顺序应该与依赖项的顺序相匹配。
+
 The return object from the function call defines the "my/shirt" module. By defining modules in this way, "my/shirt" does not exist as a global object.
+
+函数调用返回的对象可以定义了 "my/shirt" 模块。通过这种方法定义模块，"my/shirt"不会以一个全局对象的方式存在。
+
+#### Define a Module as a Function
+
+> Modules do not have to return objects. Any valid return value from a function is allowed. Here is a module that returns a function as its module definition:
+>
+> 模块不一定必须返回对象。一个函数的任何合法的返回值都是被允许的。这里有一个返回一个函数来做为它的模块定义的模块
+
+```javascript
+//A module definition inside foo/title.js. It uses
+//my/cart and my/inventory modules from before,
+//but since foo/title.js is in a different directory than
+//the "my" modules, it uses the "my" in the module dependency
+//name to find them. The "my" part of the name can be mapped
+//to any directory, but by default, it is assumed to be a
+//sibling to the "foo" directory.
+define(['my/cart', 'my/inventory'], function (cart, inventory) {
+	//return a function to define "foo/title".
+	//It gets or sets the window title.
+	return function (title) {
+		return title ? (window.title = title) : inventory.storeName + ' ' + cart.name
+	}
+})
+```
+
+#### Define a Module with Simplified CommonJS Wrapper:使用简化的 CommonJS Wrapper 定义一个模块：
+
+> If you wish to reuse some code that was written in the traditional CommonJS module format it may be difficult to re-work to the array of dependencies used above, and you may prefer to have direct alignment of dependency name to the local variable used for that dependency. You can use the simplified CommonJS wrapper for those cases:
+>
+> 如果你想重用一些 通过传统的 CommonJS 模块格式来书写的的代码，那么重新处理上面的依赖项数组就会比较困难，并且你也许更喜欢将依赖项目名称与用于该依赖的本地变量直接对齐
+
+```javascript
+define(function (require, exports, module) {
+	var a = require('a'),
+		b = require('b')
+
+	//Return the module value
+	return function () {}
+})
+```
+
+> This wrapper relies on Function.prototype.toString() to give a useful string value of the function contents. This does not work on some devices like the PS3 and some older Opera mobile browsers. Use the optimizer to pull out the dependencies in the array format for use on those devices.
+>
+> 这个包装器依赖于 Function.prototype.toString() 来提供一个函数内容的有用的字符串值。这不适用于某些设备例如 PS3 和 一些较旧的 Opera 移动端浏览器。用这个优化器以数组格式来提取依赖项目，以便在这些设备中使用。
+>
+> More information is available on the CommonJS page, and in the "Sugar" section in the Why AMD page.
+>
+> 更多的信息可在 CommonJS 页面，和 在 Why AMD 页面的 “Sugar” 区域中
+
+#### Define a Module with a Name
+
+You may encounter some define() calls that include a name for the module as the first argument to define():
+
+你也许遇到一些包含一个模块名字作为 define() 的第一个参数 的 define() 调用
+
+```javascript
+//Explicitly defines the "foo/title" module:
+define('foo/title', ['my/cart', 'my/inventory'], function (cart, inventory) {
+	//Define foo/title object in here.
+})
+```
+
+These are normally generated by the optimization tool. You can explicitly name modules yourself, but it makes the modules less portable -- if you move the file to another directory you will need to change the name. It is normally best to avoid coding in a name for the module and just let the optimization tool burn in the module names. The optimization tool needs to add the names so that more than one module can be bundled in a file, to allow for faster loading in the browser.
+
+这些通常是由优化工具生成的。你可以自己显式地命名模块，但是这会使模块降低灵活性--如果你移动这些文件到其他文件夹，你需要更改它们的名字。最好是避免编写一个模块的名字并且，仅仅让优化工具来记录它们的名字。这个优化工具需要增加它们的名字，这样的话，不止一个模块可以被打包进一个文件里，以便与在浏览器中被快速被加载
+
+#### Other Module Notes
+
+One module per file.: Only one module should be defined per JavaScript file, given the nature of the module name-to-file-path lookup algorithm. You should only use the optimization tool to group multiple modules into optimized files.
+
+Relative module names inside define(): For require("./relative/name") calls that can happen inside a define() function call, be sure to ask for "require" as a dependency, so that the relative name is resolved correctly:
+
+```javascript
+define(['require', './relative/name'], function (require) {
+	var mod = require('./relative/name')
+})
+```
+
+Or better yet, use the shortened syntax that is available for use with translating CommonJS modules:
+
+```javascript
+define(function (require) {
+	var mod = require('./relative/name')
+})
+```
+
+This form will use Function.prototype.toString() to find the require() calls, and add them to the dependency array, along with "require", so the code will work correctly with relative paths.
+
+Relative paths are really useful if you are creating a few modules inside a directory, so that you can share the directory with other people or other projects, and you want to be able to get a handle on the sibling modules in that directory without having to know the directory's name.
+
+Relative module names are relative to other names, not paths: The loader stores modules by their name and not by their path internally. So for relative name references, those are resolved relative to the module name making the reference, then that module name, or ID, is converted to a path if needs to be loaded. Example code for a 'compute' package that has a 'main' and 'extras' modules in it:
+
+```
+* lib/
+    * compute/
+        * main.js
+        * extras.js
+```
+
+where the main.js module looks like this:
+
+```javascript
+define(['./extras'], function (extras) {
+	//Uses extras in here.
+})
+```
+
+If this was the paths config:
+
+```javascript
+require.config({
+	baseUrl: 'lib',
+	paths: {
+		compute: 'compute/main',
+	},
+})
+```
+
+And a require(['compute']) is done, then lib/compute/main.js will have the module name of 'compute'. When it asks for './extras', that is resolved relative to 'compute', so 'compute/./extras', which normalizes to just 'extras'. Since there is no paths config for that module name, the path generated will be for 'lib/extras.js', which is incorrect.
+
+For this case, packages config is a better option, since it allows setting the main module up as 'compute', but internally the loader will store the module with the ID of 'compute/main' so that the relative reference for './extras' works.
+
+Another option is to construct a module at lib/compute.js that is just define(['./compute/main'], function(m) { return m; });, then there is no need for paths or packages config.
+
+Or, do not set that paths or packages config and do the top level require call as require(['compute/main']).
+
+Generate URLs relative to module: You may need to generate an URL that is relative to a module. To do so, ask for "require" as a dependency and then use require.toUrl() to generate the URL:
+Generate URLs relative to module: You may need to generate an URL that is relative to a module. To do so, ask for "require" as a dependency and then use require.toUrl() to generate the URL:
+
+```javascript
+define(['require'], function (require) {
+	var cssUrl = require.toUrl('./style.css')
+})
+```
+
+Console debugging: If you need to work with a module you already loaded via a require(["module/name"], function(){}) call in the JavaScript console, then you can use the require() form that just uses the string name of the module to fetch it:
+
+```javascript
+require('module/name').callSomeFunction()
+```
+
+Note this only works if "module/name" was previously loaded via the async version of require: require(["module/name"]). If using a relative path, like './module/name', those only work inside define
