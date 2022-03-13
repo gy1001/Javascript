@@ -595,9 +595,15 @@ define(['a', 'exports'], function (a, exports) {
 
 JSONP is a way of calling some services in JavaScript. It works across domains and it is an established approach to calling services that just require an HTTP GET via a script tag.
 
+JSONP 在 JavaScript 中是一种调用一些服务的方式。它跨域工作并且是一种仅通过一个 script 标签 来加载一个 http get 请求的既定的服务。
+
 To use a JSONP service in RequireJS, specify "define" as the callback parameter's value. This means you can get the value of a JSONP URL as if it was a module definition.
 
+为了在 requireJS 中调用 JSONP 服务，特殊的 define ，请指定 define 作为回调参数值。这意味着如果一个 JSON URL 是模块定义的话，你能够获取它的值。
+
 Here is an example that calls a JSONP API endpoint. In this example, the JSONP callback parameter is called "callback", so "callback=define" tells the API to wrap the JSON response in a "define()" wrapper:
+
+这有一个调用 JSONP api 端的例子。在这个例子中，JSONP 回调函数参数叫做 callback, 因此 callback=define 就是告诉 API 来 用 define() 包装器来包装 JSON 响应
 
 ```javascript
 require(['http://example.com/api/data.json?callback=define'], function (data) {
@@ -609,33 +615,57 @@ require(['http://example.com/api/data.json?callback=define'], function (data) {
 
 This use of JSONP should be limited to JSONP services for initial application setup. If the JSONP service times out, it means other modules you define via define() may not get executed, so the error handling is not robust.
 
+这个 JSONP 的使用 应该被限制于用于初始应用程序设置的 JSONP 服务。如果这个 JSONP 服务超时了，它意味着你通过 define() 定义的其他模块可能没有被执行，这样的错误处理不可靠。
+
 Only JSONP return values that are JSON objects are supported. A JSONP response that is an array, a string or a number will not work.
+
+只有 JSONP 返回 JSONP 对象的值是被支持的。一个 JSONP 响应值为一个数组、一个字符串或者一个数字 将不会工作。
 
 This functionality should not be used for long-polling JSONP connections -- APIs that deal with real time streaming. Those kinds of APIs should do more script cleanup after receiving each response, and RequireJS will only fetch a JSONP URL once -- subsequent uses of the same URL as a dependency in a require() or define() call will get a cached value.
 
+这个泛函数不应该被用于长轮询 JSONP 链接 -- 处理实时流媒体的 APIs。 这些种类的 APIs 在收到每个响应后应该做更多的脚本清理，并且 RequireJS 将一次只获取一个 JSONP URL -- 后续的 在 require() 或者 define() 调用中 使用同样的 URL 将会获得一个缓存的值。
+
 Errors in loading a JSONP service are normally surfaced via timeouts for the service, since script tag loading does not give much detail into network problems. To detect errors, you can override requirejs.onError() to get errors. There is more information in the Handling Errors section.
+
+加载 JSONP 时候的错误服务 一般是通过服务超时来表现出来的，因此 script 标签的加载并在网络问题上并不会给出太多细节。为了查明错误，你可以重写 requirejs.onError() 来获取错误。在处理错误区域中有更多的信息。
 
 #### Undefining a Module
 
 There is a global function, requirejs.undef(), that allows undefining a module. It will reset the loader's internal state to forget about the previous definition of the module.
 
+这个有一个全局函数 requirejs.undef()，它允许取消定义一个模块。它将重置加载器的内部转态 来忘记模块的先前定义。
+
 However, it will not remove the module from other modules that are already defined and got a handle on that module as a dependency when they executed. So it is really only useful to use in error situations when no other modules have gotten a handle on a module value, or as part of any future module loading that may use that module. See the errback section for an example.
 
+但是，它不会将其他 已经被定义并且在它们执行时候已经把这个模块作为依赖项拿到句柄的 模块中移除。因此它真的仅仅在错误情况下才有用，当没有其他模块拿到一个模块值作为句柄时，或者作为一个将来 可能使用那个模块作为模块加载的一部分的时候。有关示例。看 errback 部分。
+
 If you want to do more sophisticated dependency graph analysis for undefining work, the semi-private onResourceLoad API may be helpful.
+
+如果你想做为 未定义的工作做更精确的依赖图表分析，the semi-private onResourceLoad API 将会很有用。
 
 ### MECHANICS
 
 RequireJS loads each dependency as a script tag, using head.appendChild().
 
+RequireJS 使用 head.appendChild() 加载每一个依赖项作为一个 script 标签
+
 RequireJS waits for all dependencies to load, figures out the right order in which to call the functions that define the modules, then calls the module definition functions once the dependencies for those functions have been called. Note that the dependencies for a given module definition function could be called in any order, due to their sub-dependency relationships and network load order.
+
+RequireJS 等待所有的依赖项来加载，算出调用定义模块的正确顺序，然后一旦这些函数依赖项被调用时候就触发这些模块定义。注意一个给定的被定义的模块可以以任何顺序被调用，这依赖于他们的子依赖关系和网络记载熟顺序。
 
 Using RequireJS in a server-side JavaScript environment that has synchronous loading should be as easy as redefining require.load(). The build system does this, the require.load method for that environment can be found in build/jslib/requirePatch.js.
 
+在有同步加载的服务端 JavaScript 环境中 使用 requireJS 应该是像像重新定义 require.load 一样简单的。这个构建环境执行此操作，这个环境的 require.load 方法可以在 build/jslib/requirePatch.js 中被发现
+
 In the future, this code may be pulled into the require/ directory as an optional module that you can load in your env to get the right load behavior based on the host environment.
+
+在将来，这个代码也许会被作为 可选模块放在 require/ 文件夹中，这样你可以在你的 env 中加载，以此在主机环境中获得正确的加载行为。
 
 ### CONFIGURATION OPTIONS
 
 When using require() in the top-level HTML page (or top-level script file that does not define a module), a configuration object can be passed as the first option:
+
+当在顶层 HTML 页面(或者不是定义模块的顶层的脚本文件)中使用 require()，一个设置对象可以被作为第一个设置项被传递。
 
 ```javascript
 <script src="scripts/require.js"></script>
@@ -661,7 +691,11 @@ When using require() in the top-level HTML page (or top-level script file that d
 
 You may also call require.config from your data-main Entry Point, but be aware that the data-main script is loaded asynchronously. Avoid other entry point scripts which wrongly assume that data-main and its require.config will always execute prior to their script loading.
 
+你也可以在你的 data-main 入口调用 require.config，但是请注意到，data-main 脚本文件是被异步加载的。避免其他的错误地假设 data-main 和它的 require.config 将总是比其他的脚本加载优先执行的脚本入口 。
+
 Also, you can define the config object as the global variable require before require.js is loaded, and have the values applied automatically. This example specifies some dependencies to load as soon as require.js defines require():
+
+同样的，你可以在 require.js 加载前把 config 对象定义为一个全局变量，并自动应用这些值。这个例子明示了一些 一旦 require.js 定义 require()时就要加载的依赖项
 
 ```javascript
 <script>
@@ -680,23 +714,43 @@ Also, you can define the config object as the global variable require before req
 
 Note: It is best to use var require = {} and do not use window.require = {}, it will not behave correctly in IE.
 
+注意：最好使用 var require = {} 而不是使用 window.require = {}, 否则在 IE 中将出现错误
+
 There are some patterns for separating the config from main module loading.
+
+这有一些从主模块加载中分离配置的模式
 
 Supported configuration options:
 
-baseUrl: the root path to use for all module lookups. So in the above example, "my/module"'s script tag will have a src="/another/path/my/module.js". baseUrl is not used when loading plain .js files (indicated by a dependency string starting with a slash, has a protocol, or ends in .js), those strings are used as-is, so a.js and b.js will be loaded from the same directory as the HTML page that contains the above snippet.
+主持的配置选项
+
+**baseUrl**: the root path to use for all module lookups. So in the above example, "my/module"'s script tag will have a src="/another/path/my/module.js". baseUrl is not used when loading plain .js files (indicated by a dependency string starting with a slash, has a protocol, or ends in .js), those strings are used as-is, so a.js and b.js will be loaded from the same directory as the HTML page that contains the above snippet.
 
 If no baseUrl is explicitly set in the configuration, the default value will be the location of the HTML page that loads require.js. If a data-main attribute is used, that path will become the baseUrl.
 
 The baseUrl can be a URL on a different domain as the page that will load require.js. RequireJS script loading works across domains. The only restriction is on text content loaded by text! plugins: those paths should be on the same domain as the page, at least during development. The optimization tool will inline text! plugin resources so after using the optimization tool, you can use resources that reference text! plugin resources from another domain.
 
-paths: path mappings for module names not found directly under baseUrl. The path settings are assumed to be relative to baseUrl, unless the paths setting starts with a "/" or has a URL protocol in it ("like http:"). Using the above sample config, "some/module"'s script tag will be src="/another/path/some/v1.0/module.js".
+**baseUrl**: 用来查找所有模块的主路径。在以上例子中， "my/module"的脚本 将会拥有一个 地址指向 /another/path/my/module.js. baseUrl 在加载普通的 js 文件(明确以斜杠开头、有协议或以 .js 结尾的) 时并不适用，这些字符串将会原样适用，并且 a.js 和 b.js 将会从 包含上述代码段的 HTML 页面的同级目录中加载。
+
+如果 baseUrl 在配置中没有被明确设置时候，这个默认值将会被定为这个加载 require.js 页面的位置。如果一个 data-main 属性被使用时候，那个路径会变为 baseUrl.
+
+这个 baseUrl 也可以是一个与加载 require.js 页面的不同的域名的 URL. RequireJS 脚本加载可以跨域工作。唯一的限制就是被文本插件加载的文本内容： 至少在开发过程中，这些路径应该是与页面一样的域名。这些优化工具将内联文本插件资源，因此当使用优化工具后，你可以使用 从其他域名引用的文本插件资源的资源。
+
+**paths**: path mappings for module names not found directly under baseUrl. The path settings are assumed to be relative to baseUrl, unless the paths setting starts with a "/" or has a URL protocol in it ("like http:"). Using the above sample config, "some/module"'s script tag will be src="/another/path/some/v1.0/module.js".
 
 The path that is used for a module name should not include an extension, since the path mapping could be for a directory. The path mapping code will automatically add the .js extension when mapping the module name to a path. If require.toUrl() is used, it will add the appropriate extension, if it is for something like a text template.
 
 When run in a browser, paths fallbacks can be specified, to allow trying a load from a CDN location, but falling back to a local location if the CDN location fails to load.
 
-bundles: Introduced in RequireJS 2.1.10: allows configuring multiple module IDs to be found in another script. Example:
+**paths**: 从模块名字中的 path 映射 不是直接在 baseURl 找到。这个路径设置 假设是相对于 baseURL 的，除非 这个路径被设置为 以 / 或者一个 url 协议(例如 http:) 开头的。使用上面的列子配置， "some/module" 的脚本标签将会是 src="/another/path/some/v1.0/module.js"
+
+这个被用来表示模块名字的路径不应该包含扩展名，因为这个路径映射也可以是一个文件夹。在映射模块名字为一个路径时候，这个路径映射代码将会自动添加.js 后缀。如果 require.toUrl()被使用了，他将会加上适当的后缀，如果他是用于类似文本模板的东西。
+
+在浏览器中运行时，路径回调需要被指定，以便允许尝试从一个 CDN 地址 进行加载，但是如果 CDN 位置加载失败了会返回本地位置。
+
+**bundles**: Introduced in RequireJS 2.1.10: allows configuring multiple module IDs to be found in another script. Example:
+
+**bundles**：RequireJS 2.1.10 中介绍：允许设置多个模块 id 来在另一个脚本中被发现。例如
 
 ```javascript
 requirejs.config({
@@ -715,17 +769,31 @@ require(['util', 'text'], function (util, text) {
 
 That config states: modules 'main', 'util', 'text' and 'text!template.html' will be found by loading module ID 'primary'. Module 'text!secondary.html' can be found by loading module ID 'secondary'.
 
+这个设置状态：模块 main util text 和 'text!template.html' 在加载 模块 id "primary"时候被发现。模块 'text!secondary.html' 在 加载模块 id "secondary" 时候被发现
+
 This only sets up where to find a module inside a script that has multiple define()'d modules in it. It does not automatically bind those modules to the bundle's module ID. The bundle's module ID is just used for locating the set of modules.
+
+这只设置在一个有多个 define()的脚本中哪里找到一个模块。它不会自动把这些模块自动绑定到这些包的模块 id 上。这个包的模块 id 仅仅用来定位模块集。
 
 Something similar is possible with paths config, but it is much wordier, and the paths config route does not allow loader plugin resource IDs in its configuration, since the paths config values are path segments, not IDs.
 
+类似的情况也可以通过 路径设置 来实现，但它更冗长，并且这个路径配置路由不允许在它的设置中加载插件资源 ids，因为这个路径设置值是路径片段，而不是 ids
+
 bundles config is useful if doing a build and that build target was not an existing module ID, or if you have loader plugin resources in built JS files that should not be loaded by the loader plugin. Note that the keys and values are module IDs, not path segments. They are absolute module IDs, not a module ID prefix like paths config or map config. Also, bundle config is different from map config in that map config is a one-to-one module ID relationship, where bundle config is for pointing multiple module IDs to a bundle's module ID.
+
+如果你正在做一个构建而且执行构建目标不是一个现有的模块 id， 或者你在构建的 js 文件中有加载插件资源，而这些资源不应该被加载器插件加载 ，包配置是很有用的。请注意，键和值是 模块 ids，而不是路径段。它们是绝对的模块 id，不是一个带类似于 paths config 或者 map config 前缀 的模块 id.此外，包配置是不同于 map 配置的的，因为 map 配置是一对一的模块 id 关系，而包配置是将多个模块 id 指向一个包模块的 id.
 
 As of RequireJS 2.2.0, the optimizer can generate the bundles config and insert it into the top level requirejs.config() call. See the bundlesConfigOutFile build config option for more details.
 
-shim: Configure the dependencies, exports, and custom initialization for older, traditional "browser globals" scripts that do not use define() to declare the dependencies and set a module value.
+作为 requireJS 2.2.0, 这个优化器可以产生这个包配置并且将其插入顶层的 requirejs.config()调用。有关更多细节，参阅 bundlesConfigOutFile 构建配置选项
+
+**shim**: Configure the dependencies, exports, and custom initialization for older, traditional "browser globals" scripts that do not use define() to declare the dependencies and set a module value.
+
+shim: 配置依赖项，exports 和 旧版本的自定义初始化，传统的 “浏览器全局” 脚本不使用 define() 来声明依赖关系和设置一个模块值。
 
 Here is an example. It requires RequireJS 2.1.0+, and assumes backbone.js, underscore.js and jquery.js have been installed in the baseUrl directory. If not, then you may need to set a paths config for them:
+
+下面是一个例子。它需要 RequireJS 2.1.0+， 并假设 backbone.js, underscore.js and jquery.js 在 baseUrl 文件夹中已经被安装了。如果没有，你可能需要为它们设置一个路径配置。
 
 ```javascript
 requirejs.config({
@@ -780,7 +848,11 @@ define(['backbone'], function (Backbone) {
 
 In RequireJS 2.0.\*, the "exports" property in the shim config could have been a function instead of a string. In that case, it functioned the same as the "init" property as shown above. The "init" pattern is used in RequireJS 2.1.0+ so a string value for exports can be used for enforceDefine, but then allow functional work once the library is known to have loaded.
 
+在 RequireJS 2.0.中，这个在 shim 配置中的 exports 属性 可以是一个函数而不是一个字符串。在这种情况下，它的功能与上面的所示 init 属性相同。这个 init 模型可以在 RequireJS 2.1。0+中使用，因此导出的一个字符串值可以用于强定义，但是一旦知道库已经被加载了，就允许函数工作。
+
 For "modules" that are just jQuery or Backbone plugins that do not need to export any module value, the shim config can just be an array of dependencies:
+
+对于那些仅仅是 jQuery or Backbone 插件，不需要导出任何模块值，这个 shim 配置可以是一个依赖性数组。
 
 ```javascript
 requirejs.config({
@@ -794,38 +866,55 @@ requirejs.config({
 
 Note however if you want to get 404 load detection in IE so that you can use paths fallbacks or errbacks, then a string exports value should be given so the loader can check if the scripts actually loaded (a return from init is not used for enforceDefine checking):
 
+注意：如果你这 IE 中获得 404 加载提示你可以使用路径回退或者 errbacks, 那么应该给出一个字符串导出值，这样加载器可以检查脚本是否实际加载了（init 返回值不是用来强制执行定义检查的）
+
 ```javascript
 requirejs.config({
-    shim: {
-        'jquery.colorize': {
-            deps: ['jquery'],
-            exports: 'jQuery.fn.colorize'
-        },
-        'jquery.scroll': {
-            deps: ['jquery'],
-            exports: 'jQuery.fn.scroll'
-        },
-        'backbone.layoutmanager': {
-            deps: ['backbone']
-            exports: 'Backbone.LayoutManager'
-        }
-    }
+	shim: {
+		'jquery.colorize': {
+				deps: ['jquery'],
+				exports: 'jQuery.fn.colorize'
+		},
+		'jquery.scroll': {
+				deps: ['jquery'],
+				exports: 'jQuery.fn.scroll'
+		},
+		'backbone.layoutmanager': {
+				deps: ['backbone']
+				exports: 'Backbone.LayoutManager'
+		}
+	}
 });
 ```
 
 Important notes for "shim" config:
 
+重要的关于 shim 配置的笔记
+
 - The shim config only sets up code relationships. To load modules that are part of or use shim config, a normal require/define call is needed. Setting shim by itself does not trigger code to load.
+
+shim 配置只设置代码关系。为了加载属于或者使用 shim 配置加载模块，需要一个正常的 require/define 调用。自行设置 shim 不会触发加载代码。
+
 - Only use other "shim" modules as dependencies for shimmed scripts, or AMD libraries that have no dependencies and call define() after they also create a global (like jQuery or lodash). Otherwise, if you use an AMD module as a dependency for a shim config module, after a build, that AMD module may not be evaluated until after the shimmed code in the build executes, and an error will occur. The ultimate fix is to upgrade all the shimmed code to have optional AMD define() calls.
 
-* If it is not possible to upgrade the shimmed code to use AMD define() calls, as of RequireJS 2.1.11, the optimizer has a wrapShim build option that will try to automatically wrap the shimmed code in a define() for a build. This changes the scope of shimmed dependencies, so it is not guaranteed to always work, but, for example, for shimmed dependencies that depend on an AMD version of Backbone, it can be helpful.
-* The init function will not be called for AMD modules. For example, you cannot use a shim init function to call jQuery's noConflict. See Mapping Modules to use noConflict for an alternate approach to jQuery.
-* Shim config is not supported when running AMD modules in node via RequireJS (it works for optimizer use though). Depending on the module being shimmed, it may fail in Node because Node does not have the same global environment as browsers. As of RequireJS 2.1.7, it will warn you in the console that shim config is not supported, and it may or may not work. If you wish to suppress that message, you can pass requirejs.config({ suppress: { nodeShim: true }});.
+只使用其他 shim 模块作为 shimmed 脚本模块的依赖项，或者 那些没有依赖项的 AMD 库并在他们创建全局(例如 jQuery 或者 lodash)后调用 define().否则，如果你使用一个 AMD 模块作为 shim 配置模块的依赖 ，在构建之后，那个 AMD 模块可能直到构建中的 shimmed 代码被执行以后才会被评估，并且一会出现错误。最终的解决方案是升级所有的 shimmed 代码来使得可选的 AMD define() 调用。
+
+- If it is not possible to upgrade the shimmed code to use AMD define() calls, as of RequireJS 2.1.11, the optimizer has a wrapShim build option that will try to automatically wrap the shimmed code in a define() for a build. This changes the scope of shimmed dependencies, so it is not guaranteed to always work, but, for example, for shimmed dependencies that depend on an AMD version of Backbone, it can be helpful.
+
+如果不能升级 shimmed 代码来使用 AMD define()调用，从 RequireJS 2.1.11 开始，这个优化器有一个 wrapShim 构建选项，他会尝试自动将 shimmed 代码 包装在一个 define() 中去构建。这改变了 shimmed 依赖项的范围，因此它不能确保总是工作，例如，对于依赖于一个 AMD 的版本的 Backbone 的 shimmed 依赖，他是有用的。
+
+- The init function will not be called for AMD modules. For example, you cannot use a shim init function to call jQuery's noConflict. See Mapping Modules to use noConflict for an alternate approach to jQuery.
+
+这个初始化函数将不会被 AMD 模块调用。例如，你不能使用一个 shim 初始化函数来调用 jQuery's 的 noConflict。
+
+- Shim config is not supported when running AMD modules in node via RequireJS (it works for optimizer use though). Depending on the module being shimmed, it may fail in Node because Node does not have the same global environment as browsers. As of RequireJS 2.1.7, it will warn you in the console that shim config is not supported, and it may or may not work. If you wish to suppress that message, you can pass requirejs.config({ suppress: { nodeShim: true }});.
 
 Important optimizer notes for "shim" config:
 
 - You should use the mainConfigFile build option to specify the file where to find the shim config. Otherwise the optimizer will not know of the shim config. The other option is to duplicate the shim config in the build profile.
+
 - Do not mix CDN loading with shim config in a build. Example scenario: you load jQuery from the CDN but use the shim config to load something like the stock version of Backbone that depends on jQuery. When you do the build, be sure to inline jQuery in the built file and do not load it from the CDN. Otherwise, Backbone will be inlined in the built file and it will execute before the CDN-loaded jQuery will load. This is because the shim config just delays loading of the files until dependencies are loaded, but does not do any auto-wrapping of define. After a build, the dependencies are already inlined, the shim config cannot delay execution of the non-define()'d code until later. define()'d modules do work with CDN loaded code after a build because they properly wrap their source in define factory function that will not execute until dependencies are loaded. So the lesson: shim config is a stop-gap measure for non-modular code, legacy code. define()'d modules are better.
+
 - For local, multi-file builds, the above CDN advice also applies. For any shimmed script, its dependencies must be loaded before the shimmed script executes. This means either building its dependencies directly in the buid layer that includes the shimmed script, or loading its dependencies with a require([], function (){}) call, then doing a nested require([]) call for the build layer that has the shimmed script.
 
 * If you are using uglifyjs to minify the code, do not set the uglify option toplevel to true, or if using the command line do not pass -mt. That option mangles the global names that shim uses to find exports.
