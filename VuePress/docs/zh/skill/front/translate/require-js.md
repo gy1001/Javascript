@@ -905,19 +905,29 @@ shim 配置只设置代码关系。为了加载属于或者使用 shim 配置加
 
 - The init function will not be called for AMD modules. For example, you cannot use a shim init function to call jQuery's noConflict. See Mapping Modules to use noConflict for an alternate approach to jQuery.
 
-这个初始化函数将不会被 AMD 模块调用。例如，你不能使用一个 shim 初始化函数来调用 jQuery's 的 noConflict。
+这个初始化函数将不会被 AMD 模块调用。例如，你不能使用一个 shim 初始化函数来调用 jQuery's 的 noConflict. 映射模块来使用 noConflict 作为 jQuery 的替代方法
 
 - Shim config is not supported when running AMD modules in node via RequireJS (it works for optimizer use though). Depending on the module being shimmed, it may fail in Node because Node does not have the same global environment as browsers. As of RequireJS 2.1.7, it will warn you in the console that shim config is not supported, and it may or may not work. If you wish to suppress that message, you can pass requirejs.config({ suppress: { nodeShim: true }});.
 
+当在 node 中 运行 RequireJS 中 AMD 模块时候，shim 配置是不支持的。（它适用于优化器使用）。依赖于被 shimmed 的模块，在 node 中他可能会失败因为 node 没有和浏览器一样的全局环境。在 RequireJS 2.1.7 中，它将在控制台中警告你：shim 配置不被支持，它可能不会工作。如果你想要抑制这个信息，你可以传递 require.config({ suppress: { nodeShim: true }} )
+
 Important optimizer notes for "shim" config:
+
+“shim”配置的重要优化注意事项:
 
 - You should use the mainConfigFile build option to specify the file where to find the shim config. Otherwise the optimizer will not know of the shim config. The other option is to duplicate the shim config in the build profile.
 
+你应该使用 mainConfigFile 构建选项来指定在哪个文件中找到 shim 配置。否则，优化器将不会知道 shim 设置。另一个选项是在构建概要文件中复制 shim 配置的。
+
 - Do not mix CDN loading with shim config in a build. Example scenario: you load jQuery from the CDN but use the shim config to load something like the stock version of Backbone that depends on jQuery. When you do the build, be sure to inline jQuery in the built file and do not load it from the CDN. Otherwise, Backbone will be inlined in the built file and it will execute before the CDN-loaded jQuery will load. This is because the shim config just delays loading of the files until dependencies are loaded, but does not do any auto-wrapping of define. After a build, the dependencies are already inlined, the shim config cannot delay execution of the non-define()'d code until later. define()'d modules do work with CDN loaded code after a build because they properly wrap their source in define factory function that will not execute until dependencies are loaded. So the lesson: shim config is a stop-gap measure for non-modular code, legacy code. define()'d modules are better.
+
+不要在构建中混合 CDN 加载和 shim 配置。示例场景：你从 CDN 中加载 jQuery，但是使用这个 shim 配置来加载一些类似依赖于 jQuery 的库存版本。当你进行构建时候，请确保 jQuery 内联到构建文件中而不是从 CDN 中加载它。否则，Backbone 将内联在构建文件中，并且他将在 cdn-loader jQuery 加载之前执行。这是因为这个 shim 配置会延迟这个文件的加载，直到依赖项加载完毕，但不会对 define 进行任何 auto-wrapping. 在构建之后，这些依赖项已经被内联，shim 配置不能将 非-define()'d 代码的指向延迟到以后。define()的模块确实可以在编译后与 CDN 加载的代码一起工作，因为他们正确地将它们的源代码包装在 define 工厂函数中，该函数在执行依赖加载后才会执行。所以教训是：shim 配置是对非模块化代码、遗留代码的权益措施。Define()'d 模块更好
 
 - For local, multi-file builds, the above CDN advice also applies. For any shimmed script, its dependencies must be loaded before the shimmed script executes. This means either building its dependencies directly in the buid layer that includes the shimmed script, or loading its dependencies with a require([], function (){}) call, then doing a nested require([]) call for the build layer that has the shimmed script.
 
-* If you are using uglifyjs to minify the code, do not set the uglify option toplevel to true, or if using the command line do not pass -mt. That option mangles the global names that shim uses to find exports.
+对于本地的多文件构建，上面的 CDN 建议也适用。对于任何 shimmed 脚本，它的依赖项必须在 shimmed 脚本执行前被加载。这就意味着，要么直接在包含 shimmed 脚本的 buid 层中构建它的依赖项，要么使用 require([],function(){})调用来加载它的依赖项，然后对具有 shimmed 脚本的构建层执行嵌套的 require([]) 调用。
+
+- If you are using uglifyjs to minify the code, do not set the uglify option toplevel to true, or if using the command line do not pass -mt. That option mangles the global names that shim uses to find exports.
 
 map: For the given module prefix, instead of loading the module with the given ID, substitute a different module ID.
 
