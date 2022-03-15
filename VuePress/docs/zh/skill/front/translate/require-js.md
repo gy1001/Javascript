@@ -929,11 +929,19 @@ Important optimizer notes for "shim" config:
 
 - If you are using uglifyjs to minify the code, do not set the uglify option toplevel to true, or if using the command line do not pass -mt. That option mangles the global names that shim uses to find exports.
 
-map: For the given module prefix, instead of loading the module with the given ID, substitute a different module ID.
+如果你正在使用 uglifyjs 来压缩代码，不要将 uglify 选项设置为 true, 或者如果使用命令行，不要传递 -mt。这个选项破坏了 shim 用来寻找出口产品的全局名称。
+
+**map**: For the given module prefix, instead of loading the module with the given ID, substitute a different module ID.
+
+**map**： 对于给定的模块前缀，而不是加载具有给定 ID 的模块，而是替换一个不同的模块 ID
 
 This sort of capability is really important for larger projects which may have two sets of modules that need to use two different versions of 'foo', but they still need to cooperate with each other.
 
+这种排序能力对于大型项目来说非常重要，因为他们也许有两组模块，需要不同版本的 foo， 但是他们仍然需要相互协作。
+
 This is not possible with the context-backed multiversion support. In addition, the paths config is only for setting up root paths for module IDs, not for mapping one module ID to another one.
+
+这在上下文支持的多版本支持下是不可能的。此外，路径配置仅仅用于为模块 ID 设置根路径，而不是映射一个模块 ID 到另一个
 
 map example:
 
@@ -952,6 +960,8 @@ requirejs.config({
 
 If the modules are laid out on disk like this:
 
+如果磁盘上的模块布局类似这样
+
 ```
 	foo1.0.js
 	foo1.2.js
@@ -963,9 +973,15 @@ If the modules are laid out on disk like this:
 
 When 'some/newmodule' does `require('foo')` it will get the foo1.2.js file, and when 'some/oldmodule' does `require('foo')` it will get the foo1.0.js file.
 
+当 'some/newmodule' 做   `require('foo')` 时候，它将获得 foo1.2.js 文件，而当 'some/oldmodule' 做`require('foo')`时候，它将获得 foo1.0.js 文件
+
 This feature only works well for scripts that are real AMD modules that call define() and register as anonymous modules. Also, only use absolute module IDs for map config. Relative IDs (like '../some/thing') do not work.
 
+这个特征只适用了那些调用了那些调用 define() 并注册为匿名模块的真正的 AMD 模块脚本。同样，map 配置只能适用绝对模块 ids. 相对的 ids(类似 '../some/thing')不起作用。
+
 There is also support for a "\*" map value which means "for all modules loaded, use this map config". If there is a more specific map config, that one will take precedence over the star config. Example:
+
+它还支持一个 "\*" 映射值。意思是"对于所有的加载的模块，使用这个映射配置"。如果有一个更具体的 map 配置，他将优先于开始配置。例如：
 
 ```javascript
 requirejs.config({
