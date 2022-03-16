@@ -998,9 +998,15 @@ requirejs.config({
 
 Means that for any module except "some/oldmodule", when "foo" is wanted, use "foo1.2" instead. For "some/oldmodule" only, use "foo1.0" when it asks for "foo".
 
+意味着任何除了"some/oldmodule"意外的模块，当需要 foo 时候，使用 "foo1.2" 来代替。 仅对于 "some/oldmodule"，当它请求 "foo"时候，使用 "foo1.0"
+
 Note: when doing builds with map config, the map config needs to be fed to the optimizer, and the build output must still contain a requirejs config call that sets up the map config. The optimizer does not do ID renaming during the build, because some dependency references in a project could depend on runtime variable state. So the optimizer does not invalidate the need for a map config after the build.
 
+笔记：当用 map 设置进行构建时候，map 配置需要提供给优化器，并且构建输出必须仍然包含一个 requirejs 配置用来设置 map 配置。优化器在构建期间不进行 id 重命名，因为项目中引用的一些依赖可以依靠于运行时候的变装状态。因此这个优化器不会在构建之后取消对 map 配置的需求。
+
 config: There is a common need to pass configuration info to a module. That configuration info is usually known as part of the application, and there needs to be a way to pass that down to a module. In RequireJS, that is done with the config option for requirejs.config(). Modules can then read that info by asking for the special dependency "module" and calling module.config(). Example:
+
+配置：通常把配置信息传递给一个模块。配置信息通常被认为是应用程序的一部分，并且需要有一种方法将其传递给一个模块。在 RequireJS 中，这是通过 requireJS.config() 的配置选项来完成的。模块可以通过请求特殊的依赖项模块来读取 和调用 module.config。例如
 
 ```javascript
 requirejs.config({
@@ -1031,6 +1037,8 @@ define(['module'], function (module) {
 ```
 
 For passing config to a package, target the main module in the package, not the package ID:
+
+要将一个配置传递给一个包，目标是包中的主模块，而不是 包 ID
 
 ```javascript
 requirejs.config({
