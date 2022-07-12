@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Axios的all和spread的使用</title>
+  </head>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.24.0/axios.min.js"></script>
+  <body>
+    <button class="btn">发送请求</button>
+  </body>
+  <script>
+    const btns = document.getElementsByClassName('btn')
+
+    function getA() {
+      return axios.get('http://localhost:3000/comments')
+    }
+
+    function getB() {
+      return axios.get('http://localhost:3000/posts', {
+        headers: {
+          common: {
+            Authorization: 'test-data',
+          },
+          get: {
+            Authorization: 'test-data-get',
+          },
+          Authorization: 'test-data-01222',
+        },
+      })
+    }
+
+    // 声明全局变量
+    let cancel = null
+    btns[0].onclick = function () {
+      axios.all([getA(), getB()]).then(
+        axios.spread(function (resA, resB) {
+          console.log(resA.data)
+          console.log(resB.data)
+        })
+      )
+      // axios.all([getA(), getB()]).then((res) => {
+      //   console.log(res[0], res[1])
+      // })
+    }
+
+    function spread(cb) {
+      return function wrap(arr) {
+        // console.log(arr)
+        cb.apply(null, arr)
+      }
+    }
+
+    Promise.all([1, 2, 3]).then(
+      spread((res1, res2, res3) => {
+        console.log(res1, res2, res3)
+      })
+    )
+    console.log(
+      axios.getUri({
+        url: 'http://localhost:3000/comments',
+        params: { id: 1234 },
+      })
+    )
+  </script>
+</html>
