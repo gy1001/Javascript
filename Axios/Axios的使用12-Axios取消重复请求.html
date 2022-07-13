@@ -34,8 +34,7 @@
         const requestKey = generateReqKey(config)
         if (pendingRequest.has(requestKey)) {
           const cancel = pendingRequest.get(requestKey)
-          cancel()
-          // cancel(requestKey)
+          cancel(requestKey)
           pendingRequest.delete(requestKey)
         }
       }
