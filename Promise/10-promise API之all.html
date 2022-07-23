@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>10-promise API之all</title>
+  </head>
+  <body></body>
+  <script>
+    const p1 = new Promise((resolve, reject) => {
+      resolve('ok1')
+    })
+    const p2 = new Promise((resolve, reject) => {
+      resolve('Ok2')
+    })
+    // const p3 = Promise.resolve('ok3')
+    const p3 = Promise.reject('error3')
+    // promise.all 都成功了，才会执行 resolve 回调，否则就执行 reject 回调
+    const result = Promise.all([p1, p2, p3]).then(
+      (result) => {
+        console.log(result) // ["ok1", "Ok2", "ok3"]
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  </script>
+</html>
