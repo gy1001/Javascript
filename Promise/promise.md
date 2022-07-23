@@ -114,10 +114,44 @@
 
      说明：指定用于得到成功 value 的成功回调和用于得到失败 reason 的失败回调，返回一个新的 promise 对象
 
+3. Promise.prototype.catch 方法：（onRejected） => {}
+
+   * onRejected 函数：失败的回调函数 （reason） => {}
+
+     说明：then()的语法糖，相当于 then(undefined, onRejected)
+
+4. Promise.resolve 方法: (value) => {}
+
+   * value: 成功的数据或者 promie 对象
+
+     说明：返回一个失败/成功的 promise 对象
+
+5. Promise.reject 方法：（reason） => {}
+
+   * reason : 失败的原因
+
+     说明：返回一个失败的 promise 对象
+
+6. Promise.all 方法：（promises）=> {}
+
+   * promises：包含n个promise的数组
+
+     说明：返回一个新的promise, 只有所有的promise都成功才成功，只要有一个失败了就直接失败
+
+7. Promise.race 方法：(promises) => {}
+
+   * 
+
 ## Promise API
+
+
 
 ## Promise 关键问题
 
+
+
 ## Promise 自定义封装
+
+
 
 ## async 与 await
