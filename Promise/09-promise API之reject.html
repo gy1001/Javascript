@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>09-promise API 之 reject</title>
+  </head>
+  <body></body>
+  <script>
+    let p1 = Promise.reject(521)
+    // 如果传入的参数为 非 promise 类型参数的对象，则返回的结果为失败的promise 对象
+    // 如果传入的参数为 promise 对象，则参数的结果决定了 reject 的结果，就是说如果内部 resolve(result)了 ，外部也是把result当做失败参数返回
+    let p2 = Promise.reject(
+      new Promise((resolve, reject) => {
+        resolve('OK')
+        // reject('error')
+      })
+    )
+    p1.then(
+      (result) => {
+        console.log('p1-resolve', result)
+      },
+      (error) => {
+        console.log('p1-error', error)
+      }
+    )
+    p2.then(
+      (result) => {
+        console.log('p2-resolve', result)
+      },
+      (error) => {
+        console.log('p2-error', error)
+      }
+    )
+  </script>
+</html>
