@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>12-promise关键问题之对象状态</title>
+  </head>
+  <body></body>
+  <script>
+    let p = new Promise((resolve, reject) => {
+      // 1. resolve 函数
+      resolve('ok') // pending => fulfilled（resolved）
+      // 2. reject 函数
+      // reject('error') // pending => reject
+      // 3.  抛出错误
+      // throw new Error('失败了')
+    })
+  </script>
+</html>
