@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>10-promise API 之 race</title>
+  </head>
+  <body></body>
+  <script>
+    const p1 = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('ok1')
+      }, 1000)
+    })
+    const p2 = new Promise((resolve, reject) => {
+      resolve('Ok2')
+    })
+    // const p3 = Promise.resolve('ok3')
+    const p3 = Promise.reject('error3')
+    const result = Promise.race([p1, p2, p3]).then(
+      (result) => {
+        console.log(result) /// 0k2
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  </script>
+</html>
