@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>23-手写promise-06-then方法执行回调</title>
+  </head>
+  <body></body>
+  <script>
+    function Promise(executor) {
+      // 添加属性
+      this.PromiseState = 'pending'
+      this.PromiseResult = null
+      // 保存实例对象的this值
+      const self = this
+      // 执行器函数在内部是同步调用的
+      function resolve(data) {
+        // 增加判断状态逻辑
+        if (self.PromiseState !== 'pending') {
+          return
+        }
+        // 修改对象的状态(promiseState)
+        self.PromiseState = 'fulfilled'
+        // 设置对象的结果值(promiseResult)
+        self.PromiseResult = data
+      }
+
+      function reject(error) {
+        if (self.PromiseState !== 'pending') {
+          return
+        }
+        self.PromiseState = 'rejected'
+        self.PromiseResult = error
+      }
+      try {
+        executor(resolve, reject)
+      } catch (error) {
+        // 修改 promise 的状态为失败
+        reject(error)
+      }
+    }
+
+    // 添加 then 方法
+    Promise.prototype.then = function (onResolved, onRejected) {
+      // 调用回调函数
+      if (this.PromiseState === 'fulfilled') {
+        onResolved(this.PromiseResult)
+      } else if (this.PromiseState === 'rejected') {
+        onRejected(this.PromiseResult)
+      }
+    }
+  </script>
+  <script>
+    let p = new Promise((resolve, reject) => {
+      reject('error')
+      resolve('ok')
+      // throw 'error'
+    })
+    console.log(p)
+    p.then(
+      (value1) => {
+        console.log('value1', value1)
+      },
+      (error1) => {
+        console.log('error1', error1)
+      }
+    )
+  </script>
+</html>
