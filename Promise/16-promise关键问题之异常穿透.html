@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>16-promise关键问题之异常穿透</title>
+  </head>
+  <body></body>
+  <script>
+    let p = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // resolve('ok')
+        reject('ERROR')
+      }, 1000)
+    })
+    p.then((value1) => {
+      console.log(1111)
+    })
+      .then((value2) => {
+        console.log(2222)
+      })
+      .then((value3) => {
+        console.log(3333)
+      })
+      .catch((reason) => {
+        console.log('reason', reason)
+      })
+  </script>
+</html>

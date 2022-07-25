@@ -172,12 +172,6 @@
 6. promise 异常穿透
    * 当使用 promise 的 then 链式调用时，可以在最后指定失败的回调
    * 前面任何操作出了异常，都会传到最后失败的回调中处理
-7. 中断 promise 链
-
-## Promise API
-
-## Promise 关键问题
-
-## Promise 自定义封装
-
-## async 与 await
+7. 中断 promise 链？
+   * 当使用 promise 的 then 链式调用时，在中间中断，不再调用后面的回调函数
+   * 办法：在回调函数中返回一个 pendding 状态的 promise 对象
