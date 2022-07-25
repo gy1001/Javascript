@@ -1,8 +1,6 @@
-## promise 介绍与基本使用
+## 1. Promise 是什么
 
-### 1. Promise 是什么
-
-#### 1.1 理解
+### 1.1 理解
 
 1. 抽象表达
    - Promise 是一门新的技术(ES6 规范)
@@ -16,7 +14,7 @@
    - 从语法上来说：Promise 是一个构造函数
    - 从功能上来说：Promise 对象用来封装一个异步操作并可以获取其成功、失败的结果值
 
-#### 1.2 promise 的状态
+### 1.2 promise 的状态
 
 > promise 是一个属性：promiseState： pending/resolved/rejected
 
@@ -31,7 +29,7 @@
 
 成功的结果数据一般称为 value, 失败的结果数据一般称为 reason
 
-#### 1.3 promise 的对象的值
+### 1.3 promise 的对象的值
 
 > 实例对象中的另一个属性: promiseResult
 
@@ -40,7 +38,7 @@
 - resolve
 - reject
 
-#### 1.4 promise 的 基本流程
+### 1.4 promise 的 基本流程
 
 1. 创建：new Promise() ，注意：此刻是 pending 状态
 2. 执行异步操作
@@ -53,14 +51,14 @@
      - 指向 .then()/.catch() 回调 onRejected()
      - 最后指向新的 promise 对象
 
-### 2. 为什么要使用 Promise
+## 2. 为什么要使用 Promise
 
-#### 2.1 指定回调函数的方法更加灵活
+### 2.1 指定回调函数的方法更加灵活
 
 1. 旧的：必须在异步任务前指定
 2. promise: 启动异步任务 =》返回 promise 对象 =》给 promise 对象绑定回调函数（甚至可以在异步任务结束后指定多个）
 
-#### 2.2 支持链式调用，可以解决回调地狱问题
+### 2.2 支持链式调用，可以解决回调地狱问题
 
 1. 什么是回调地狱
 
@@ -92,9 +90,9 @@
    - 如果不设置回调函数，Promise 内部抛出的错误，不会反应到外部
    - 当处于 pending 状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）
 
-#### 2.3 如何使用 Promise
+### 2.3 如何使用 Promise
 
-##### 2.3.1 API
+#### 2.3.1 API
 
 1. Promise 的构造函数：Promise(executor) {}
 
@@ -144,7 +142,7 @@
 
      说明：返回一个新的 promise, 第一个完成的 promise 的结果状态就是最终的结果状态。它只关注是否已解决，而不管其被解决还是被拒绝。
 
-#### 2.3.2 promise 的几个关键问题
+### 2.3.2 promise 的几个关键问题
 
 1. 如何改变 promise 的装填
    - resolve(value) 如果当时是 pending，就会变为 resolved
@@ -175,4 +173,11 @@
 7. 中断 promise 链？
    * 当使用 promise 的 then 链式调用时，在中间中断，不再调用后面的回调函数
    * 办法：在回调函数中返回一个 pendding 状态的 promise 对象
+
+## 3. 自定义(手写)Promise
+
+### 3.1 定义整体结构
+
+```javascript
+```
 
