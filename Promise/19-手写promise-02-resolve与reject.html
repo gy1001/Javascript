@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>19-手写promise-02-resolve与reject</title>
+  </head>
+  <body></body>
+  <script>
+    function Promise(executor) {
+      // 执行器函数在内部是同步调用的
+      function resolve(data) {}
+
+      function reject(error) {}
+
+      executor(resolve, reject)
+    }
+
+    // 添加 then 方法
+    Promise.prototype.then = function (onResolved, onRejected) {}
+  </script>
+  <script>
+    let p = new Promise((resolve, reject) => {
+      resolve('ok')
+    })
+    p.then((value1) => {
+      console.log('value1', value1)
+    }).then((value2) => {
+      console.log('value2', value2)
+    })
+  </script>
+</html>
