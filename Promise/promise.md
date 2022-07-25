@@ -158,6 +158,21 @@
      - 在执行器中直接调用 resolve()/reject()
      - 延迟更长时间才调用 then()
    - 什么时候才能得到数据
+     - 如果先指定的回调，那当状态发生改变时，回到函数就会调用，得到数据
+     - 如果先改变的状态，那当指定回调时，回调函数就会调用，得到数据
+4. promise.then()返回的新promise 的结果状态由什么决定
+   * 简单表达：由then 指定的回调函数执行的结果决定
+   * 详细表达
+     * 如果抛出异常，新 promise 变为 rejected, reason 为抛出的异常
+     * 如果返回的是非 promise 的任意值，新 promise 变为 resolve，value为返回的值
+     * 如果返回的是另一个新 promise,此 promise 的结果就会成为新 promise 的结果
+5. promise 如何串联多个操作任务
+   * promise 的 then 返回一个新的 promise，可以开成 then 的链式调用
+   * 通过 then 的链式调用串联多个同步/异步任务
+6. promise 异常穿透
+   * 当使用 promise 的 then 链式调用时，可以在最后指定失败的回调
+   * 前面任何操作出了异常，都会传到最后失败的回调中处理
+7. 中断 promise 链
 
 ## Promise API
 

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>14-promise关键问题之promise.then方法的返回结果特点</title>
+  </head>
+  <body></body>
+  <script>
+    let p = new Promise((resolve, reject) => {
+      resolve('ok')
+    })
+    const result1 = p.then((value) => {
+      // 1. 抛出错误：throw '出了问题'
+      // 2. 返回结果是非 Promise 类型的对象
+      console.log('value1', value)
+      return 521
+    })
+    console.log(result1)
+    // 3. 返回结果是 promise 对象，
+    const p3 = new Promise((resolve, reject) => {
+      resolve('ok')
+    })
+    const result3 = p3.then((value) => {
+      return new Promise((resolve, reject) => {
+        resolve('success')
+      })
+    })
+    console.log(result3)
+  </script>
+</html>
