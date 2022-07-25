@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>20-手写promise-03-resolve与reject内部实现</title>
+  </head>
+  <body></body>
+  <script>
+    function Promise(executor) {
+      // 添加属性
+      this.PromiseState = 'pending'
+      this.PromiseResult = null
+      // 保存实例对象的this值
+      const self = this
+      // 执行器函数在内部是同步调用的
+      function resolve(data) {
+        // 修改对象的状态(promiseState)
+        self.PromiseState = 'fulfilled'
+        // 设置对象的结果值(promiseResult)
+        self.PromiseResult = data
+      }
+
+      function reject(error) {
+        self.PromiseState = 'rejected'
+        self.PromiseResult = error
+      }
+
+      executor(resolve, reject)
+    }
+
+    // 添加 then 方法
+    Promise.prototype.then = function (onResolved, onRejected) {}
+  </script>
+  <script>
+    let p = new Promise((resolve, reject) => {
+      resolve('ok')
+    })
+    console.log(p)
+    p.then((value1) => {
+      console.log('value1', value1)
+    })
+  </script>
+</html>
