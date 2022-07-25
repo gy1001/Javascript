@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>13-promise关键问题之执行多个回调</title>
+  </head>
+  <body></body>
+  <script>
+    let p = new Promise((resolve, reject) => {
+      resolve('ok')
+    })
+    p.then((result) => {
+      console.log('result1', result)
+      return '我是 result1中返回的数据'
+    }).then((result) => {
+      console.log('result2', result)
+    })
+  </script>
+</html>
