@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>17-Promise关键问题之中断promise链条</title>
+  </head>
+  <body></body>
+  <script>
+    let p = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('ok')
+      }, 1000)
+    })
+    p.then((value1) => {
+      console.log(1111)
+      // 有且只有一个方式
+      return new Promise(() => {})
+    })
+      .then((value2) => {
+        console.log(2222)
+      })
+      .then((value3) => {
+        console.log(3333)
+      })
+      .catch((reason) => {
+        console.warn(reason)
+      })
+  </script>
+</html>

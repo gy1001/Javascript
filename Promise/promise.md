@@ -175,3 +175,4 @@
 7. 中断 promise 链？
    * 当使用 promise 的 then 链式调用时，在中间中断，不再调用后面的回调函数
    * 办法：在回调函数中返回一个 pendding 状态的 promise 对象
+
