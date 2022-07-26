@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>35-手写promise-18-自定义封装-class版本的实现</title>
+  </head>
+  <body></body>
+  <script>
+    class Promise {
+      constructor(executor) {
+        // 添加属性
+        this.PromiseState = 'pending'
+        this.PromiseResult = null
+        // 声明一个属性
+        this.callback = []
+        // 保存实例对象的this值
+        const self = this
+        // 执行器函数在内部是同步调用的
+        function resolve(data) {
+          // 增加判断状态逻辑
+          if (self.PromiseState !== 'pending') {
+            return
+          }
+          // 修改对象的状态(promiseState)
+          self.PromiseState = 'fulfilled'
+          // 设置对象的结果值(promiseResult)
+          self.PromiseResult = data
+          // 调用成功的回调函数
+          if (self.callback.length > 0) {
+            setTimeout(() => {
+              self.callback.forEach((item) => {
+                item.onResolved(data)
+              })
+            })
+            // self.callback = []
+          }
+        }
+
+        function reject(error) {
+          if (self.PromiseState !== 'pending') {
+            return
+          }
+          self.PromiseState = 'rejected'
+          self.PromiseResult = error
+          // 调用失败的回调函数
+          if (self.callback.length > 0) {
+            setTimeout(() => {
+              self.callback.forEach((item) => {
+                item.onRejected(error)
+              })
+            })
+            // self.callback = []
+          }
+        }
+        try {
+          executor(resolve, reject)
+        } catch (error) {
+          // 修改 promise 的状态为失败
+          reject(error)
+        }
+      }
+
+      then(onResolved, onRejected) {
+        const self = this
+        // onRejected、onRejected 兼容处理为空时候的处理
+        if (typeof onRejected !== 'function') {
+          onRejected = (reason) => {
+            throw reason
+          }
+        }
+        1
+        if (typeof onResolved !== 'function') {
+          onResolved = (value) => value
+        }
+        return new Promise((resolve, reject) => {
+          function callback(typeFunc) {
+            try {
+              let result = typeFunc(self.PromiseResult)
+              if (result instanceof Promise) {
+                result.then(
+                  (v) => {
+                    resolve(v)
+                  },
+                  (e) => {
+                    reject(e)
+                  }
+                )
+              } else {
+                // 结果的对象状态为成功
+                resolve(result)
+              }
+            } catch (error) {
+              reject(error)
+            }
+          }
+          if (this.PromiseState === 'fulfilled') {
+            setTimeout(() => {
+              callback(onResolved)
+            })
+          } else if (this.PromiseState === 'rejected') {
+            setTimeout(() => {
+              callback(onRejected)
+            })
+          }
+          // 增加pending 的一个判断
+          if (this.PromiseState === 'pending') {
+            // 需要保存回调函数
+            this.callback.push({
+              onResolved: function () {
+                // console.log('success')
+                // 执行成功的回调函数
+                callback(onResolved)
+              },
+              onRejected: function () {
+                callback(onRejected)
+              },
+            })
+          }
+        })
+      }
+
+      catch(onRejected) {
+        return this.then(undefined, onRejected)
+      }
+
+      static resolve(resultVal) {
+        // 返回 promise
+        return new Promise((resolve, reject) => {
+          if (resultVal instanceof Promise) {
+            resultVal.then(
+              (v) => {
+                resolve(v)
+              },
+              (err) => {
+                reject(err)
+              }
+            )
+          } else {
+            resolve(resultVal)
+          }
+        })
+      }
+      static reject(rejectVal) {
+        return new Promise((resolve, reject) => {
+          reject(rejectVal)
+        })
+      }
+
+      static all(promises) {
+        // 返回的结果为一个promise 对象
+        return new Promise((resolve, reject) => {
+          // 声明变量
+          let count = 0
+          let resultArr = []
+          for (let index = 0; index < promises.length; index++) {
+            promises[index].then(
+              (result) => {
+                count++
+                // 这里不能直接用push，因为涉及到执行顺序的问题
+                resultArr[index] = result
+                // resultArr.push(result)
+                if (count === promises.length) {
+                  //都成功时候才能调用 resolve 改变状态
+                  resolve(resultArr)
+                }
+              },
+              (err) => {
+                reject(err)
+              }
+            )
+          }
+        })
+      }
+
+      static race(promises) {
+        return new Promise((resolve, reject) => {
+          for (let index = 0; index < promises.length; index++) {
+            promises[index].then(
+              (v) => {
+                resolve(v)
+              },
+              (error) => {
+                reject(error)
+              }
+            )
+          }
+        })
+      }
+    }
+  </script>
+  <script>
+    // 存在的问题：下面代码的执行顺序应该是 11 33 22，但是自定义then函数中导致的顺序执行有误，所以需要解决
+    const p1 = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('OK')
+      }, 1000)
+      console.log(11)
+    })
+    p1.then((value) => {
+      console.log(22)
+    })
+    console.log(33)
+  </script>
+</html>
