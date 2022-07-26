@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>29-手写promise-12-catch方法-异常穿透与值传递</title>
+    <title>30-手写promise-13-自定义封装-resolve方法封装</title>
   </head>
   <body></body>
   <script>
@@ -66,7 +66,7 @@
           throw reason
         }
       }
-
+      1
       if (typeof onResolved !== 'function') {
         onResolved = (value) => value
       }
@@ -116,38 +116,35 @@
     Promise.prototype.catch = function (onRejected) {
       return this.then(undefined, onRejected)
     }
+    // 不属于函数实例，是构造函数方法
+    Promise.resolve = function (resultVal) {
+      // 返回 promise
+      return new Promise((resolve, reject) => {
+        if (resultVal instanceof Promise) {
+          resultVal.then(
+            (v) => {
+              resolve(v)
+            },
+            (err) => {
+              reject(err)
+            }
+          )
+        } else {
+          resolve(resultVal)
+        }
+      })
+    }
   </script>
   <script>
-    let p = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // resolve('ok1')
-        reject('error122')
-      }, 1000)
-    })
-    const result = p
-      .then()
-      .then(
-        (value1) => {
-          return 'i am success'
-        },
-        (error1) => {
-          console.log('error1', error1)
-        }
-      )
-      .then(
-        (res) => {
-          console.log('res2', res)
-        },
-        (error2) => {
-          console.log('error2', error2)
-        }
-      )
-      .then((res3) => {
-        console.log('res3', res3)
+    const p1 = Promise.resolve('ok啊')
+    console.log(p1)
+    const p2 = Promise.resolve(
+      new Promise((resolve, reject) => {
+        reject('error我是错误信息')
       })
-      .catch((error) => {
-        console.log(3333, error)
-      })
-    // console.log(1111, result)
+    )
+    console.log(p2)
+    const p3 = Promise.resolve(Promise.resolve('我是成功信息'))
+    console.log(p3)
   </script>
 </html>
