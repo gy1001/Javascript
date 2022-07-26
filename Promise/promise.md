@@ -181,6 +181,23 @@
 ```javascript
 ```
 
+## 4. async 与 await
+
+### 4.1 mdn文档
+
+[mdn文档--async](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function)
+
+### 4.2 async 函数
+
+1. 函数的返回值为 promise 对象
+2. promise 对象的结果由 async 函数执行的返回值决定
+
+### 4.3 await 表达式
+
+1. await 右侧的表达式一般为promise 对象，但也可以是其他的值
+2. 如果表达式是promise 对象，await 返回的是 promise 成功的值
+3. 如果表达式是其他值，直接将此值作为 await 的返回值
+
 ## 一些注意点
 
 ### 1. Promise的then的第二个参数和catch的区别
@@ -192,7 +209,7 @@
 
 2. 区别：
 
-   * **如果在then的第一个函数里抛出了异常，后面的catch能捕获到，而then的第二个函数捕获不到。**
+   *  **如果在then的第一个函数里抛出了异常，后面的catch能捕获到，而then的第二个函数捕获不到。**
 
 3. 相同
 
