@@ -181,3 +181,146 @@
 ```javascript
 ```
 
+## 一些注意点
+
+### 1. Promise的then的第二个参数和catch的区别
+
+1. 首先区分前提：
+
+   * reject是用来抛出异常的，catch是用来处理异常的
+   * reject是Promise的方法，而then和catch是Promise实例的方法（Promise.prototype.then 和 Promise.prototype.catch）
+
+2. 区别：
+
+   * **如果在then的第一个函数里抛出了异常，后面的catch能捕获到，而then的第二个函数捕获不到。**
+
+3. 相同
+
+   * then的第二个参数和catch捕获错误信息的时候会遵循就近原则。
+
+     * 如果是promise内部报错，reject抛出错误后，then的第二个参数和catch方法都存在的情况下，只有then的第二个参数能捕获到，如果then的第二个参数不存在，则catch方法会捕获到。 来看下面的例子：
+
+       ```javascript
+       // 如下代码
+       const promise = new Promise((resolve, rejected) => {
+           throw new Error('test');
+       });
+       
+       //此时只有then的第二个参数可以捕获到错误信息
+       promise.then(res => {
+           //
+       }, err => {
+           console.log(err);
+       }).catch(err1 => {
+           console.log(err1);
+       });
+       
+       
+       //此时catch方法可以捕获到错误信息
+       promise.then(res => {
+           //
+       }).catch(err1 => {
+           console.log(err1);
+       });
+       
+       
+       //此时只有then的第二个参数可以捕获到Promise内部抛出的错误信息
+       promise.then(res => {
+           throw new Error('hello');
+       }, err => {
+           console.log(err);
+       }).catch(err1 => {
+           console.log(err1);
+       });
+       
+       //此时只有then的第二个参数可以捕获到Promise内部抛出的错误信息
+       promise.then(res => {
+           throw new Error('hello');
+       }, err => {
+           console.log(err);
+       });
+       
+       
+       //此时catch可以捕获到Promise内部抛出的错误信息
+       promise.then(res => {
+           throw new Error('hello');
+       }).catch(err1 => {
+           console.log(err1);
+       });
+       
+       作者：贾西贝Xx
+       链接：https://juejin.cn/post/7075894989200293919
+       来源：稀土掘金
+       著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+       ```
+
+       
+
+4. 实现语法糖：**`catch只是一个语法糖而己 还是通过then 来处理的，`**
+
+   ```javascript
+   Promise.prototype.catch = function(fn){
+       return this.then(null,fn);
+   }
+   ```
+
+5. 写法比较
+
+   ```javascript
+   // bad
+   promise
+     .then(function(data) {
+       // success
+     }, function(err) {
+       // error
+     });
+   
+   // good
+   promise
+     .then(function(data) { //cb
+       // success
+     })
+     .catch(function(err) {
+       // error
+     });
+   ```
+
+6. 总结
+
+   **上面代码中，第二种写法要好于第一种写法，理由是第二种写法可以捕获前面then方法执行中的错误，也更接近同步的写法（try/catch）。因此，建议总是使用catch方法，而不使用then方法的第二个参数。**
+
+### 2. Promise多个then回调中存在的问题
+
+> 当 主promise 失败时候，如果第一个then 函数的第二个参数有处理且不抛出问题，那么将会执行后续then函数的第一个参数，，依次类推
+
+代码如下
+
+```javascript
+let p = new Promise((resolve, reject) => {
+  reject('error122')
+})
+const result = p
+.then(
+  (value1) => {
+    return 'i am success'
+  },
+  (error1) => {
+    console.log('error1', error1) // 之类会执行，打印 error1 error122
+  }
+)
+.then(
+  (res) => {
+    console.log('res2', res) // 这里会执行，打印 res2 undefined
+  },
+  (error2) => {
+    console.log('error2', error2)
+  }
+)
+.then((res3) => {
+  console.log('res3', res3) // 这里会执行,打印 res3 undefined
+})
+.catch((error) => {
+  console.log(3333, error)
+})
+```
+
