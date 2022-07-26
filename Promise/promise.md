@@ -198,6 +198,11 @@
 2. 如果表达式是promise 对象，await 返回的是 promise 成功的值
 3. 如果表达式是其他值，直接将此值作为 await 的返回值
 
+### 4.4 注意
+
+1. await 必须写在 async 函数中，但是 async 函数中可以没有 await
+2. 如果 await 的promise 失败了，就会抛弃异常，需要通过 try...catch 捕获处理
+
 ## 一些注意点
 
 ### 1. Promise的then的第二个参数和catch的区别
