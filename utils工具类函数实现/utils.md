@@ -143,3 +143,21 @@ console.log(add.bind(obj, 3, 4)())
 console.log(add.bind(null)(10, 20))
 ```
 
+### 1.1.2 实现说明
+
+* 区别：call/apply/bind
+  * call(obj)/apply(obj)：调用函数，指定函数中的 this 为第一个参数的值
+  * bind(obj)：返回一个新的函数，新函数内部会调用原来的函数，且 this 为 bind() 指定的第一参数的值
+  * 注意：如果obj 是 null/undefined, this 指向 全局对象 window / node
+* 应用
+  * call/apply 应用：根据伪数组生成真数组
+  * bind应用: react 中组件的自定义方法、vue中的事件回调函数内部
+* 自定义 call/apply
+  * 给 obj 添加一个临时方法，方法名任意，值为当期函数
+  * 通过obj 调用这个临时方法，并将接收的参数传入
+  * 删除 obj 上的这个临时方法属性
+* 自定义 bind
+  * 返回一个新函数
+  * 在新函数内部通过原函数对象的call方法来执行原函数
+  * 指定原函数的 this为 obj
+  * 指定参数为 bind 调用的参数和后面新函数调用的参数
