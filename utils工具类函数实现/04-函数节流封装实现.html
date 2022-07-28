@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>04-函数节流封装实现</title>
+  </head>
+  <style>
+    body {
+      height: 2000px;
+      background: linear-gradient(#125, #eae);
+    }
+  </style>
+  <body></body>
+  <script>
+    function throttle(callback, wait) {
+      // 定义开始时间
+      let start = 0
+      // 返回结果是一个函数
+      return function (e) {
+        // 只有距离上次处理的时间间隔超过了wait 时，才执行处理事件的函数
+        const current = Date.now()
+        if (current - start > wait) {
+          callback.call(this, event) // 指定 this 和 参数
+          start = current
+        }
+      }
+    }
+  </script>
+
+  <script>
+    window.addEventListener(
+      'scroll',
+      throttle(function () {
+        console.log(Date.now())
+      }, 500)
+    )
+  </script>
+</html>
