@@ -257,7 +257,34 @@ console.log(add.bind(null)(10, 20))
    }, 500)
    ```
 
-   
+## 2、数组相关
 
-   
+### 2.1 数组声明式系列方式
+
+#### map
+
+> 返回一个由回调函数的返回值组成的新数组
+
+```javascript
+// map 函数：接受一个数组 和 一个回调函数
+function map(arr, callback) {
+  const newArr = []
+  for (let index = 0; index < arr.length; index++) {
+    newArr.push(callback(arr[index], index))
+  }
+  return newArr
+}
+// 测试代码
+const arr = [1, 2, 3, 4, 5, 6, 7, 8]
+const result = map(arr, (item) => {
+  return item * 10
+})
+console.log(result)
+```
+
+
+
+
+
+
 
