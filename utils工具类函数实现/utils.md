@@ -350,9 +350,26 @@ const result = find(arr, (item) => {
 console.log(result) // 2
 ```
 
+#### findIndex函数
 
+> 找到第一个满足测试函数的元素并返回那个元素的索引，如果找不到，返回 -1
 
+```javascript
+ function findIndex(arr, callback) {
+   for (let index = 0; index < arr.length; index++) {
+     if (callback(arr[index], index)) {
+       return index
+     }
+   }
+   return -1
+ }
 
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const result = findIndex(arr, (item) => {
+  return item / 2 === 5
+})
+console.log(result) // 9
+```
 
 
 
