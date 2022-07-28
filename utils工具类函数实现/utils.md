@@ -312,6 +312,25 @@ console.log(result)
 
 #### filter 函数
 
+> 将所有在过滤函数中返回 `true`的 数组元素放进一个数组中并返回
+
+```javascript
+function filter(arr, callback) {
+  const newArr = []
+  for (let index = 0; index < arr.length; index++) {
+    if (callback(arr[index], index)) {
+      newArr.push(arr[index])
+    }
+  }
+  return newArr
+}
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const result = filter(arr, (item) => {
+  return item % 2 === 0
+})
+console.log(result)
+```
+
 
 
 
