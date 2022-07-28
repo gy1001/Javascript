@@ -261,7 +261,7 @@ console.log(add.bind(null)(10, 20))
 
 ### 2.1 数组声明式系列方式
 
-#### map
+#### map 函数
 
 > 返回一个由回调函数的返回值组成的新数组
 
@@ -281,6 +281,38 @@ const result = map(arr, (item) => {
 })
 console.log(result)
 ```
+
+#### reduce 函数
+
+> 从左到右为每个数组元素执行一次回调函数，并把上次回调函数的返回值放在一个暂存器中传给下次回调函数，并返回最后一次回调函数的返回值
+
+```javascript
+
+function reduce(arr, callback, initValue) {
+  let result = initValue
+  for (let index = 0; index < arr.length; index++) {
+    // 调用回调函数将返回的结果赋值给result
+    result = callback(result, arr[index])
+  }
+  return result
+}
+
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const result = reduce(
+  arr,
+  (prev, next) => {
+    console.log(prev, next)
+    prev.push(next)
+    return prev
+  },
+  []
+)
+console.log(result)
+```
+
+#### filter 函数
+
+
 
 
 
