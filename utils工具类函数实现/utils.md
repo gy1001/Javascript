@@ -231,10 +231,30 @@ console.log(add.bind(null)(10, 20))
 2. 函数防抖
 
    ```javascript
-   function debunce(){
-     
+   // html:  <button id="btn">测试函数防抖</button>
+   
+   function debounce(callback, wait) {
+     // 用来 保存定时器任务的标识 id
+     let timerId = null
+     return function (event) {
+       if (timerId) {
+         // 如果定时器存在就清除
+         clearTimeout(timerId)
+       }
+       // 启动延迟 wait 时间后执行的定时器任务
+       timerId = setTimeout(() => {
+         // 调用 callback 处理事件
+         callback.call(this, event)
+         // 处理后重置定时器标识
+         timerId = null
+       }, wait)
+     }
    }
    
+   const btn = document.getElementById('btn')
+   btn.onclick = debounce(function () {
+     console.log('点击事件触发了')
+   }, 500)
    ```
 
    
