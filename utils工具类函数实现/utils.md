@@ -298,16 +298,14 @@ function reduce(arr, callback, initValue) {
 }
 
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-const result = reduce(
-  arr,
-  (prev, next) => {
+const result = reduce( arr, (prev, next) => {
     console.log(prev, next)
-    prev.push(next)
+    prev.push(next * 2)
     return prev
   },
   []
 )
-console.log(result)
+console.log(result) // [2, 4, 6, 8, 10, 12, 14, 16, 18, 20] 
 ```
 
 #### filter 函数
@@ -324,11 +322,32 @@ function filter(arr, callback) {
   }
   return newArr
 }
+
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 const result = filter(arr, (item) => {
   return item % 2 === 0
 })
-console.log(result)
+console.log(result) // [2,4,6,8,10]
+```
+
+#### find 函数
+
+> 找到第一个满足测试函数的元素并返回这个元素的值，如果找不到，则返回 undefined
+
+```javascript
+function find(arr, callback) {
+  for (let index = 0; index < arr.length; index++) {
+    if (callback(arr[index], index)) {
+      return arr[index]
+    }
+  }
+}
+
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const result = find(arr, (item) => {
+  return item % 2 === 0
+})
+console.log(result) // 2
 ```
 
 
