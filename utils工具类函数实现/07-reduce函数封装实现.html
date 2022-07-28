@@ -21,11 +21,11 @@
       arr,
       (prev, next) => {
         console.log(prev, next)
-        prev.push(next)
+        prev.push(next * 2)
         return prev
       },
       []
     )
-    console.log(result)
+    console.log(result) // [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
   </script>
 </html>
