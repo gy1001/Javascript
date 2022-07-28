@@ -371,6 +371,29 @@ const result = findIndex(arr, (item) => {
 console.log(result) // 9
 ```
 
+#### every 函数
+
+> 如果数组中的每个元素都符合测试函数，则返回 true， 否则返回 false
+
+```javascript
+function every(arr, callback) {
+  for (let index = 0; index < arr.length; index++) {
+    // 只要有一个回调函数结果为false, 则立即返回 false
+    if (!callback(arr[index], index)) {
+      return false
+    }
+  }
+  // 否则返回 true
+  return true
+}
+
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const result = every(arr, (item) => {
+  return item > 0
+})
+console.log(result)
+```
+
 
 
 
