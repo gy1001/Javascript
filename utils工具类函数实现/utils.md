@@ -394,7 +394,26 @@ const result = every(arr, (item) => {
 console.log(result)
 ```
 
+#### some 函数
 
+> 如果数组中至少有一个元素满足测试函数，则返回 true， 否则返回false
+
+```javascript
+function some(arr, callback) {
+  for (let index = 0; index < arr.length; index++) {
+    if (callback(arr[index], index)) {
+      return true
+    }
+  }
+  return false
+}
+
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const result = some(arr, (item) => {
+  return item > 9
+})
+console.log(result)
+```
 
 
 
