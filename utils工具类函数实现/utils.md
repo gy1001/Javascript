@@ -202,8 +202,42 @@ console.log(add.bind(null)(10, 20))
 
 #### 1.2.3 编码实现
 
-```javascript
-```
+1. 函数节流实现
 
+   ```javascript
+   function throttle(callback, wait) {
+     // 定义开始时间
+     let start = 0
+     // 返回结果是一个函数
+     return function (e) {
+       // 只有距离上次处理的时间间隔超过了wait 时，才执行处理事件的函数
+       const current = Date.now()
+       if (current - start > wait) {
+         callback.call(this, event) // 指定 this 和 参数
+         start = current
+       }
+     }
+   }
+   
+   // 调用方式
+   window.addEventListener('scroll', throttle(function () {
+       console.log(Date.now())
+     }, 500)
+   )
+   ```
 
+   
+
+2. 函数防抖
+
+   ```javascript
+   function debunce(){
+     
+   }
+   
+   ```
+
+   
+
+   
 
