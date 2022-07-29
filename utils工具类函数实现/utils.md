@@ -807,7 +807,7 @@ console.log(result)
 
 ## 3、对象相关
 
-### 3.1 newInstance
+### 3.1 newInstance （自定义new）
 
 * 语法：newInstance(Fn, ...args)
 
@@ -844,6 +844,82 @@ console.log(result)
   const p2 = newInstance(Person, 'Jack', 13)
   console.log(p2)
   console.log(p2.constructor)
+  ```
+
+### 3.2 myInstanceOf (自定义 instanceOf)
+
+* 语法：myInstacenOf(obj, Type)
+
+* 功能：判断 obj 是否是 Type类型的实例
+
+* 实现：Type的原型对象是否是obj的原型链上的某个对象，如果返回是 true, 否则返回 false
+
+* 编码实现
+
+  ```javascript
+   function myInstanceOf(obj, Type) {
+     // 得到原型对象
+     let protoObj = obj.__proto__
+     // 只要原型对象存在
+     while (protoObj) {
+       // 如果原型对象是 Type 的原型对象，返回 true
+       if (protoObj === Type.prototype) {
+         return true
+       }
+       // 指定原型对象的原型对象
+       protoObj = protoObj.__proto__
+     }
+     return false
+   }
+  
+  function Person(name, age) {
+    this.name = name
+    this.age = age
+  }
+  const p = new Person('tom', 12)
+  
+  console.log(myInstanceOf(p, Object), p instanceof Object) // true true
+  console.log(myInstanceOf(p, Person), p instanceof Person) // true true
+  console.log(myInstanceOf(p, Function), p instanceof Function) // false false
+  
+  function Parent() {}
+  const p1 = new Parent()
+  // 注意以下关系
+  console.log(p1.__proto__ === Parent.prototype)
+  console.log(Parent.prototype.__proto__ === Object.prototype)
+  console.log(Object.prototype.__proto__ === null)
+  
+  console.log(p1.constructor === Parent)
+  console.log(Parent.prototype.constructor === Parent)
+  console.log(Parent.constructor === Function)
+  console.log(Function.constructor === Function)
+  
+  console.log(Parent.__proto__ === Function.prototype)
+  console.log(Function.prototype.__proto__ === Object.prototype)
+  console.log(Object.prototype.__proto__ === null)
+  ```
+
+* 关系图如下
+
+  ![image](https://segmentfault.com/img/remote/1460000021232137/view)
+
+* 参考文章：[一张图搞定JS原型&原型链](https://segmentfault.com/a/1190000021232132)
+
+### 3.3 合并多个对象 mergeObject
+
+* 语法：mergeObject(...objs)
+
+* 功能：合并多个对象，返回一个合并后的对象(不改变原对象)
+
+* 例子
+
+  * obj1: { a: [{ x: 2 }, { y: 4 }], b: 1}
+  * obj2: { a: { z: 3}, b: [2, 3], c: 'foo'}
+  * 合并后：{ a: [ { x: 2 }, { y: 4 }, { z: 3 } ], b: [ 1, 2, 3 ], c: 'foo' }
+
+* 源码实现：
+
+  ```javascript
   ```
 
   

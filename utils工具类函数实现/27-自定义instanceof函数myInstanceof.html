@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>27-自定义instanceof函数myInstanceof</title>
+  </head>
+  <body></body>
+
+  <script>
+    function myInstanceOf(obj, Type) {
+      // 得到原型对象
+      let protoObj = obj.__proto__
+      // 只要原型对象存在
+      while (protoObj) {
+        // 如果原型对象是 Type 的原型对象，返回 true
+        if (protoObj === Type.prototype) {
+          return true
+        }
+        // 指定原型对象的原型对象
+        protoObj = protoObj.__proto__
+      }
+      return false
+    }
+
+    function Person(name, age) {
+      this.name = name
+      this.age = age
+    }
+    const p = new Person('tom', 12)
+
+    console.log(myInstanceOf(p, Object), p instanceof Object) // true true
+    console.log(myInstanceOf(p, Person), p instanceof Person) // true true
+    console.log(myInstanceOf(p, Function), p instanceof Function) // false false
+
+    function Parent() {}
+    const p1 = new Parent()
+    // 注意以下关系
+    console.log(p1.__proto__ === Parent.prototype)
+    console.log(Parent.prototype.__proto__ === Object.prototype)
+    console.log(Object.prototype.__proto__ === null)
+
+    console.log(p1.constructor === Parent)
+    console.log(Parent.prototype.constructor === Parent)
+    console.log(Parent.constructor === Function)
+    console.log(Function.constructor === Function)
+
+    console.log(Parent.__proto__ === Function.prototype)
+    console.log(Function.prototype.__proto__ === Object.prototype)
+    console.log(Object.prototype.__proto__ === null)
+  </script>
+</html>
