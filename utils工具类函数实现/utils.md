@@ -450,5 +450,26 @@ console.log(result)
    console.log(result)
    ```
 
-2. 
+2. 第二版：使用 forEach 和 对象容器
+
+   ```javascript
+    function unique2(arr) {
+      const newArr = []
+      const newObj = {}
+      for (let index = 0; index < arr.length; index++) {
+        const item = arr[index]
+        if (!newObj.hasOwnProperty(item)) {
+          newObj[item] = true
+          newArr.push(item)
+        }
+      }
+      return newArr
+    }
+   
+   const arr = [2, 3, 2, 7, 6, 7, 8, 9, 8, 9]
+   const result = unique2(arr)
+   console.log(result)
+   ```
+
+   
 
