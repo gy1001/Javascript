@@ -638,6 +638,31 @@ console.log(result)
   console.log(chunk(arr, 4)) // [[1, 2, 3, 4], [5, 6, 7, 8]， [9, 10], [9, 10]]
   ```
 
+### 2.6 数组取差异
+
+#### 2.6.1 API 说明
+
+* 语法：difference(arr1, arr2)
+
+* 功能：得到当前数组中所有不在 arr 中的元素组成的数组(不改变原数组)
+
+* 例子：difference([1,3,5,7,8], [5,8]) ===> [1,3,7]
+
+* 编码实现
+
+  ```javascript
+  function difference(arr1, arr2) {
+    if (arr1.length === 0) {
+      return []
+    } else if (arr2.length === 0) {
+      return arr1
+    }
+    return arr1.filter((item) => arr2.indexOf(item) === -1)
+  }
+  
+  console.log(difference([1, 3, 4, 5, 7, 8], [1, 5, 8, 3])) // [4, 7]
+  ```
+
   
 
 
