@@ -511,6 +511,51 @@ console.log(result)
   console.log(result) // [2, 3, 2, 7, 6, 7, 8, 9, 8, 9, 10, 11, 12, 13, 14]
   ```
 
+#### slice()：切片函数
+
+* 语法：var newArr = slice(array, [begin, [,end]])
+
+* 功能：返回一个由 begin 和 end 决定的原数组的浅拷贝，原始数组不会被改变
+
+* 编码实现
+
+  ```javascript
+  function slice(arr, begin, end) {
+    // 如果当前数组是 [], 直接返回[]
+    if (arr.length === 0) {
+      return []
+    }
+    begin = begin || 0
+    // 如果 begin 超过最大下标，直接返回[]
+    if (begin >= arr.length) {
+      return []
+    }
+  
+    // 如果数组超过数组长度，则截取到数组长度
+    end = end || arr.length
+    if (end > arr.length) {
+      end = arr.length
+    }
+    // 如果 end 小于 begin, 则直接返回 []
+    if (end <= begin) {
+      return []
+    }
+  
+    const newArr = []
+    // 取出下标在 [begin,end) 区间的元素，并保存到最终的数组中
+    for (let index = begin; index < end; index++) {
+      newArr.push(arr[index])
+    }
+    return newArr
+  }
+  
+  const arr = [2, 3, 2, 7, 6, 7, 8, 9, 8, 9]
+  const result = slice(arr)
+  console.log(result)
+  console.log(slice(arr, 2))
+  console.log(slice(arr, 5))
+  ```
+
   
 
 

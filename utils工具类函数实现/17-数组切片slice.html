@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>17-数组切片slice</title>
+  </head>
+  <body></body>
+  <script>
+    function slice(arr, begin, end) {
+      // 如果当前数组是 [], 直接返回[]
+      if (arr.length === 0) {
+        return []
+      }
+      begin = begin || 0
+      // 如果 begin 超过最大下标，直接返回[]
+      if (begin >= arr.length) {
+        return []
+      }
+
+      end = end || arr.length
+      if (end > arr.length) {
+        end = arr.length
+      }
+
+      if (end <= begin) {
+        return []
+      }
+
+      const newArr = []
+      // 取出下标在 [begin,end) 区间的元素，并保存到最终的数组中
+      for (let index = begin; index < end; index++) {
+        newArr.push(arr[index])
+      }
+      return newArr
+    }
+
+    const arr = [2, 3, 2, 7, 6, 7, 8, 9, 8, 9]
+    const result = slice(arr)
+    console.log(result)
+    console.log(slice(arr, 2))
+    console.log(slice(arr, 5))
+  </script>
+</html>
