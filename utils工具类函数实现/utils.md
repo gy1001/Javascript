@@ -556,7 +556,53 @@ console.log(result)
   console.log(slice(arr, 5))
   ```
 
-  
+### 2.4 数组扁平化
+
+#### 2.4.1 API 说明
+
+* 语法：flatten(array)
+* 取出嵌套数组（多维）中的所有元素放到一个新数组中(一维)中
+* 如：[1,[3,[2,4]]] => [1,2,3,4]
+
+#### 2.4.2 编码实现
+
+1. 方法1: 使用 递归 + reduce + concat
+
+   ```javascript
+   function flatten1(arr) {
+     return arr.reduce((prev, item) => {
+       if (Array.isArray(item) && item.some((cItem) => Array.isArray(cItem))) {
+         return prev.concat(flatten1(item))
+       } else {
+         return prev.concat(item)
+       }
+     }, [])
+   }
+   
+   const arr = [1, [3, [2, 4, [5, 65, 6, 7888, [8]]]]]
+   const result = flatten1(arr)
+   console.log(result) // [1, 3, 2, 4, 5, 65, 6, 7888, 8]
+   ```
+
+2. 方法2:  some + concat
+
+   ```javascript
+   function flatten2(arr) {
+     // 先创建一个总数组
+     let newArr = [].concat(...arr)
+     // 遍历：只要数组中还有数组，就进行合并展开处理，直至数组中没有数组
+     while (newArr.some((item) => Array.isArray(item))) {
+       newArr = [].concat(...newArr)
+     }
+     return newArr
+   }
+   
+   const arr = [1, [3, [2, 4, [5, 65, 6, 7888, [8]]]]]
+   const result = flatten2(arr)
+   console.log(result) // [1, 3, 2, 4, 5, 65, 6, 7888, 8]
+   ```
+
+   
 
 
 
