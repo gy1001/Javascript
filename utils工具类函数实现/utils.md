@@ -483,5 +483,35 @@ console.log(result)
    console.log(result)
    ```
 
-   
+### 2.3 数组合并与切片
+
+#### concat()：合并函数
+
+* 语法： var newArr =  concat(array, value1 [, value2, ...[,valueN]])
+
+* 功能：将 n 个数组或值与当前数组合并在一个新数组，原始数组不会被改变
+
+* 编码实现
+
+  ```javascript
+  function concat(arr, ...value) {
+    const newArr = [...arr]
+    value.forEach((item) => {
+      if (Array.isArray(item)) {
+        newArr.push(...item)
+      } else {
+        newArr.push(item)
+      }
+    })
+    return newArr
+  }
+  
+  const arr = [2, 3, 2, 7, 6, 7, 8, 9, 8, 9]
+  const result = concat(arr, [10, 11], 12, 13, 14)
+  console.log(result) // [2, 3, 2, 7, 6, 7, 8, 9, 8, 9, 10, 11, 12, 13, 14]
+  ```
+
+  
+
+
 
