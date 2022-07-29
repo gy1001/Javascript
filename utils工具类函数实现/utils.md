@@ -746,4 +746,40 @@ console.log(result)
   console.log(arr) // [1, 5]
   ```
 
+### 2.8 得到数组的部分元素
+
+#### 2.8.1 drop(array, count)
+
+* 得到当前数组过滤左边 count 个 后剩余元素组成的数组
+
+* 说明：不改变当前数组，count 默认是1
+
+* 如：drop([1,3,5,7], 2) =====> [5, 7]
+
+* 编码实现
+
+  ```javascript
+  // 两种方式均可
+  function drop1(arr, number) {
+    number = number || 1
+    const newArr = []
+    for (let index = number; index < arr.length; index++) {
+      const element = arr[index]
+      newArr.push(element)
+    }
+    return newArr
+  }
+  
+  function drop(arr, number = 1) {
+    if (arr.length === 0 || number >= arr.length) {
+      return []
+    }
+    return arr.filter((item, index) => index >= number)
+  }
+  
+  console.log(drop([1, 3, 5, 7], 2)) // [5,7]
+  console.log(drop([1, 3, 5, 7], 4)) // []
+  console.log(drop([1, 3, 5, 7])) // [3,5,7]
+  ```
+
   
