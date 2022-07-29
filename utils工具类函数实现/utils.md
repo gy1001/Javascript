@@ -920,6 +920,34 @@ console.log(result)
 * 源码实现：
 
   ```javascript
+  function mergeObject(...objs) {
+    const result = []
+    objs.forEach((item) => {
+      Object.keys(item).forEach((key) => {
+        // 如果 result 还没有 key 属性值
+        if (!result.hasOwnProperty(key)) {
+          result[key] = item[key]
+        } else {
+          // 否则合并属性
+          result[key] = [].concat(result[key], item[key])
+        }
+      })
+    })
+    return result
+  }
+  
+  const object = {
+    a: [{ x: 2 }, { y: 4 }],
+    b: 1,
+    d: { a: 22 },
+  }
+  const other = {
+    a: { z: 3 },
+    b: [2, 3],
+    c: 'foo',
+    d: { b: 33 },
+  }
+  console.log(mergeObject(object, other))
   ```
 
   
