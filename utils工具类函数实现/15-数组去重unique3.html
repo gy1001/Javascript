@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>15-数组去重unique3</title>
+  </head>
+  <body></body>
+  <script>
+    function unique3(arr) {
+      return [...new Set(arr)]
+    }
+
+    const arr = [2, 3, 2, 7, 6, 7, 8, 9, 8, 9]
+    const result = unique3(arr)
+    console.log(result)
+  </script>
+</html>

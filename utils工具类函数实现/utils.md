@@ -471,5 +471,17 @@ console.log(result)
    console.log(result)
    ```
 
+3. 第三版：使用 ES6 语法
+
+   ```javascript
+   function unique3(arr) {
+     return [...new Set(arr)]
+   }
+   
+   const arr = [2, 3, 2, 7, 6, 7, 8, 9, 8, 9]
+   const result = unique3(arr)
+   console.log(result)
+   ```
+
    
 
