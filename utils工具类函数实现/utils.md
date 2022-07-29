@@ -415,5 +415,40 @@ const result = some(arr, (item) => {
 console.log(result)
 ```
 
+### 2.2 数组去重
 
+#### 2.2.1 API 说明
+
+根据当前数组产生一个去重重复元素后的新数组
+
+#### 2.2.2 实现思路
+
+1. 利用 forEach 和 indexOf()
+   * 说明：本质是双重遍历，效率差些
+2. 利用 forEach() + 对象容器
+   * 说明：只需一重遍历，效率高些
+3. 利用 ES6 语法：from + Set 或者 ... + Set
+   * 说明：编码简洁
+
+#### 2.2.3 代码实现
+
+1. 第一版：使用 forEach 和 indexOf 方法
+
+   ```javascript
+   function unique1(arr) {
+     const newArr = []
+     for (let index = 0; index < arr.length; index++) {
+       if (newArr.indexOf(arr[index]) === -1) {
+         newArr.push(arr[index])
+       }
+     }
+     return newArr
+   }
+   
+   const arr = [2, 3, 2, 7, 6, 7, 8, 9, 8, 9]
+   const result = unique1(arr)
+   console.log(result)
+   ```
+
+2. 
 
