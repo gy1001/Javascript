@@ -636,6 +636,18 @@ console.log(result)
   }
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   console.log(chunk(arr, 4)) // [[1, 2, 3, 4], [5, 6, 7, 8]， [9, 10], [9, 10]]
+  
+  
+  // 上述示例涉及到一个地址引用的情况，会有一定的理解代价，可以更简单一点，如下
+  function chunk2(array, size) {
+    const outPutArr = []
+    const forTime = Math.ceil(array.length / size)
+    for (let i = 0; i < forTime; i++) {
+      outPutArr.push(array.slice(i * size, (i + 1) * size))
+    }
+    return outPutArr
+  }
+  console.log(chunk2([1, 2, 3, 4, 5, 6, 7], 3))
   ```
 
 ### 2.6 数组取差异
@@ -663,7 +675,39 @@ console.log(result)
   console.log(difference([1, 3, 4, 5, 7, 8], [1, 5, 8, 3])) // [4, 7]
   ```
 
+### 2.7 删除数组中部分元素
+
+#### 2.7.1 pull (array, ...values)
+
+* 删除原数组中与 value 相同的元素，返回所有删除元素的数组
+
+* 说明：原数组发生了改变
+
+* 如 pull([1,3,5,3,7],2,7,3,7) ====> 原数组变为 [1,5] 返回值为 [3,3,7]
+
+* 编码实现
+
+  ```javascript
+  function pull(arr1, ...values) {
+    if (arr1.length === 0 || values.length === 0) {
+      return []
+    }
+    const result = []
+    for (let index = 0; index < arr1.length; index++) {
+      const element = arr1[index]
+      if (values.indexOf(element) !== -1) {
+        arr1.splice(index, 1)
+        result.push(element)
+        index--
+      }
+    }
+    return result
+  }
   
+  var arr = [1, 3, 5, 3, 7]
+  console.log(pull(arr, 2, 7, 3, 7)) // [3, 3, 7]
+  console.log(arr) // [1, 5]
+  ```
 
-
+  
 
