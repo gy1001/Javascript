@@ -709,5 +709,41 @@ console.log(result)
   console.log(arr) // [1, 5]
   ```
 
-  
+#### 2.7.2 pullArr(arry, values)
 
+* 功能与 pull 一直，只是参数变为数组
+
+* 如：pullAll([1,3,5,3,7], [2, 7, 3, 7]) ===> 数组1变为[1, 5], 返回值为[3,3,7]
+
+* 编码实现
+
+  ```javascript
+  function pull(arr1, ...values) {
+    if (arr1.length === 0 || values.length === 0) {
+      return []
+    }
+    const result = []
+    for (let index = 0; index < arr1.length; index++) {
+      const element = arr1[index]
+      if (values.indexOf(element) !== -1) {
+        arr1.splice(index, 1)
+        result.push(element)
+        index--
+      }
+    }
+    return result
+  }
+  
+  function pullAll(arr1, values) {
+    if (!values || !Array.isArray(values)) {
+      return []
+    }
+    return pull(arr1, ...values)
+  }
+  
+  var arr = [1, 3, 5, 3, 7]
+  console.log(pullAll(arr, [2, 7, 3, 7])) // [3, 3, 7]
+  console.log(arr) // [1, 5]
+  ```
+
+  

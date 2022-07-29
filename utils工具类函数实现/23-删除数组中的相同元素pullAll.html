@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>23-删除数组中的相同元素pullAll</title>
+  </head>
+  <body></body>
+  <script>
+    function pull(arr1, ...values) {
+      if (arr1.length === 0 || values.length === 0) {
+        return []
+      }
+      const result = []
+      for (let index = 0; index < arr1.length; index++) {
+        const element = arr1[index]
+        if (values.indexOf(element) !== -1) {
+          arr1.splice(index, 1)
+          result.push(element)
+          index--
+        }
+      }
+      return result
+    }
+
+    function pullAll(arr1, values) {
+      if (!values || !Array.isArray(values)) {
+        return []
+      }
+      return pull(arr1, ...values)
+    }
+
+    var arr = [1, 3, 5, 3, 7]
+    console.log(pullAll(arr, [2, 7, 3, 7])) // [3, 3, 7]
+    console.log(arr) // [1, 5]
+  </script>
+</html>
