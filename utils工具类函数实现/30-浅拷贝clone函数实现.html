@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>30-浅拷贝clone函数实现</title>
+  </head>
+  <body></body>
+  <script>
+    // 利用 ES5语法，for...in
+    function clone2(target) {
+      // 如果是对象（不是函数，也就是可能是object对象或者数组）
+      if (target != null && typeof target === 'object') {
+        const cloneTarget = Array.isArray(target) ? [] : {}
+        for (const key in target) {
+          if (target.hasOwnProperty(key)) {
+            cloneTarget[key] = target[key]
+          }
+        }
+        return cloneTarget
+      }
+      // 基本类型或者函数，直接返回
+      return target
+    }
+
+    const obj1 = { x: 'abc', y: { m: 1 } }
+    const obj2 = clone2(obj1)
+    console.log(obj2, obj2 === obj1, obj2.x === obj1.x, obj2.y === obj1.y)
+
+    const arr1 = ['abc', { m: 1 }]
+    const arr2 = clone2(arr1)
+    console.log(arr2, arr2 === arr1, arr2[0] === arr1[0], arr2[1] === arr1[1])
+
+    // 对克隆后的数据进行深层次属性的改变，会影响原来的数据
+    obj2.y.m = '2222'
+    console.log(obj1.y.m)
+  </script>
+</html>

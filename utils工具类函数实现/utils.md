@@ -964,40 +964,71 @@ console.log(result)
 
 #### 3.4.2 实现浅拷贝 clone
 
-```javascript
-// 实现浅拷贝方式1
-function clone1(target) {
-   // 如果是对象（不是函数，也就是可能是object对象或者数组）
-   if (target != null && typeof target === 'object') {
-     if (target instanceof Array) {
-       //
-       return [...target]
-     } else {
-       return { ...target }
+1. 实现方式1：使用ES6语法
+
+   ```javascript
+   // 实现浅拷贝方式1
+   function clone1(target) {
+      // 如果是对象（不是函数，也就是可能是object对象或者数组）
+      if (target != null && typeof target === 'object') {
+        if (target instanceof Array) {
+          //
+          return [...target]
+        } else {
+          return { ...target }
+        }
+      }
+      // 基本类型或者函数，直接返回
+      return target
+    }
+   
+   const obj1 = { x: 'abc', y: { m: 1 } }
+   const obj2 = clone1(obj1)
+   console.log(obj2, obj2 === obj1, obj2.x === obj1.x, obj2.y === obj1.y)
+   
+   const arr1 = ['abc', { m: 1 }]
+   const arr2 = clone1(arr1)
+   console.log(arr2, arr2 === arr1, arr2[0] === arr1[0], arr2[1] === arr1[1])
+   
+   // 对克隆后的数据进行深层次属性的改变，会影响原来的数据
+   obj2.y.m = '2222'
+   console.log(obj1.y.m)
+   ```
+
+2. 实现方式2：使用ES5语法， for...in 
+
+   ```javascript
+   // 实现深拷贝方式2
+   // 利用 ES5语法，for...in
+   function clone2(target) {
+     // 如果是对象（不是函数，也就是可能是object对象或者数组）
+     if (target != null && typeof target === 'object') {
+       const cloneTarget = Array.isArray(target) ? [] : {}
+       for (const key in target) {
+         if (target.hasOwnProperty(key)) {
+           cloneTarget[key] = target[key]
+         }
+       }
+       return cloneTarget
      }
+     // 基本类型或者函数，直接返回
+     return target
    }
-   // 基本类型或者函数，直接返回
-   return target
- }
-
-const obj1 = { x: 'abc', y: { m: 1 } }
-const obj2 = clone1(obj1)
-console.log(obj2, obj2 === obj1, obj2.x === obj1.x, obj2.y === obj1.y)
-
-const arr1 = ['abc', { m: 1 }]
-const arr2 = clone1(arr1)
-console.log(arr2, arr2 === arr1, arr2[0] === arr1[0], arr2[1] === arr1[1])
-
-// 对克隆后的数据进行深层次属性的改变，会影响原来的数据
-obj2.y.m = '2222'
-console.log(obj1.y.m)
+   
+   const obj1 = { x: 'abc', y: { m: 1 } }
+   const obj2 = clone2(obj1)
+   console.log(obj2, obj2 === obj1, obj2.x === obj1.x, obj2.y === obj1.y)
+   
+   const arr1 = ['abc', { m: 1 }]
+   const arr2 = clone2(arr1)
+   console.log(arr2, arr2 === arr1, arr2[0] === arr1[0], arr2[1] === arr1[1])
+   
+   // 对克隆后的数据进行深层次属性的改变，会影响原来的数据
+   obj2.y.m = '2222'
+   console.log(obj1.y.m)
+   ```
 
 
-// 实现深拷贝方式2
-function clone2(target){
-  
-}
-```
 
 
 
