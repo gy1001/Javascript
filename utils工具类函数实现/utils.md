@@ -805,4 +805,45 @@ console.log(result)
   console.log(dropRight([1, 3, 5, 7])) // [1,3,5]
   ```
 
+## 3、对象相关
+
+### 3.1 newInstance
+
+* 语法：newInstance(Fn, ...args)
+
+* 功能：创建 Fn 构造函数的实例对象
+
+* 编码实现
+
+  ```javascript
+  function newInstance(Fn, ...args) {
+    // 创建一个空的 object 实例对象 obj, 作为 Fn 的实例对象
+    const obj = {}
+    // 将 Fn 的 prototype 属性值赋值给 obj 的 __proto__ 属性值
+    obj.__proto__ = Fn.prototype
+    // 调用 Fn, 指定 this 为 obj, 参数为 args 列表
+    const result = Fn.call(obj, ...args)
+    // 如果 Fn 返回的是一个对象类型，那返回的就不再是 obj, 而是 Fn返回的对象
+    // 否则返回 obj
+    return result instanceof Object ? result : obj
+  }
+  
+  function Person(name, age) {
+    this.name = name
+    this.age = age
+    // return {}
+    // return []
+    // return function (){}
+    // return 1
+    // return undefined
+  }
+  
+  const p = new Person('tom', 12)
+  console.log(p)
+  
+  const p2 = newInstance(Person, 'Jack', 13)
+  console.log(p2)
+  console.log(p2.constructor)
+  ```
+
   
