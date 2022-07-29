@@ -29,5 +29,15 @@
     }
     const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     console.log(chunk(arr, 4)) // [[1, 2, 3, 4], [5, 6, 7, 8]， [9, 10], [9, 10]]
+
+    function chunk2(array, size) {
+      const outPutArr = []
+      const forTime = Math.ceil(array.length / size)
+      for (let i = 0; i < forTime; i++) {
+        outPutArr.push(array.slice(i * size, (i + 1) * size))
+      }
+      return outPutArr
+    }
+    console.log(chunk2([1, 2, 3, 4, 5, 6, 7], 3))
   </script>
 </html>
