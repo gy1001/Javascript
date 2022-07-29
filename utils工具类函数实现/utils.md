@@ -950,4 +950,56 @@ console.log(result)
   console.log(mergeObject(object, other))
   ```
 
+
+### 3.4 对象/数组拷贝
+
+#### 3.4.1 区分浅拷贝与深拷贝
+
+* 纯语言表达
+  * 浅拷贝：只是复制了 对象属性或者数组元素本身（只是引用地址值）
+  * 深拷贝：不仅复制了对象属性或数组元素本身，还复制了指向的对象（使用递归）
+* 举例说明：拷贝 persons 数组（多个人对象的数组）
+  * 浅拷贝：只是拷贝了每个person 对象的引用地址值，每个person 对象只有一份
+  * 深拷贝：每个 person 对象也被复制了一份新的
+
+#### 3.4.2 实现浅拷贝 clone
+
+```javascript
+// 实现浅拷贝方式1
+function clone1(target) {
+   // 如果是对象（不是函数，也就是可能是object对象或者数组）
+   if (target != null && typeof target === 'object') {
+     if (target instanceof Array) {
+       //
+       return [...target]
+     } else {
+       return { ...target }
+     }
+   }
+   // 基本类型或者函数，直接返回
+   return target
+ }
+
+const obj1 = { x: 'abc', y: { m: 1 } }
+const obj2 = clone1(obj1)
+console.log(obj2, obj2 === obj1, obj2.x === obj1.x, obj2.y === obj1.y)
+
+const arr1 = ['abc', { m: 1 }]
+const arr2 = clone1(arr1)
+console.log(arr2, arr2 === arr1, arr2[0] === arr1[0], arr2[1] === arr1[1])
+
+// 对克隆后的数据进行深层次属性的改变，会影响原来的数据
+obj2.y.m = '2222'
+console.log(obj1.y.m)
+
+
+// 实现深拷贝方式2
+function clone2(target){
   
+}
+```
+
+
+
+
+
