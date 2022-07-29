@@ -615,6 +615,27 @@ console.log(result)
 * 编码实现
 
   ```javascript
+  function chunk(array, size) {
+    if (array.length === 0) {
+      return []
+    }
+    size = size || 1
+    const bigArr = []
+    let smallArr = []
+    array.forEach((item) => {
+      if (smallArr.length === 0) {
+        bigArr.push(smallArr)
+      }
+      smallArr.push(item)
+      // 巧妙的用到了地址引用
+      if (smallArr.length === size) {
+        smallArr = []
+      }
+    })
+    return bigArr
+  }
+  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  console.log(chunk(arr, 4)) // [[1, 2, 3, 4], [5, 6, 7, 8]， [9, 10], [9, 10]]
   ```
 
   
