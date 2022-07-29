@@ -782,4 +782,27 @@ console.log(result)
   console.log(drop([1, 3, 5, 7])) // [3,5,7]
   ```
 
+#### 2.8.2 dropRight(array, count)
+
+* 得到当前数组过滤掉右边 count 个后剩余元素组成的数组
+
+* 说明：不改变当前数组，count 默认是1
+
+* 如：dropRight([1,3,5,7], 2) ====> [1,3]
+
+* 编码实现
+
+  ```javascript
+  function dropRight(array, count = 1) {
+    if (array.length === 0 || count >= array.length) {
+      return []
+    }
+    return array.filter((item, index) => index < array.length - count)
+  }
+  
+  console.log(dropRight([1, 3, 5, 7], 2)) // [1,3]
+  console.log(dropRight([1, 3, 5, 7], 4)) // []
+  console.log(dropRight([1, 3, 5, 7])) // [1,3,5]
+  ```
+
   
