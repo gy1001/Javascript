@@ -1088,6 +1088,51 @@ console.log(result)
      console.log(obj2.c === obj1.c, obj2.d === obj1.d) // false true
      ```
 
+3. 方法三：面试加强版
+
+   * 解决问题2：循环引用正常
+
+     注：方法二中的深拷贝之所以在循环引用问题出现错误，原因在于遍历 属性时候，出现了重复调用，导致一直 for 循环遍历下去，现在加一个缓存中间值，如果之前遍历过就直接返回。
+
+   * 编码实现
+
+     ```javascript
+     function deepClone3(target, map = new Map()) {
+       if (target !== null && typeof target === 'object') {
+         // 从容器中读取克隆对象
+         let cloneTarget = map.get(target)
+         // 如果存在，返回前面缓存的克隆对象
+         if (cloneTarget) {
+           return cloneTarget
+         }
+         // 创建克隆对象(可能是{}或者是[])
+         cloneTarget = target instanceof Array ? [] : {}
+         // 缓存到map中
+         map.set(target, cloneTarget)
+         for (const key in target) {
+           if (target.hasOwnProperty(key)) {
+             // 递归调用，深度克隆对象，且传入缓存容器map
+             cloneTarget[key] = deepClone3(target[key], map)
+           }
+         }
+         return cloneTarget
+       }
+       return target
+     }
+     
+     const obj1 = {
+       a: 1,
+       b: ['e', 'f', 'g'],
+       c: { h: { i: 2 } },
+       d: function () {},
+     }
+     obj1.b.push(obj1.c)
+     obj1.c.j = obj1.b // 这里属性进行了循环引用
+     const obj2 = deepClone3(obj1)
+     console.log(obj2)
+     console.log(obj2.c === obj1.c, obj2.d === obj1.d) // false true
+     ```
+
      
 
 
