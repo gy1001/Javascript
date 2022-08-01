@@ -1204,6 +1204,30 @@ console.log(result)
   console.log(reverseString(string))
   ```
 
+### 4.2 字符串是否回文：palindrome(str)
+
+* 语法: palindrome(str)
+
+* 功能：如果给定的字符串是回文，则返回true，否则返回 false
+
+  * 注意：回文，英文palindrome，指一个顺着读和反过来读都一样的字符串，比如madam、我爱我
+
+* 编码实现：
+
+  ```javascript
+  function reverseString(str) {
+    // return str.split('').reverse().join('')
+    // return [...str].reverse().join('')
+    return Array.from(str).reverse().join('')
+  }
+  
+  function palindrome(str) {
+    return str === reverseString(str)
+  }
+  console.log(palindrome('abcb')) // false
+  console.log(palindrome('abcba')) // true
+  ```
+
   
 
 

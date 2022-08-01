@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>36-字符串是否回文</title>
+  </head>
+  <body></body>
+  <script>
+    function reverseString(str) {
+      // return str.split('').reverse().join('')
+      // return [...str].reverse().join('')
+      return Array.from(str).reverse().join('')
+    }
+
+    function palindrome(str) {
+      return str === reverseString(str)
+    }
+    console.log(palindrome('abcb')) // false
+    console.log(palindrome('abcba')) // true
+  </script>
+</html>
