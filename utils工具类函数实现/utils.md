@@ -1245,5 +1245,63 @@ console.log(result)
   console.log(truncate(string, 10)) // abcdefg
   ```
 
+## 5、手写DOM事件监听(带委托)
+
+### 5.1 理解事件冒泡与事件委托
+
+#### 5.1.1 事件冒泡
+
+* 基于DOM树形结构
+
+* 事件在目标元素上处理后，会由内向外逐层传递
+
+* 应用场景：事件代理、委托、委派
+
+* 图解?
+
+  <img src='https://zxfjd3g.github.io/atguigu_utils-docs/assets/img/image-20201215141059095.a3dce0aa.png' align='left'>
+
+#### 5.1.2 事件委托
+
+* 将多个子元素的同类事件监听委托给（绑定在）共同的一个父组件上
+* 好处
+  * 减少内存占用（事件监听回调从n变为1）
+  * 动态添加的内部元素也能响应
+
+### 5.2 API 相关
+
+* 语法：addEventListener(element, type, fn ,selector)
+* 说明：如果 selector 没有，直接给 element 绑定事件，如果 selector 有，将 selector 对应的多个元素的事件委托给父元素 element
+
+### 5.3 编码实现
+
+```javascript
+function addEventListener(el, type, fn, selector) {
+  if (typeof el === 'string') {
+    el = document.querySelector(el)
+  }
+  // 如果没有指定 selector 普通的事件绑定
+  if (!selector) {
+    element.addEventListener(type, fn)
+    return
+  }
+  el.addEventListener(type, function (event) {
+    // 得到真正发生事件的目标元素
+    const target = event.target
+    // 如果与选择器匹配
+    if (target.matches(selector)) {
+      // 调用处理事件的回调fn, 并指定this为目标元素, 参数为event
+      fn.call(target, event)
+    }
+  })
+}
+
+addEventListener('#ul', 'click', function (event) {
+    console.log(this.innerHTML, event)
+  },
+  'li'
+)
+```
+
 
 
