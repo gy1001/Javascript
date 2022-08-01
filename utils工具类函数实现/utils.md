@@ -1133,6 +1133,57 @@ console.log(result)
      console.log(obj2.c === obj1.c, obj2.d === obj1.d) // false true
      ```
 
+4. 方法四：深拷贝面试加强版本2（优化遍历性能）
+
+   * 数组：while|for|forEach 优于 for...in  | keys && froEach
+
+   * 对象：for...in 与 keys()&forEach() 差不多
+
+   * 编码实现
+
+     ```javascript
+      function deepClone4(target, map = new Map()) {
+        if (target !== null && typeof target === 'object') {
+          // 从容器中读取克隆对象
+          let cloneTarget = map.get(target)
+          // 如果存在，返回前面缓存的克隆对象
+          if (cloneTarget) {
+            return cloneTarget
+          }
+          // 创建克隆对象(可能是[]或者{})
+          if (target instanceof Array) {
+            cloneTarget = []
+            // 缓存到map中
+            map.set(target, cloneTarget)
+            target.forEach((item, index) => {
+              cloneTarget[index] = deepClone4(item, map)
+            })
+          } else {
+            cloneTarget = {}
+            // 缓存到 map中
+            map.set(target, cloneTarget)
+            Object.keys(target).forEach((key) => {
+              cloneTarget[key] = deepClone4(target[key], map)
+            })
+          }
+          return cloneTarget
+        }
+        return target
+      }
+     
+     const obj1 = {
+       a: 1,
+       b: ['e', 'f', 'g'],
+       c: { h: { i: 2 } },
+       d: function () {},
+     }
+     obj1.b.push(obj1.c)
+     obj1.c.j = obj1.b // 这里属性进行了循环引用
+     const obj2 = deepClone4(obj1)
+     console.log(obj2)
+     console.log(obj2.c === obj1.c, obj2.d === obj1.d) // false true
+     ```
+
      
 
 
