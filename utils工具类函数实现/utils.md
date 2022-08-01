@@ -1055,7 +1055,40 @@ console.log(result)
    // console.log(obj2, obj2.c === obj1.c, obj2.d === obj1.d)
    ```
 
-   
+2. 方法二：面试基础版
+
+   * 解决问题1：函数属性还没丢失
+
+   * 编码实现
+
+     ```javascript
+     function deepClone2(target) {
+       if (target !== null && typeof target === 'object') {
+         const cloneTarget = target instanceof Array ? [] : {}
+         for (const key in target) {
+           if (target.hasOwnProperty(key)) {
+             cloneTarget[key] = deepClone2(target[key])
+           }
+         }
+         return cloneTarget
+       }
+       return target
+     }
+     
+     const obj1 = {
+       a: 1,
+       b: ['e', 'f', 'g'],
+       c: { h: { i: 2 } },
+       d: function () {},
+     }
+     obj1.b.push(obj1.c)
+     // obj1.c.j = obj1.b // 这里属性进行了循环引用，会报错
+     const obj2 = deepClone2(obj1)
+     console.log(obj2)
+     console.log(obj2.c === obj1.c, obj2.d === obj1.d) // false true
+     ```
+
+     
 
 
 
