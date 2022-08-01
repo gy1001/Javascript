@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>39-手写事件总线eventBus</title>
+  </head>
+  <body></body>
+  <script>
+    const eventBus = {
+      callbacks: {},
+    }
+
+    eventBus.on = function (type, callback) {
+      if (this.callbacks[type]) {
+        this.callbacks[type].push(callback)
+      } else {
+        this.callbacks[type] = [callback]
+      }
+    }
+
+    // 分发事件
+    eventBus.emit = function (type, data) {
+      const callbacks = this.callbacks[type]
+      if (callbacks && callbacks.length > 0) {
+        callbacks.forEach((callback) => {
+          callback(data)
+        })
+      }
+    }
+    // 移除事件监听
+    eventBus.off = function (eventName) {
+      if (eventName) {
+        //  如果移除事件有值，表示移除某种类型
+        delete this.callbacks[eventName]
+      } else {
+        // 如果没有值，表示移除所有
+        this.callbacks = {}
+      }
+    }
+
+    eventBus.on('login', (data) => {
+      console.log('add', data)
+    })
+    eventBus.on('login', (data) => {
+      console.log('login2', data)
+    })
+    eventBus.on('logout', (data) => {
+      console.log('logout', data)
+    })
+
+    setTimeout(() => {
+      eventBus.emit('login', '我是用户名还有密码')
+    }, 2000)
+
+    setTimeout(() => {
+      eventBus.off('login')
+      console.log('已经取消监听login事件了，再触发login，就无效了')
+      eventBus.emit('login')
+    }, 4000)
+    // eventBus.off('add')
+    // eventBus.off()
+  </script>
+</html>

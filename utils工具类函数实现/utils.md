@@ -1303,5 +1303,70 @@ addEventListener('#ul', 'click', function (event) {
 )
 ```
 
+## 6、手写事件总线
+
+### 6.1 API 说明
+
+1. eventBus：包含所有功能的事件总线对象
+2. eventBus.on(eventName, listener)：监听事件监听
+3. eventBus.emit(eventName, data): 分发事件
+4. eventBus.off(eventName)：解绑指定事件名的事件监听，如果没有指定解绑所有
+
+### 6.2 编码实现
+
+```javascript
+const eventBus = {
+  callbacks: {},
+}
+
+eventBus.on = function (type, callback) {
+  if (this.callbacks[type]) {
+    this.callbacks[type].push(callback)
+  } else {
+    this.callbacks[type] = [callback]
+  }
+}
+
+// 分发事件
+eventBus.emit = function (type, data) {
+  const callbacks = this.callbacks[type]
+  if (callbacks && callbacks.length > 0) {
+    callbacks.forEach((callback) => {
+      callback(data)
+    })
+  }
+}
+// 移除事件监听
+eventBus.off = function (eventName) {
+  if (eventName) {
+    //  如果移除事件类型有值，表示移除某种类型
+    delete this.callbacks[eventName]
+  } else {
+    // 如果没有值，表示移除所有
+    this.callbacks = {}
+  }
+}
+
+eventBus.on('login', (data) => {
+  console.log('add', data)
+})
+eventBus.on('login', (data) => {
+  console.log('login2', data)
+})
+eventBus.on('logout', (data) => {
+  console.log('logout', data)
+})
+
+setTimeout(() => {
+  eventBus.emit('login', '我是用户名还有密码')
+}, 2000)
+
+setTimeout(() => {
+  eventBus.off('login')
+  console.log('已经取消监听login事件了，再触发login，就无效了')
+  eventBus.emit('login')
+}, 4000)
+```
+
 
 
