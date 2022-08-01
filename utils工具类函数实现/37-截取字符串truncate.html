@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>37-截取字符串truncate</title>
+  </head>
+  <body></body>
+  <script>
+    function truncate(str, num) {
+      return str.length > num ? str.slice(0, num) + '...' : str
+    }
+    const string = 'abcdefg'
+    console.log(truncate(string, 5)) // abcde...
+    console.log(truncate(string, 10)) // abcdefg
+  </script>
+</html>

@@ -1228,7 +1228,22 @@ console.log(result)
   console.log(palindrome('abcba')) // true
   ```
 
-  
+### 4.3 截取字符串 truncate(str, num)
+
+* 语法：truncate(str, num)
+
+* 功能：如果字符串的长度超过了num, 截取前面 num 长度部分，并以 ... 结束
+
+* 编码实现
+
+  ```javascript
+  function truncate(str, num) {
+    return str.length > num ? str.slice(0, num) + '...' : str
+  }
+  const string = 'abcdefg'
+  console.log(truncate(string, 5)) // abcde...
+  console.log(truncate(string, 10)) // abcdefg
+  ```
 
 
 
