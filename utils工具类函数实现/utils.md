@@ -1028,7 +1028,34 @@ console.log(result)
    console.log(obj1.y.m)
    ```
 
+#### 3.4.3 实现深拷贝 deepClone
 
+1. 方法一：大众乞丐版
+
+   * 问题1：函数属性丢失（JSON 不支持转换函数）
+   * 问题2：循环引用会出错
+
+   ```javascript
+   function deepClone1(target) {
+     // 通过数据创建 JSON 格式的字符串
+     return JSON.parse(JSON.stringify(target))
+   }
+   
+   const obj1 = {
+     a: 1,
+     b: ['e', 'f', 'g'],
+     c: { h: { i: 2 } },
+     // JSON 不能转换方法，使用这种方式克隆后会丢失
+     d: function () {},
+   }
+   obj1.b.push(obj1.c)
+   // obj1.c.j = obj1.b // 这里属性进行了循环引用，会报错
+   const obj2 = deepClone1(obj1)
+   console.log(obj2)
+   // console.log(obj2, obj2.c === obj1.c, obj2.d === obj1.d)
+   ```
+
+   
 
 
 
