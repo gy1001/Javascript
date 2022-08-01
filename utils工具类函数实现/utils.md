@@ -1184,9 +1184,27 @@ console.log(result)
      console.log(obj2.c === obj1.c, obj2.d === obj1.d) // false true
      ```
 
-     
+##  4、字符串相关
 
+### 4.1 字符串倒序：reverseString(str)
 
+* 语法：reverseString(str)
+
+* 功能：生成一个倒序的字符串
+
+* 编码实现
+
+  ```javascript
+   function reverseString(str) {
+     // return str.split('').reverse().join('')
+     // return [...str].reverse().join('')
+     return Array.from(str).reverse().join('')
+   }
+  const string = 'abcdefghijklmnopqrstuvwxyz'
+  console.log(reverseString(string))
+  ```
+
+  
 
 
 
