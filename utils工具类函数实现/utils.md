@@ -232,7 +232,7 @@ console.log(add.bind(null)(10, 20))
 
    ```javascript
    // html:  <button id="btn">测试函数防抖</button>
-   
+
    function debounce(callback, wait) {
      // 用来 保存定时器任务的标识 id
      let timerId = null
@@ -250,7 +250,7 @@ console.log(add.bind(null)(10, 20))
        }, wait)
      }
    }
-   
+
    const btn = document.getElementById('btn')
    btn.onclick = debounce(function () {
      console.log('点击事件触发了')
@@ -478,7 +478,7 @@ console.log(result)
    function unique3(arr) {
      return [...new Set(arr)]
    }
-   
+
    const arr = [2, 3, 2, 7, 6, 7, 8, 9, 8, 9]
    const result = unique3(arr)
    console.log(result)
@@ -506,7 +506,7 @@ console.log(result)
     })
     return newArr
   }
-  
+
   const arr = [2, 3, 2, 7, 6, 7, 8, 9, 8, 9]
   const result = concat(arr, [10, 11], 12, 13, 14)
   console.log(result) // [2, 3, 2, 7, 6, 7, 8, 9, 8, 9, 10, 11, 12, 13, 14]
@@ -531,7 +531,7 @@ console.log(result)
     if (begin >= arr.length) {
       return []
     }
-  
+
     // 如果数组超过数组长度，则截取到数组长度
     end = end || arr.length
     if (end > arr.length) {
@@ -541,7 +541,7 @@ console.log(result)
     if (end <= begin) {
       return []
     }
-  
+
     const newArr = []
     // 取出下标在 [begin,end) 区间的元素，并保存到最终的数组中
     for (let index = begin; index < end; index++) {
@@ -549,7 +549,7 @@ console.log(result)
     }
     return newArr
   }
-  
+
   const arr = [2, 3, 2, 7, 6, 7, 8, 9, 8, 9]
   const result = slice(arr)
   console.log(result)
@@ -597,7 +597,7 @@ console.log(result)
      }
      return newArr
    }
-   
+
    const arr = [1, [3, [2, 4, [5, 65, 6, 7888, [8]]]]]
    const result = flatten2(arr)
    console.log(result) // [1, 3, 2, 4, 5, 65, 6, 7888, 8]
@@ -637,7 +637,7 @@ console.log(result)
   }
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   console.log(chunk(arr, 4)) // [[1, 2, 3, 4], [5, 6, 7, 8]， [9, 10], [9, 10]]
-  
+
   // 上述示例涉及到一个地址引用的情况，会有一定的理解代价，可以更简单一点，如下
   function chunk2(array, size) {
     const outPutArr = []
@@ -671,7 +671,7 @@ console.log(result)
     }
     return arr1.filter((item) => arr2.indexOf(item) === -1)
   }
-  
+
   console.log(difference([1, 3, 4, 5, 7, 8], [1, 5, 8, 3])) // [4, 7]
   ```
 
@@ -703,7 +703,7 @@ console.log(result)
     }
     return result
   }
-  
+
   var arr = [1, 3, 5, 3, 7]
   console.log(pull(arr, 2, 7, 3, 7)) // [3, 3, 7]
   console.log(arr) // [1, 5]
@@ -733,14 +733,14 @@ console.log(result)
     }
     return result
   }
-  
+
   function pullAll(arr1, values) {
     if (!values || !Array.isArray(values)) {
       return []
     }
     return pull(arr1, ...values)
   }
-  
+
   var arr = [1, 3, 5, 3, 7]
   console.log(pullAll(arr, [2, 7, 3, 7])) // [3, 3, 7]
   console.log(arr) // [1, 5]
@@ -769,14 +769,14 @@ console.log(result)
     }
     return newArr
   }
-  
+
   function drop(arr, number = 1) {
     if (arr.length === 0 || number >= arr.length) {
       return []
     }
     return arr.filter((item, index) => index >= number)
   }
-  
+
   console.log(drop([1, 3, 5, 7], 2)) // [5,7]
   console.log(drop([1, 3, 5, 7], 4)) // []
   console.log(drop([1, 3, 5, 7])) // [3,5,7]
@@ -799,7 +799,7 @@ console.log(result)
     }
     return array.filter((item, index) => index < array.length - count)
   }
-  
+
   console.log(dropRight([1, 3, 5, 7], 2)) // [1,3]
   console.log(dropRight([1, 3, 5, 7], 4)) // []
   console.log(dropRight([1, 3, 5, 7])) // [1,3,5]
@@ -827,7 +827,7 @@ console.log(result)
     // 否则返回 obj
     return result instanceof Object ? result : obj
   }
-  
+
   function Person(name, age) {
     this.name = name
     this.age = age
@@ -837,10 +837,10 @@ console.log(result)
     // return 1
     // return undefined
   }
-  
+
   const p = new Person('tom', 12)
   console.log(p)
-  
+
   const p2 = newInstance(Person, 'Jack', 13)
   console.log(p2)
   console.log(p2.constructor)
@@ -935,7 +935,7 @@ console.log(result)
     })
     return result
   }
-  
+
   const object = {
     a: [{ x: 2 }, { y: 4 }],
     b: 1,
@@ -1013,15 +1013,15 @@ console.log(result)
      // 基本类型或者函数，直接返回
      return target
    }
-   
+
    const obj1 = { x: 'abc', y: { m: 1 } }
    const obj2 = clone2(obj1)
    console.log(obj2, obj2 === obj1, obj2.x === obj1.x, obj2.y === obj1.y)
-   
+
    const arr1 = ['abc', { m: 1 }]
    const arr2 = clone2(arr1)
    console.log(arr2, arr2 === arr1, arr2[0] === arr1[0], arr2[1] === arr1[1])
-   
+
    // 对克隆后的数据进行深层次属性的改变，会影响原来的数据
    obj2.y.m = '2222'
    console.log(obj1.y.m)
@@ -1073,7 +1073,7 @@ console.log(result)
        }
        return target
      }
-  
+
      const obj1 = {
        a: 1,
        b: ['e', 'f', 'g'],
@@ -1118,7 +1118,7 @@ console.log(result)
        }
        return target
      }
-  
+
      const obj1 = {
        a: 1,
        b: ['e', 'f', 'g'],
@@ -1169,7 +1169,7 @@ console.log(result)
        }
        return target
      }
-     
+
      const obj1 = {
        a: 1,
        b: ['e', 'f', 'g'],
@@ -1219,7 +1219,7 @@ console.log(result)
     // return [...str].reverse().join('')
     return Array.from(str).reverse().join('')
   }
-  
+
   function palindrome(str) {
     return str === reverseString(str)
   }
@@ -1443,8 +1443,8 @@ PubSub.unsubscribe = function (flag) {
       // 如果 flag 是 token
       // 找到 flag 对应的 callbacks
       const callbacks = Object.values(callbacksObj).find((callbacks) =>
-                                                         callbacks.hasOwnProperty(flag)
-                                                        )
+        callbacks.hasOwnProperty(flag)
+      )
       // 如果存在，删除对应的属性
       if (callbacks) {
         delete callbacks[flag]
@@ -1489,3 +1489,70 @@ setTimeout(() => {
 }, 4000)
 ```
 
+## 8、手写 ajax 函数（模拟 axios）
+
+编码实现
+
+```javascript
+// 手写 ajax 函数，模拟 axios
+function myAxios({ url, method = 'GEY', params = {}, data = {} }) {
+  // 返回一个 promise
+  return new Promise((resolve, reject) => {
+    // 处理method(转为大写)
+    method = method.toUpperCase()
+    // 处理 queryString
+    let queryString = ''
+    Object.keys(params).forEach((key) => {
+      queryString += `${key}=${params[key]}&`
+    })
+    if (queryString) {
+      // 去除最后一位的 &
+      queryString = queryString.slice(0, -1)
+      url += '?' + queryString
+    }
+    const request = new XMLHttpRequest()
+    // 打开链接（初始化请求）
+    request.open(method, url, true)
+    if (method === 'GET') {
+      request.send()
+    } else if (method === 'POST' || method === 'PUT' || method === 'DELETE') {
+      // 告诉服务器请求体的格式是 json
+      request.setRequestHeader('Content-type', 'application/json;charset=utf-8')
+      // 发送json 格式请求体参数
+      request.send(JSON.stringify(data))
+    }
+
+    request.onreadystatechange = function () {
+      // 如果请求没有结束
+      if (request.readyState !== 4) {
+        return
+      }
+      const { status, statusText } = request
+      if ((status >= 200) & (status < 300)) {
+        const response = {
+          data: JSON.parse(request.response),
+          status,
+          statusText,
+        }
+        resolve(response)
+      } else {
+        reject(new Error('request error status is ' + status))
+      }
+    }
+  })
+}
+
+/* 发送特定请求的静态方法 */
+myAxios.get = function (url, options) {
+  return myAxios(Object.assign(options, { url, method: 'GET' }))
+}
+myAxios.delete = function (url, options) {
+  return myAxios(Object.assign(options, { url, method: 'DELETE' }))
+}
+myAxios.post = function (url, data, options) {
+  return myAxios(Object.assign(options, { url, data, method: 'POST' }))
+}
+myAxios.put = function (url, data, options) {
+  return myAxios(Object.assign(options, { url, data, method: 'PUT' }))
+}
+```
