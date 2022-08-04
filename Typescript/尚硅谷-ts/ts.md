@@ -92,39 +92,39 @@
   ```javascript
   let a:string = "孙悟空";
   let a = "孙悟空";
-  
+
   // 类型断言
   let strLength: number = (someValue as string).length;
-  
+
   // never
   function createError():never{
     throw new Error("报错了")
   }
-  
+
   // 属性名后面加 ? 表示属性是可选的
   let b:{ name: string, age?: numebr}
   b = { name:'孙悟空', age: 20 }
-  
+
   let c: {name: string, [propName: string]: any}
   c = { name: '猪八戒', age: 18, gender: "男" }
-  
+
   // 设置函数结构的类型声明
   let d: (a: number, b: number) => number
   d = function(n1: number, n2: number):number => {
     return n1 + n2
   }
-  
+
   // 数组
   let e:string[]
   e = ['a','b',"c"]
-  
+
   let f = Array<number>
   f = [1,2,3,4,5,6,7,8]
-  
+
   // 元组：固定长度的数组
   let h : [string, number]
   h = ["hello", 123]
-  
+
   // enum：枚举
   Enum Gnder {
     Male,
@@ -132,12 +132,12 @@
   }
   let i: {name: string, gender: Gender}
   i = { name: '孙悟空', gender: Gender.Male }
-  
+
   // 联合类型
   let j = string | numebr
   let j: {name:string} & { age: number }
   j = { name: '孙悟空', age: 20 }
-  
+
   // 类型别名
   let k: 1|2|3|4|5;
   let l: 1|2|3|4|5;
@@ -522,7 +522,7 @@
 
      ```javascript
      const {CleanWebpackPlugin} = require('clean-webpack-plugin')
-    
+
      module.exports = {
        ...
        plugins: [
@@ -633,10 +633,10 @@
 
 面向对象是程序中一个非常重要的思想，它被很多同学理解成了一个比较难，比较深奥的问题，其实不然，面向对象很简单，简而言之就是程序之中所有的操作都需要通过对象来完成。
 
-* 举例来说
-  * 操作浏览器要使用 window 对象
-  * 操作网页要使用 document 对象
-  * 操作控制台要使用 console 对象
+- 举例来说
+  - 操作浏览器要使用 window 对象
+  - 操作网页要使用 document 对象
+  - 操作控制台要使用 console 对象
 
 一切操作都通过对象，也就是所谓的面向对象，那么对象到底是什么，计算机程序的本质就是对现实事物的抽象，抽象的反义词是具体，比如：照片是对一个具体的人的抽象，汽车模型是对具体骑车的抽象等等。程序也是对事物的抽象，在程序中我们可以表示一个人、一条狗、一把枪、一颗子弹等等所有的事物。一个事物到了程序中就变为了一个对象。
 
@@ -644,9 +644,9 @@
 
 ### 5.1 类（class）
 
-要想面向对象，操作对象，首先便要拥有对象，那么下一个问题就是如何创建对象。要创建对象，必须先定义类，所谓的类可以理解为对象的模型，程序中可以已根据创建指定类型的对象，举例来说：可以通过Person 类创建人的对象，通过Dog 类创建狗的对象，通过Car来创建汽车的对象，不同的类可以用来创建不同的对象
+要想面向对象，操作对象，首先便要拥有对象，那么下一个问题就是如何创建对象。要创建对象，必须先定义类，所谓的类可以理解为对象的模型，程序中可以已根据创建指定类型的对象，举例来说：可以通过 Person 类创建人的对象，通过 Dog 类创建狗的对象，通过 Car 来创建汽车的对象，不同的类可以用来创建不同的对象
 
-* 定义类
+- 定义类
 
   ```javascript
   class 类名 {
@@ -658,30 +658,30 @@
   }
   ```
 
-* 示例
+- 示例
 
   ```javascript
   /*
   	直接定义的属性是实例属性，需要通过对象的实例去访问
   		const person = new Person("孙悟空")
-  		
+
     使用 static 开头的属性是静态属性(类属性)，可以直接通过类去访问
     Person.gener
-    
+
     readonly 表示一个只读的属性，无法修改
   */
   class Person {
     name: string
     age: number
-    
+
     static gender = "男"
     static readonly magic = '72般变化'
-  
+
     constructor(name: string, age: number) {
       this.name = name
       this.age = age
     }
-  
+
     sayHello() {
       console.log('hello say')
     }
@@ -716,3 +716,99 @@ console.log(dog)
 console.log(dog2)
 ```
 
+### 5.3 继承简介
+
+1. 未使用继承时
+
+   ```javascript
+   class Dog {
+     name: string
+     age: number
+
+     constructor(name: string, age: number) {
+       this.name = name
+       this.age = age
+     }
+
+     sayHello() {
+       console.log('汪汪汪')
+     }
+   }
+   const dog = new Dog('旺财', 5)
+   console.log(dog)
+   dog.sayHello()
+
+   class Cat {
+     name: string
+     age: number
+
+     constructor(name: string, age: number) {
+       this.name = name
+       this.age = age
+     }
+
+     sayHello() {
+       console.log('喵喵喵')
+     }
+   }
+
+   const cat = new Cat('咪咪', 3)
+   console.log(cat)
+   cat.sayHello()
+
+   // 发现有大量共同的逻辑处
+   ```
+
+2. 使用继承时
+
+   - _使用继承类后，子类将拥有父类所有的方法和属性_
+     - _通过继承可以将多个类中共有的代码写在一个父类中_
+     - _这样只需写一次即可让所有的子类都同时拥有父类中的属性和方法_
+   - _如果希望在子类中天津爱一些父类中没有的属性或者方法，直接添加即可_
+   - _如果在子类中添加了和父类相同的方法，则子类方法会覆盖父类_
+     - _这种子类覆盖掉父类的方法的形式，我们叫做重写_
+
+   ```javascript
+   class Animal {
+     name: string
+     age: number
+
+     constructor(name: string, age: number) {
+       this.name = name
+       this.age = age
+     }
+
+     sayHello() {
+       console.log('动物叫')
+     }
+   }
+
+   // 定义一个表示狗的类
+   // 使 Dog 类 继承 Animal 类, Animal 被称为父类
+   class Dog extends Animal {
+     run() {
+       console.log(this.name + '正在跑')
+     }
+
+     sayHello(): void {
+       console.log('汪汪汪')
+     }
+   }
+
+   // 定义一个表示猫的类
+   // 使 Cat 类 继承 Animal 类
+   class Cat extends Animal {
+     sayHello(): void {
+       console.log('喵喵喵')
+     }
+   }
+
+   const dog = new Dog('旺财', 5)
+   console.log(dog)
+   dog.sayHello()
+   dog.run()
+
+   const cat = new Cat('咪咪', 3)
+   console.log(cat)
+   cat.sayHello()
+   ```
