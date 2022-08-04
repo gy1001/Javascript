@@ -859,3 +859,100 @@ console.log(dog2)
   console.log(dog)
   dog.sayHello()
   dog.run()
+
+### 5.5 抽象类
+
+* *以 abstract 开头是抽象类*
+
+  * *抽象类和其他类区别不大，只是不能用来创建对象*
+  * *抽象类就是专门用来被继承的类*
+
+* *抽象类可以添加抽象方法*
+
+  * *定义一个抽象方法*
+    *  *使用abstract 开头，没有办法体*
+    * *抽象方法只能定义在抽象类中，子类必须对抽象方法进行重写*
+
+* 代码演示
+
+  ```javascript
+  abstract class Animal {
+    name: string
+  
+    constructor(name: string) {
+      this.name = name
+    }
+  
+    // 定义一个抽象方法
+    abstract sayHello(): void
+  }
+  
+  class Dog extends Animal {
+    // 不定义 sayHello 方法会报错
+    sayHello(): void {
+      console.log('汪汪汪')
+    }
+  }
+  
+  const dog = new Dog('旺财')
+  console.log(dog)
+  dog.sayHello()
+  ```
+
+### 5.6 接口
+
+*  *接口用来定义一个类结构, 用来定义一个类中应该包含哪些属性和方法*
+* *同时接口也可以当成类型声明去使用*
+* *interface 接口可以重复声明，type 声明类型不能重复*
+* *接口可以在定义类的时候去限制类的结构*
+  * *接口中的所有属性都不能有实际的值*
+  * *接口只定义对象的结构，而不考虑实际值*
+  *  *在接口中所有的方法都是抽象方法*
+* *定义一个类时候，可以使类去实现一个接口*，*实现接口就是使类满足接口的要求*
+
+* 代码如下
+
+  ```javascript
+  interface myInterface {
+    name: string
+    age: number
+  }
+  
+  interface myInterface {
+    gender: string
+  }
+  
+  const obj: myInterface = {
+    name: '孙悟空',
+    age: 500,
+    gender: '男',
+  }
+  
+  // 接口可以在定义类的时候去限制类的结构
+  //  接口中的所有属性都不能有实际的值
+  // 接口只定义对象的结构，而不考虑实际值
+  //      在接口中所有的方法都是抽象方法
+  
+  interface myInter {
+    name: string
+    sayHello(): void
+  }
+  
+  // 定义一个类时候，可以使类去实现一个接口
+  //   实现接口就是使类满足接口的要求
+  class MyClass implements myInter {
+    name: string
+   	constructor(name: string) {
+      this.name = name
+    }
+  
+    sayHello() {
+      console.log('大家好')
+    }
+  }
+  ```
+
+* *接口类似于抽象类，不过接口中只能定义抽象方法，而抽象类中可以做具体实现，也可以不做具体实现*
+
+### 5.7 
+
