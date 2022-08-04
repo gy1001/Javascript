@@ -393,3 +393,238 @@
           ```
 
     - 等等还有很多：[具体参考官网](https://www.tslang.cn/docs/handbook/compiler-options.html)
+
+## 4、使用 webpack 打包 TS 代码
+
+### 4.1 初步打包 `TS` 文件
+
+1. 创建 webpack-ts-demo, 然后执行初始化命令
+
+   ```shell
+   npm init
+   ```
+
+2. 安装相关依赖包
+
+   ```shell
+   npm install webpack webpack-cli typescript ts-loader -D
+   ```
+
+3. 创建 `webpack` 配置文件 `webpack.config.js`
+
+   ```javascript
+   const path = require('path')
+
+   module.exports = {
+     mode: 'development',
+     // 指定入口文件
+     entry: './src/index.ts',
+     // 指定打包文件所在目录
+     output: {
+       path: path.resolve(__dirname, 'dist'),
+       filename: 'bundle.js',
+     },
+     // 指定webpack 打包时候使用的模块
+     module: {
+       // 指定加载规则
+       rules: [
+         {
+           // test 指定生效的文件规则
+           test: /\.ts$/,
+           // 要使用的 loader
+           use: 'ts-loader',
+           // 要指定排除的文件夹
+           exclude: /node_modules/,
+         },
+       ],
+     },
+   }
+   ```
+
+4. 创建 `ts` 配置文件 `tsconfig.js`
+
+   - 可以手动创建，也可以执行命令`npx tsc --init` 进行创建
+
+   - 内容如下
+
+     ```javascript
+     {
+       "compilerOptions": {
+         "target": "ES2015",
+         "module": "ES2015",
+         "strict": true
+       }
+     }
+     ```
+
+5. `package.jso` 中增加脚本命令
+
+   ```javascript
+   "scripts": {
+     "build": "webpack"
+   },
+   ```
+
+6. 执行打包命令，就可以看到 `dist` 目录下的 `bundle.js` 文件了
+
+   ```shell
+   npm run build
+   ```
+
+### 4.2 加入 HTML 文件
+
+1. 增加 `html` 插件
+
+   ```shell
+   npm install html-webpack-plugin -D
+   ```
+
+2. 修改 `package.json` 文件
+
+   ```javascript
+   const htmlWebpackPlugin = require('html-webpack-plugin')
+
+   module.exports = {
+    	module: {...},
+   	plugins: [
+       new htmlWebpackPlugin({
+         title: '我是自定义title',
+         template: "./index.html" // 也可以指定 一个 html 模板文件进行渲染
+       })
+     ]
+   }
+   ```
+
+3. 安装 `dev-serve`插件
+
+   ```javascript
+   npm install webpack-dev-server -D
+   ```
+
+4. 修改`package.json`，增加脚本
+
+   ```javascript
+    "scripts": {
+      	...
+       "start": "webpack serve --open"
+     },
+   ```
+
+5. 运行`npm run start`，可以看到自动打开浏览器，并且当文件内容更新后，页面内容进行自动更新
+
+### 4.3 其他
+
+1. `clean-webpack-plugin`
+
+   - 安装命令：`npm install clean-webpack-plugin -D`
+
+   - 修改配置文件`package.json`引入
+
+     ```javascript
+     const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+
+     module.exports = {
+       ...
+       plugins: [
+         ...,
+         new CleanWebpackPlugin(),
+       ]
+     }
+     ```
+
+2. `resolve `
+
+   - 用来设置引用模块
+
+   - 示例
+
+     - ```javascript
+       module.exports = {
+         ....,
+         resolve: {
+            extensions: ['.ts', '.js'],
+         }
+       }
+       ```
+
+### 4.4 使用 babel
+
+1. 安装命令
+
+   ```shell
+   npm install @babel/core @babel/preset-env babel-loade core-js -D
+   ```
+
+2. 更改`package.json`中的 `rules`选项
+
+   ```javascript
+   ...
+   module.exports = {
+     ...
+     rule: [
+        {
+           // test 指定生效的文件规则
+           test: /\.ts$/,
+           // 要使用的 loader
+           use: [
+             {
+               // 指定加载器k
+               loader: 'babel-loader',
+               // 设置 babel
+               options: {
+                 // 设置自定义的环境
+                 presets: [
+                   [
+                     '@babel/preset-env',
+                     // 指定环境的插件
+                     {
+                       targets: {
+                         chrome: '58',
+                         ie: '11'
+                       },
+                       corejs: '3',
+                       // 使用 corejs 的方式 为 usage,表示按需加载
+                       useBuiltIns: 'usage',
+                     },
+                   ],
+                 ],
+               },
+             },
+             'ts-loader',
+           ], // 加载器的执行顺序是
+           // 要指定排除的文件夹
+           exclude: /node_modules/,
+         },
+     ]
+     ...
+   }
+   ```
+
+3. 默认`webpack`打包会产生一个箭头函数进行包裹代码，如果你不想可以进行如下设置
+
+   ```javascript
+   module.exports = {
+     output: {
+       environment: {
+         // The environment supports arrow functions ('() => { ... }').
+         arrowFunction: true,
+         // The environment supports BigInt as literal (123n).
+         bigIntLiteral: false,
+         // The environment supports const and let for variable declarations.
+         const: true,
+         // The environment supports destructuring ('{ a, b } = obj').
+         destructuring: true,
+         // The environment supports an async import() function to import EcmaScript modules.
+         dynamicImport: false,
+         // The environment supports 'for of' iteration ('for (const x of array) { ... }').
+         forOf: true,
+         // The environment supports ECMAScript Module syntax to import ECMAScript modules (import ... from '...').
+         module: false,
+         // The environment supports optional chaining ('obj?.a' or 'obj?.()').
+         optionalChaining: true,
+         // The environment supports template literals.
+         templateLiteral: true,
+       },
+     },
+   }
+   ```
