@@ -92,39 +92,39 @@
   ```javascript
   let a:string = "孙悟空";
   let a = "孙悟空";
-
+  
   // 类型断言
   let strLength: number = (someValue as string).length;
-
+  
   // never
   function createError():never{
     throw new Error("报错了")
   }
-
+  
   // 属性名后面加 ? 表示属性是可选的
   let b:{ name: string, age?: numebr}
   b = { name:'孙悟空', age: 20 }
-
+  
   let c: {name: string, [propName: string]: any}
   c = { name: '猪八戒', age: 18, gender: "男" }
-
+  
   // 设置函数结构的类型声明
   let d: (a: number, b: number) => number
   d = function(n1: number, n2: number):number => {
     return n1 + n2
   }
-
+  
   // 数组
   let e:string[]
   e = ['a','b',"c"]
-
+  
   let f = Array<number>
   f = [1,2,3,4,5,6,7,8]
-
+  
   // 元组：固定长度的数组
   let h : [string, number]
   h = ["hello", 123]
-
+  
   // enum：枚举
   Enum Gnder {
     Male,
@@ -132,12 +132,12 @@
   }
   let i: {name: string, gender: Gender}
   i = { name: '孙悟空', gender: Gender.Male }
-
+  
   // 联合类型
   let j = string | numebr
   let j: {name:string} & { age: number }
   j = { name: '孙悟空', age: 20 }
-
+  
   // 类型别名
   let k: 1|2|3|4|5;
   let l: 1|2|3|4|5;
@@ -522,7 +522,7 @@
 
      ```javascript
      const {CleanWebpackPlugin} = require('clean-webpack-plugin')
-
+  
      module.exports = {
        ...
        plugins: [
@@ -664,24 +664,24 @@
   /*
   	直接定义的属性是实例属性，需要通过对象的实例去访问
   		const person = new Person("孙悟空")
-
+  
     使用 static 开头的属性是静态属性(类属性)，可以直接通过类去访问
     Person.gener
-
+  
     readonly 表示一个只读的属性，无法修改
   */
   class Person {
     name: string
     age: number
-
+  
     static gender = "男"
     static readonly magic = '72般变化'
-
+  
     constructor(name: string, age: number) {
       this.name = name
       this.age = age
     }
-
+  
     sayHello() {
       console.log('hello say')
     }
@@ -772,29 +772,29 @@ console.log(dog2)
    class Animal {
      name: string
      age: number
-
+   
      constructor(name: string, age: number) {
        this.name = name
        this.age = age
      }
-
+   
      sayHello() {
        console.log('动物叫')
      }
    }
-
+   
    // 定义一个表示狗的类
    // 使 Dog 类 继承 Animal 类, Animal 被称为父类
    class Dog extends Animal {
      run() {
        console.log(this.name + '正在跑')
      }
-
+   
      sayHello(): void {
        console.log('汪汪汪')
      }
    }
-
+   
    // 定义一个表示猫的类
    // 使 Cat 类 继承 Animal 类
    class Cat extends Animal {
@@ -802,13 +802,60 @@ console.log(dog2)
        console.log('喵喵喵')
      }
    }
-
+   
    const dog = new Dog('旺财', 5)
    console.log(dog)
    dog.sayHello()
    dog.run()
-
+   
    const cat = new Cat('咪咪', 3)
    console.log(cat)
    cat.sayHello()
    ```
+
+### 5.4 super 关键字
+
+* *在类的方法中 super 就表示当前类的父类*
+
+* *如果子类中写了构造函数 constructor 在子类构造函数中必须对父类构造函数进行调用*
+
+* 示例
+
+  ```javascript
+  class Animal {
+    name: string
+  
+    constructor(name: string) {
+      this.name = name
+    }
+  
+    sayHello() {
+      console.log('动物叫')
+    }
+  }
+  
+  class Dog extends Animal {
+    age: number
+    gender: number
+  
+    constructor(name: string, age: number, gender: number) {
+      //  如果子类中写了构造函数 constructor 在子类构造函数中必须对父类构造函数进行调用
+      super(name) //  这里就是在调用父类构造函数并传参
+      this.age = age
+      this.gender = gender
+    }
+    run() {
+      console.log(this.name + '正在跑')
+    }
+  
+    sayHello(): void {
+      // 在类的方法中 super 就表示当前类的父类
+      super.sayHello()
+      console.log('汪汪汪')
+    }
+  }
+  
+  const dog = new Dog('旺财', 5, 1)
+  console.log(dog)
+  dog.sayHello()
+  dog.run()
