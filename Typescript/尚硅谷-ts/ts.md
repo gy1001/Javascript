@@ -1071,3 +1071,61 @@ console.log(dog2)
   }
   const c = new C('猪八戒', 300)
   console.log(c.name, c.age)
+
+### 5.8 泛型
+
+*  *在定义函数或者类时，如果遇到类型不明确就可以使用泛型*
+
+* *可以直接调用具有泛型的函数*
+
+  * *不指定泛型，TS可以自动对类型进行推断*
+  * *指定泛型*
+
+* 泛型也可以继承接口类型
+
+* 示例
+
+  ```javascript
+  function fn(a: number): number {
+    return a
+  }
+  
+  /**
+   * 在定义函数或者类时，如果遇到类型不明确就可以使用泛型
+   *
+   */
+  
+  function fn2<K>(a: K): K {
+    return a
+  }
+  
+  // 可以直接调用具有泛型的函数
+  fn2(20) // 不指定泛型，TS可以自动对类型进行推断
+  fn2<string>('hello') // 指定泛型
+  
+  //  泛型也可以指定多个
+  function fn3<T, K>(a: T, b: K): T {
+    return a
+  }
+  fn3<number, string>(123, 'hello')
+  
+  interface Inter {
+    length: number
+  }
+  function fn4<T extends Inter>(a: T): number {
+    return a.length
+  }
+  fn4('1223')
+  fn4({ length: 10 })
+  
+  class MyClass<T> {
+    name: T
+  
+    constructor(name: T) {
+      this.name = name
+    }
+  }
+  const mc = new MyClass<string>('孙悟空')
+  ```
+
+  
