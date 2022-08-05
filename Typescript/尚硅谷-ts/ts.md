@@ -92,39 +92,39 @@
   ```javascript
   let a:string = "孙悟空";
   let a = "孙悟空";
-  
+
   // 类型断言
   let strLength: number = (someValue as string).length;
-  
+
   // never
   function createError():never{
     throw new Error("报错了")
   }
-  
+
   // 属性名后面加 ? 表示属性是可选的
   let b:{ name: string, age?: numebr}
   b = { name:'孙悟空', age: 20 }
-  
+
   let c: {name: string, [propName: string]: any}
   c = { name: '猪八戒', age: 18, gender: "男" }
-  
+
   // 设置函数结构的类型声明
   let d: (a: number, b: number) => number
   d = function(n1: number, n2: number):number => {
     return n1 + n2
   }
-  
+
   // 数组
   let e:string[]
   e = ['a','b',"c"]
-  
+
   let f = Array<number>
   f = [1,2,3,4,5,6,7,8]
-  
+
   // 元组：固定长度的数组
   let h : [string, number]
   h = ["hello", 123]
-  
+
   // enum：枚举
   Enum Gnder {
     Male,
@@ -132,12 +132,12 @@
   }
   let i: {name: string, gender: Gender}
   i = { name: '孙悟空', gender: Gender.Male }
-  
+
   // 联合类型
   let j = string | numebr
   let j: {name:string} & { age: number }
   j = { name: '孙悟空', age: 20 }
-  
+
   // 类型别名
   let k: 1|2|3|4|5;
   let l: 1|2|3|4|5;
@@ -522,7 +522,7 @@
 
      ```javascript
      const {CleanWebpackPlugin} = require('clean-webpack-plugin')
-  
+
      module.exports = {
        ...
        plugins: [
@@ -664,24 +664,24 @@
   /*
   	直接定义的属性是实例属性，需要通过对象的实例去访问
   		const person = new Person("孙悟空")
-  
+
     使用 static 开头的属性是静态属性(类属性)，可以直接通过类去访问
     Person.gener
-  
+
     readonly 表示一个只读的属性，无法修改
   */
   class Person {
     name: string
     age: number
-  
+
     static gender = "男"
     static readonly magic = '72般变化'
-  
+
     constructor(name: string, age: number) {
       this.name = name
       this.age = age
     }
-  
+
     sayHello() {
       console.log('hello say')
     }
@@ -772,29 +772,29 @@ console.log(dog2)
    class Animal {
      name: string
      age: number
-   
+
      constructor(name: string, age: number) {
        this.name = name
        this.age = age
      }
-   
+
      sayHello() {
        console.log('动物叫')
      }
    }
-   
+
    // 定义一个表示狗的类
    // 使 Dog 类 继承 Animal 类, Animal 被称为父类
    class Dog extends Animal {
      run() {
        console.log(this.name + '正在跑')
      }
-   
+
      sayHello(): void {
        console.log('汪汪汪')
      }
    }
-   
+
    // 定义一个表示猫的类
    // 使 Cat 类 继承 Animal 类
    class Cat extends Animal {
@@ -802,12 +802,12 @@ console.log(dog2)
        console.log('喵喵喵')
      }
    }
-   
+
    const dog = new Dog('旺财', 5)
    console.log(dog)
    dog.sayHello()
    dog.run()
-   
+
    const cat = new Cat('咪咪', 3)
    console.log(cat)
    cat.sayHello()
@@ -815,29 +815,29 @@ console.log(dog2)
 
 ### 5.4 super 关键字
 
-* *在类的方法中 super 就表示当前类的父类*
+- _在类的方法中 super 就表示当前类的父类_
 
-* *如果子类中写了构造函数 constructor 在子类构造函数中必须对父类构造函数进行调用*
+- _如果子类中写了构造函数 constructor 在子类构造函数中必须对父类构造函数进行调用_
 
-* 示例
+- 示例
 
   ```javascript
   class Animal {
     name: string
-  
+
     constructor(name: string) {
       this.name = name
     }
-  
+
     sayHello() {
       console.log('动物叫')
     }
   }
-  
+
   class Dog extends Animal {
     age: number
     gender: number
-  
+
     constructor(name: string, age: number, gender: number) {
       //  如果子类中写了构造函数 constructor 在子类构造函数中必须对父类构造函数进行调用
       super(name) //  这里就是在调用父类构造函数并传参
@@ -847,53 +847,54 @@ console.log(dog2)
     run() {
       console.log(this.name + '正在跑')
     }
-  
+
     sayHello(): void {
       // 在类的方法中 super 就表示当前类的父类
       super.sayHello()
       console.log('汪汪汪')
     }
   }
-  
+
   const dog = new Dog('旺财', 5, 1)
   console.log(dog)
   dog.sayHello()
   dog.run()
+  ```
 
 ### 5.5 抽象类
 
-* *以 abstract 开头是抽象类*
+- _以 abstract 开头是抽象类_
 
-  * *抽象类和其他类区别不大，只是不能用来创建对象*
-  * *抽象类就是专门用来被继承的类*
+  - _抽象类和其他类区别不大，只是不能用来创建对象_
+  - _抽象类就是专门用来被继承的类_
 
-* *抽象类可以添加抽象方法*
+- _抽象类可以添加抽象方法_
 
-  * *定义一个抽象方法*
-    *  *使用abstract 开头，没有办法体*
-    * *抽象方法只能定义在抽象类中，子类必须对抽象方法进行重写*
+  - _定义一个抽象方法_
+    - _使用 abstract 开头，没有办法体_
+    - _抽象方法只能定义在抽象类中，子类必须对抽象方法进行重写_
 
-* 代码演示
+- 代码演示
 
   ```javascript
   abstract class Animal {
     name: string
-  
+
     constructor(name: string) {
       this.name = name
     }
-  
+
     // 定义一个抽象方法
     abstract sayHello(): void
   }
-  
+
   class Dog extends Animal {
     // 不定义 sayHello 方法会报错
     sayHello(): void {
       console.log('汪汪汪')
     }
   }
-  
+
   const dog = new Dog('旺财')
   console.log(dog)
   dog.sayHello()
@@ -901,43 +902,43 @@ console.log(dog2)
 
 ### 5.6 接口
 
-*  *接口用来定义一个类结构, 用来定义一个类中应该包含哪些属性和方法*
-* *同时接口也可以当成类型声明去使用*
-* *interface 接口可以重复声明，type 声明类型不能重复*
-* *接口可以在定义类的时候去限制类的结构*
-  * *接口中的所有属性都不能有实际的值*
-  * *接口只定义对象的结构，而不考虑实际值*
-  *  *在接口中所有的方法都是抽象方法*
-* *定义一个类时候，可以使类去实现一个接口*，*实现接口就是使类满足接口的要求*
+- _接口用来定义一个类结构, 用来定义一个类中应该包含哪些属性和方法_
+- _同时接口也可以当成类型声明去使用_
+- _interface 接口可以重复声明，type 声明类型不能重复_
+- _接口可以在定义类的时候去限制类的结构_
+  - _接口中的所有属性都不能有实际的值_
+  - _接口只定义对象的结构，而不考虑实际值_
+  - _在接口中所有的方法都是抽象方法_
+- _定义一个类时候，可以使类去实现一个接口_，_实现接口就是使类满足接口的要求_
 
-* 代码如下
+- 代码如下
 
   ```javascript
   interface myInterface {
     name: string
     age: number
   }
-  
+
   interface myInterface {
     gender: string
   }
-  
+
   const obj: myInterface = {
     name: '孙悟空',
     age: 500,
     gender: '男',
   }
-  
+
   // 接口可以在定义类的时候去限制类的结构
   //  接口中的所有属性都不能有实际的值
   // 接口只定义对象的结构，而不考虑实际值
   //      在接口中所有的方法都是抽象方法
-  
+
   interface myInter {
     name: string
     sayHello(): void
   }
-  
+
   // 定义一个类时候，可以使类去实现一个接口
   //   实现接口就是使类满足接口的要求
   class MyClass implements myInter {
@@ -945,14 +946,131 @@ console.log(dog2)
    	constructor(name: string) {
       this.name = name
     }
-  
+
     sayHello() {
       console.log('大家好')
     }
   }
   ```
 
-* *接口类似于抽象类，不过接口中只能定义抽象方法，而抽象类中可以做具体实现，也可以不做具体实现*
+- _接口类似于抽象类，不过接口中只能定义抽象方法，而抽象类中可以做具体实现，也可以不做具体实现_
 
-### 5.7 
+### 5.7 属性的封装
 
+- _TS 可以在属性前添加属性的修饰符_
+
+- _public 修饰的属性可以在任意位置访问（修改）默认值是 public_
+- _private 私有属性，私有属性只有在类的内部进行访问（修改）_
+  - _可以在类中添加方法使得私有属性可以被外部访问_
+- _protected 受包含的属性，只能在当前类和当前类的子类中访问（修改）_
+
+- _TS 中设置 getter setter 方法的方式_
+
+  - _getter 方法用来读取属性_
+  - _setter 方法用来设置属性_
+
+- _可以直接将属性定义在 构造函数 constructor 属性中_
+
+- 代码如下
+
+  ```javascript
+  // 定义一个表示人的类
+    class Person {
+      // TS 可以在属性前添加属性的修饰符
+      //      public 修饰的属性可以在任意位置访问（修改）默认值是 public
+      //      private 私有属性，私有属性只有在类的内部进行访问（修改）
+      //              可以在类中添加方法使得私有属性可以被外部访问
+      //      protected 受包含的属性，只能在当前类和当前类的子类中访问（修改）
+      private _name: string
+      _age: number
+
+      constructor(name: string, age: number) {
+        this._name = name
+        this._age = age
+      }
+      /**
+       *  getter方法用来读取属性
+       *  setter方法用来设置属性
+       *
+       */
+
+      // 定义一个方法获得 name 属性
+      getName() {
+        return this._name
+      }
+
+      // 定义一个方法用来设置 name 属性
+      setName(val: string) {
+        this._name = val
+      }
+
+      // TS 中设置 getter 方法的方式
+      get name() {
+        return this._name
+      }
+
+      set name(val: string) {
+        this._name = val
+      }
+    }
+
+    // 目前属性是在对象中设置的，属性可以任意的被更改
+    //         属性可以任意被修改，将会导致对象中的数据变得非常不安全
+    const per = new Person('孙悟空', 500)
+    // per._name = '猪八戒' // 这里报错
+    per._age = 300
+    // 获得 name 属性
+    per.setName('猪八戒')
+    console.log(per.getName())
+
+    // 通过 get 前缀修饰后可以通过如下方式获取name 属性
+    console.log(per.name)
+    per.name = '沙悟净'
+    console.log(per.name)
+  ```
+
+- `protected` 属性如下作用
+
+  ```javascript
+  class A {
+    protected number: string
+    constructor(num: string) {
+      this.number = num
+    }
+  }
+
+  class B extends A {
+    text() {
+      console.log(this.number)
+    }
+  }
+
+  const bPer = new B('我是number')
+  bPer.text()
+  // console.log(b.number) // 因为number 是 protected 不能直接实力访问，报错
+  ```
+
+- 书写属性语法糖
+
+  ```javascript
+  class C {
+    // 可以直接将属性定义在 构造函数 constructor 属性中
+    constructor(public name: string, public age: number) {}
+  }
+  const c = new C('猪八戒', 300)
+  console.log(c.name, c.age)
+
+
+  // 与 如下代码是一样的效果
+  class C {
+    name: string
+    age: number
+    // 可以直接将属性定义在 构造函数 constructor 属性中
+    constructor(name: string, age: number) {
+      this.name = name
+      this.age = age
+    }
+  }
+  const c = new C('猪八戒', 300)
+  console.log(c.name, c.age)
+  ```
