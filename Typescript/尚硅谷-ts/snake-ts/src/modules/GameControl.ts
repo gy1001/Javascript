@@ -1,4 +1,5 @@
 import Food from './Food'
+import ScorePanel from './ScorePanel'
 import Snake from './Snake'
 class GameControl {
   food: Food
@@ -7,10 +8,12 @@ class GameControl {
   direction: string = 'ArrowDown'
   // 游戏是否结束
   isLive: boolean = true
+  scorePanel: ScorePanel
   constructor() {
     console.log('游戏开始初始化')
     this.food = new Food()
     this.snake = new Snake()
+    this.scorePanel = new ScorePanel(10, 1)
     this.init()
   }
 
@@ -60,7 +63,7 @@ class GameControl {
     if (this.isLive) {
       setTimeout(() => {
         this.run()
-      }, 300)
+      }, 300 - (this.scorePanel.level - 1) * 30)
     }
   }
 
@@ -70,6 +73,7 @@ class GameControl {
       // 食物的位置改变
       this.food.change()
       // 分数 +1
+      this.scorePanel.addScore()
       // 蛇的 body 加1
       this.snake.addBodies()
     }

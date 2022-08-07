@@ -23,9 +23,25 @@ class Snake {
 
   set X(value) {
     console.log('设置蛇的x的值')
+    if (this.X === value) {
+      return
+    }
     if (value < 0 || value > 290) {
       this.gameOver()
       return
+    }
+    // 如果将要设置的位置与蛇身第二节的左边距离相同，说明蛇要进行掉头了
+    if (
+      this.bodies.length > 1 &&
+      (this.bodies[1] as HTMLElement).offsetLeft === value
+    ) {
+      console.log('说明蛇要左右进行掉头了')
+      if (value > this.X) {
+        // 说明方向是向右进行调头,不应该调头，应该设置当前X位置左边10的距离位置
+        value = this.X - 10
+      } else {
+        value = this.X + 10
+      }
     }
     this.moveBody()
     this.head.style.left = value + 'px'
@@ -33,17 +49,28 @@ class Snake {
   }
 
   set Y(value) {
-    console.log('设置蛇的y的值')
-    // if (this.Y === value) {
-    //   return
-    // }
+    console.log('设置蛇的y的值', this.Y, value)
+    if (this.Y === value) {
+      return
+    }
     if (value < 0 || value > 290) {
       this.gameOver()
       return
     }
+    if (
+      this.bodies.length > 1 &&
+      (this.bodies[1] as HTMLElement).offsetTop === value
+    ) {
+      if (value > this.Y) {
+        // 说明方向是向上进行调头，
+        value = this.Y - 10
+      } else {
+        value = this.Y + 10
+      }
+    }
+    this.moveBody()
     this.head.style.top = value + 'px'
-    // if (this.bodies.length > 1) {
-    // }
+    this.checkHeadBody()
   }
 
   addBodies() {
@@ -51,6 +78,7 @@ class Snake {
     this.snake.insertAdjacentElement('beforeend', div)
   }
 
+  // 移动身体，应该从后往前遍历，否则前面的移动后，后一个就无法匹配前面的那个位置
   moveBody() {
     for (let index = this.bodies.length - 1; index > 0; index--) {
       const element = this.bodies[index]
