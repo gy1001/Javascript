@@ -19,11 +19,26 @@
 })(typeof window !== 'undefined' ? window : this, function (window, noGlobal) {
   console.log('我是factory函数')
   //...
-  var version = '3.6.0',
-    jQuery = function () {}
-  if (typeof noGlobal === 'undefined') {
-    window.jQuery = window.$ = jQuery
+  var version = '3.6.0'
+  var jQuery = function (selector, context) {
+    return new jQuery.fn.init(selector, context)
   }
+
+  jQuery.fn = jQuery.prototype = {}
+  var init = (jQuery.fn.init = function (selector, context, root) {})
 
   return jQuery
 })
+
+function jQuery() {
+  return new jQuery.prototype.init()
+}
+jQuery.prototype.init = function () {
+  console.log('我是init 初始化')
+}
+jQuery.prototype.css = function () {
+  console.log('我是css方法')
+}
+jQuery.prototype.init.prototype = jQuery.prototype
+
+jQuery().css()
