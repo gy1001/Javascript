@@ -507,3 +507,45 @@ class TeacherTestTwo extends PersonTwo {
 const teacherTestTwo = new TeacherTestTwo(28)
 console.log(teacherTestTwo.name)
 console.log(teacherTestTwo.age)
+
+// 静态属性 setter 和 getter
+class PersonTestThree {
+  constructor(private _name: string) {}
+  get name() {
+    return '我的名字' + this._name
+  }
+  set name(value: string) {
+    const realName = value.split(' ')[0]
+    this._name = realName
+  }
+}
+const personTestThree = new PersonTestThree('孙悟空')
+console.log(personTestThree.name)
+personTestThree.name = 'hello world'
+console.log(personTestThree.name)
+
+// 单例模式
+class Demo {
+  private static instance: Demo
+
+  private constructor(public name: string) {}
+
+  // static 类属性
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new Demo('孙悟空')
+    }
+    return this.instance
+  }
+}
+
+const demo1 = Demo.getInstance()
+const demo2 = Demo.getInstance()
+const demo3 = Demo.getInstance()
+console.log(demo1 === demo2, demo2 === demo3)
+
+class PersonTestFour {
+  constructor(public name: string) {}
+}
+
+const personTestFour = new PersonTestFour('猪八戒')
