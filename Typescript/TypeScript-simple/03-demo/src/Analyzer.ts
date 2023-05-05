@@ -17,6 +17,16 @@ interface FileContent {
 }
 
 class Analyzer implements AnalyzerSchema {
+  private static instance: Analyzer
+  private constructor() {}
+
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new Analyzer()
+    }
+    return this.instance
+  }
+
   private getCourseInfo(html: string) {
     const $ = cheerio.load(html)
     const courseItems = $('.course-item')

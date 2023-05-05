@@ -12,23 +12,24 @@ class Crowller {
   constructor(private url: string, private analzer: AnalyzerSchema) {
     this.initSpiderProcess()
   }
-  async getRawHtml() {
+  private async getRawHtml() {
     const result = await superagent.get(this.url)
     return result.text
   }
 
-  async initSpiderProcess() {
+  private async initSpiderProcess() {
     const result = await this.getRawHtml()
     const fileContent = this.analzer.analyzer(result, this.filePath)
     this.writeFile(fileContent)
   }
 
-  writeFile(fileContent: string) {
+  private writeFile(fileContent: string) {
     fs.writeFileSync(this.filePath, fileContent)
   }
 }
 const sercret = 'serretKey'
 const url = `http://www.dell-lee.com/typescript/demo.html?secret=${sercret}`
 
-const analyzer = new Analyzer()
+// const analyzer = new Analyzer()
+const analyzer = Analyzer.getInstance()
 const crowller = new Crowller(url, analyzer)
