@@ -507,3 +507,41 @@ class TeacherTestTwo extends PersonTwo {
 const teacherTestTwo = new TeacherTestTwo(28)
 console.log(teacherTestTwo.name)
 console.log(teacherTestTwo.age)
+
+// 抽象类
+abstract class Geom {
+  getType() {
+    return 'Gemo'
+  }
+  abstract getArea(): number
+}
+
+class CircleShap extends Geom {
+  getArea(): number {
+    return 123
+  }
+}
+class SquareShap extends Geom {
+  getArea(): number {
+    return 345
+  }
+}
+
+interface PersonInfo {
+  name: string
+}
+
+interface TeacherInfo extends PersonInfo {
+  teacherAge: number
+}
+interface StudentInfo extends PersonInfo {
+  age: number
+}
+const teacherInfo = { name: '唐僧', teacherAge: 3 }
+const studentInfo = { name: '猪八戒', age: 300 }
+const getUserInfo = (user: PersonInfo) => {
+  console.log(user.name)
+}
+
+getUserInfo(teacherInfo)
+getUserInfo(studentInfo)
