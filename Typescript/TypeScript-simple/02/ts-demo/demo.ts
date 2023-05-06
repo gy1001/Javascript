@@ -632,3 +632,114 @@ function addTestSecond(first: object | NumberObj, second: object | NumberObj) {
   return 0
 }
 // 等等
+// 枚举类型
+enum Status {
+  OFFLINE = 0,
+  ONLINE,
+  DELETED,
+}
+
+function getResult(status) {
+  if (status === Status.DELETED) {
+    return 'offline'
+  } else if (status === Status.ONLINE) {
+    return 'online'
+  } else if (status === Status.DELETED) {
+    return 'deleted'
+  }
+  return 'error'
+}
+// 也可以反向查询
+console.log(Status[0]) // "OFFLINE"
+
+// 泛型：泛指的类型
+function join<T>(first: T, second: T) {
+  return `${first} + ${second}`
+}
+
+join<string>('1', '2')
+join(1, 2)
+
+function joinTwo<T, U>(first: T, second: U) {
+  return `${first} + ${second}`
+}
+joinTwo<string, number>('1', 2)
+
+function joinThree<T>(first: T): T {
+  return first
+}
+
+function map<T>(params: T[]) {
+  return params
+}
+
+map<string>(['123'])
+
+class DataManager<T extends { name: string }> {
+  constructor(private data: T[]) {}
+  getItem(index: number): string {
+    return this.data[index].name
+  }
+}
+
+const dataTest = new DataManager<{ name: string }>([{ name: '孙悟空' }])
+
+class DataManagerTwo<T extends number | string> {
+  constructor(private data: T[]) {}
+  getItem(index: number): T {
+    return this.data[index]
+  }
+}
+
+// 函数的注解
+const testTest: (a: number, b: number) => number = function (
+  a: number,
+  b: number,
+): number {
+  return a + b
+}
+// 可以简写为下面的形式，也是较为常见的形式
+const testTestTwo: (a: number, b: number) => number = function (a, b) {
+  return a + b
+}
+// 使用泛型作为类型注解
+const helloTest: <T>(params: T) => T = function <T>(params: T) {
+  return params
+}
+
+namespace Home {
+  class Header {
+    constructor() {
+      const elem = document.createElement('div')
+      elem.innerText = 'this is a header'
+      document.body.appendChild(elem)
+    }
+  }
+  class Content {
+    constructor() {
+      const elem = document.createElement('div')
+      elem.innerText = 'this is a content'
+      document.body.appendChild(elem)
+    }
+  }
+  class Footer {
+    constructor() {
+      const elem = document.createElement('div')
+      elem.innerText = 'this is a footer'
+      document.body.appendChild(elem)
+    }
+  }
+
+  export class Page {
+    constructor() {
+      new Header()
+      new Content()
+      new Footer()
+    }
+  }
+}
+
+// 外部引用就可以这样使用
+new Home.Page()
+// 由于 Header Content Footer 并没有被 export 出去，所以不能通过以下方式使用
+// new Home.Header()
