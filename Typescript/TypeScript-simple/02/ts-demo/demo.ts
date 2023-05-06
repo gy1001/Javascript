@@ -587,3 +587,48 @@ const getUserInfo = (user: PersonInfo) => {
 
 getUserInfo(teacherInfo)
 getUserInfo(studentInfo)
+
+// 联合类型和类型保护
+interface BirdTest {
+  fly: boolean
+  sing: () => {}
+}
+interface DogTest {
+  fly: boolean
+  bark: () => {}
+}
+// 类型断言的方式
+function trainAnimal(animal: BirdTest | DogTest) {
+  if (animal.fly) {
+    ;(animal as BirdTest).sing()
+  } else {
+    ;(animal as DogTest).bark()
+  }
+}
+// 使用 in 语法做类型保护
+function trainAnimalSecond(animal: BirdTest | DogTest) {
+  if ('sing' in animal) {
+    animal.sing()
+  } else {
+    animal.bark()
+  }
+}
+// 使用 typeof来做类型保护
+function addTestOne(first: number | string, second: string | number) {
+  if (typeof first === 'string' || typeof second === 'string') {
+    return `${first}${second}`
+  }
+  return first + second
+}
+
+// 使用 instanceof 来做类型保护
+class NumberObj {
+  count: number
+}
+function addTestSecond(first: object | NumberObj, second: object | NumberObj) {
+  if (first instanceof NumberObj && second instanceof NumberObj) {
+    return first.count + second.count
+  }
+  return 0
+}
+// 等等
