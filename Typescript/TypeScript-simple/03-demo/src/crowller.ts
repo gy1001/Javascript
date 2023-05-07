@@ -1,7 +1,6 @@
 import superagent from 'superagent'
 import fs from 'fs'
 import path from 'path'
-import Analyzer from './Analyzer'
 
 export interface AnalyzerSchema {
   analyzer: (html: string, filePath: string) => string
@@ -27,9 +26,5 @@ class Crowller {
     fs.writeFileSync(this.filePath, fileContent)
   }
 }
-const sercret = 'serretKey'
-const url = `http://www.dell-lee.com/typescript/demo.html?secret=${sercret}`
 
-// const analyzer = new Analyzer()
-const analyzer = Analyzer.getInstance()
-const crowller = new Crowller(url, analyzer)
+export default Crowller

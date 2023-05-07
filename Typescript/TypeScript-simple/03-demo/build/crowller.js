@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const superagent_1 = __importDefault(require("superagent"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const Analyzer_1 = __importDefault(require("./Analyzer"));
 class Crowller {
     constructor(url, analzer) {
         this.url = url;
@@ -40,8 +39,4 @@ class Crowller {
         fs_1.default.writeFileSync(this.filePath, fileContent);
     }
 }
-const sercret = 'serretKey';
-const url = `http://www.dell-lee.com/typescript/demo.html?secret=${sercret}`;
-// const analyzer = new Analyzer()
-const analyzer = Analyzer_1.default.getInstance();
-const crowller = new Crowller(url, analyzer);
+exports.default = Crowller;
