@@ -3,4 +3,5 @@ console.log(teacher)
 
 $(function () {
   $('body').html('<h1>123</h1>')
+  new $.fn.init()
 })
