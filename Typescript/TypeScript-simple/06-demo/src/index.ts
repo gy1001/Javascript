@@ -134,21 +134,36 @@
 // console.log(test.name)
 
 // 装饰器这里修改的是原型上的 name
-function nameDecorator(target: any, key: string): any {
-  // target[key] = '菩提祖师'
-  return {
-    writable: true,
-    // configurable: true,
-    value: '猪八戒',
-  }
+// function nameDecorator(target: any, key: string): any {
+//   // target[key] = '菩提祖师'
+//   return {
+//     writable: true,
+//     // configurable: true,
+//     value: '猪八戒',
+//   }
+// }
+// // 这里的属性 name 是放在了实例中
+// class Test {
+//   @nameDecorator
+//   name = '唐僧'
+// }
+
+// const test = new Test()
+// // 这里调用时候肯定先从实例上寻找
+// console.log(test.name) // 唐僧
+// console.log((test as any).__proto__.name) // 猪八戒
+
+// 参数装饰器
+
+function paramDecorator(target: any, method: string, paramIndex: number) {
+  // target[method] = ''
+  console.log(target, method, paramIndex)
 }
-// 这里的属性 name 是放在了实例中
 class Test {
-  @nameDecorator
-  name = '唐僧'
+  getInfo(@paramDecorator name: string, age: number) {
+    return `${name}的年龄是${age}`
+  }
 }
 
 const test = new Test()
-// 这里调用时候肯定先从实例上寻找
-console.log(test.name) // 唐僧
-console.log((test as any).__proto__.name) // 猪八戒
+console.log(test.getInfo('孙悟空', 500))
