@@ -155,15 +155,44 @@
 
 // 参数装饰器
 
-function paramDecorator(target: any, method: string, paramIndex: number) {
-  // target[method] = ''
-  console.log(target, method, paramIndex)
+// function paramDecorator(target: any, method: string, paramIndex: number) {
+//   // target[method] = ''
+//   console.log(target, method, paramIndex)
+// }
+// class Test {
+//   getInfo(@paramDecorator name: string, age: number) {
+//     return `${name}的年龄是${age}`
+//   }
+// }
+
+// const test = new Test()
+// console.log(test.getInfo('孙悟空', 500))
+
+// 装饰器实际使用的小例子
+function catchError(msg: string) {
+  return function (target: any, key: string, descriptor: PropertyDescriptor) {
+    const fn = descriptor.value
+    descriptor.value = function () {
+      try {
+        fn()
+      } catch (e) {
+        console.log(msg)
+      }
+    }
+  }
 }
+const userInfo: any = undefined
 class Test {
-  getInfo(@paramDecorator name: string, age: number) {
-    return `${name}的年龄是${age}`
+  @catchError('userInfo.name 不存在')
+  getName() {
+    return userInfo.name
+  }
+  @catchError('userInfo.age 不存在')
+  getAge() {
+    return userInfo.age
   }
 }
 
 const test = new Test()
-console.log(test.getInfo('孙悟空', 500))
+console.log(test.getName())
+console.log(test.getAge())
