@@ -9,6 +9,15 @@ const path_1 = __importDefault(require("path"));
 const Analyzer_1 = __importDefault(require("./Analyzer"));
 const crowller_1 = __importDefault(require("./crowller"));
 const router = (0, express_1.Router)();
+function checkLogin(req, res, next) {
+    const isLogin = req.session ? req.session.login : undefined;
+    if (isLogin) {
+        next();
+    }
+    else {
+        res.send('请先登录');
+    }
+}
 router.get('/', (req, res) => {
     const isLogin = req.session ? req.session.login : undefined;
     if (isLogin) {
@@ -52,21 +61,15 @@ router.post('/login', (req, res) => {
         res.send('登录失败');
     }
 });
-router.get('/getData', (req, res) => {
-    const isLogin = req.session ? req.session.login : undefined;
-    if (isLogin) {
-        const sercret = 'serretKey';
-        const url = `http://www.dell-lee.com/typescript/demo.html?secret=${sercret}`;
-        // const analyzer = new Analyzer()
-        const analyzer = Analyzer_1.default.getInstance();
-        new crowller_1.default(url, analyzer);
-        res.send('getData successful');
-    }
-    else {
-        res.send('请登录后在进行爬取内容');
-    }
+router.get('/getData', checkLogin, (req, res) => {
+    const sercret = 'serretKey';
+    const url = `http://www.dell-lee.com/typescript/demo.html?secret=${sercret}`;
+    // const analyzer = new Analyzer()
+    const analyzer = Analyzer_1.default.getInstance();
+    new crowller_1.default(url, analyzer);
+    res.send('getData successful');
 });
-router.get('/showData', (req, res) => {
+router.get('/showData', checkLogin, (req, res) => {
     try {
         const filePath = path_1.default.resolve(__dirname, '../data/course.json');
         const content = fs_1.default.readFileSync(filePath, 'utf-8');

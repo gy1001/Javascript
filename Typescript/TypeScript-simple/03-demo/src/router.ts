@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import type { Request, Response } from 'express'
+import type { Request, Response, NextFunction } from 'express'
 import fs from 'fs'
 import path from 'path'
 import Analyzer from './Analyzer'
@@ -9,6 +9,15 @@ const router = Router()
 interface RequestWithBody extends Request {
   body: {
     password: string | undefined
+  }
+}
+
+function checkLogin(req: RequestWithBody, res: Response, next: NextFunction) {
+  const isLogin = req.session ? req.session.login : undefined
+  if (isLogin) {
+    next()
+  } else {
+    res.send('请先登录')
   }
 }
 
@@ -57,21 +66,16 @@ router.post('/login', (req: RequestWithBody, res: Response) => {
   }
 })
 
-router.get('/getData', (req: RequestWithBody, res: Response) => {
-  const isLogin = req.session ? req.session.login : undefined
-  if (isLogin) {
-    const sercret = 'serretKey'
-    const url = `http://www.dell-lee.com/typescript/demo.html?secret=${sercret}`
-    // const analyzer = new Analyzer()
-    const analyzer = Analyzer.getInstance()
-    new Crowller(url, analyzer)
-    res.send('getData successful')
-  } else {
-    res.send('请登录后在进行爬取内容')
-  }
+router.get('/getData', checkLogin, (req: RequestWithBody, res: Response) => {
+  const sercret = 'serretKey'
+  const url = `http://www.dell-lee.com/typescript/demo.html?secret=${sercret}`
+  // const analyzer = new Analyzer()
+  const analyzer = Analyzer.getInstance()
+  new Crowller(url, analyzer)
+  res.send('getData successful')
 })
 
-router.get('/showData', (req: RequestWithBody, res: Response) => {
+router.get('/showData', checkLogin, (req: RequestWithBody, res: Response) => {
   try {
     const filePath = path.resolve(__dirname, '../data/course.json')
     const content = fs.readFileSync(filePath, 'utf-8')
