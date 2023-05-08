@@ -4,6 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import Analyzer from './Analyzer'
 import Crowller from './crowller'
+import { getResponseData } from './utils/index'
 const router = Router()
 
 interface RequestWithBody extends Request {
@@ -17,7 +18,8 @@ function checkLogin(req: RequestWithBody, res: Response, next: NextFunction) {
   if (isLogin) {
     next()
   } else {
-    res.send('请先登录')
+    // res.send('请先登录')
+    res.json(getResponseData(null, '请先登录'))
   }
 }
 
@@ -48,21 +50,25 @@ router.get('/logout', (req: RequestWithBody, res: Response) => {
   if (req.session) {
     req.session.login = false
   }
-  res.redirect('/')
+  // res.redirect('/')
+  res.json(getResponseData(true))
 })
 
 router.post('/login', (req: RequestWithBody, res: Response) => {
   const { password } = req.body
   const isLogin = req.session ? req.session.login : undefined
   if (isLogin) {
-    res.send('已经登录过了')
+    // res.send('已经登录过了')
+    res.json(getResponseData(false, '已经登录过了'))
     return
   }
   if (password === '123' && req.session) {
     req.session.login = true
-    res.send('登录成功')
+    // res.send('登录成功')
+    res.json(getResponseData(true))
   } else {
-    res.send('登录失败')
+    // res.send('登录失败')
+    res.json(getResponseData(false, '登录失败'))
   }
 })
 
@@ -72,7 +78,8 @@ router.get('/getData', checkLogin, (req: RequestWithBody, res: Response) => {
   // const analyzer = new Analyzer()
   const analyzer = Analyzer.getInstance()
   new Crowller(url, analyzer)
-  res.send('getData successful')
+  // res.send('getData successful')
+  res.json(getResponseData(true))
 })
 
 router.get('/showData', checkLogin, (req: RequestWithBody, res: Response) => {
@@ -81,7 +88,8 @@ router.get('/showData', checkLogin, (req: RequestWithBody, res: Response) => {
     const content = fs.readFileSync(filePath, 'utf-8')
     res.json(JSON.parse(content))
   } catch (error) {
-    res.send('还没有爬取到内容')
+    // res.send('还没有爬取到内容')
+    res.json(getResponseData(false, '还没有爬取到内容'))
   }
 })
 
