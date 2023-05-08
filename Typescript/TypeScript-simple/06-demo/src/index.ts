@@ -199,22 +199,31 @@
 
 import 'reflect-metadata'
 
-const user = {
-  name: '唐僧',
-}
-// 往 user 上增加一个 data 属性 值为 test
-Reflect.defineMetadata('data', 'test', user)
-console.log(Reflect.getMetadata('data', user)) // test
+// const user = {
+//   name: '唐僧',
+// }
+// // 往 user 上增加一个 data 属性 值为 test
+// Reflect.defineMetadata('data', 'test', user)
+// console.log(Reflect.getMetadata('data', user)) // test
 
-@Reflect.metadata('data', 'test')
-class User {
-  @Reflect.metadata('data2', 'test2')
-  name = '唐僧'
-  @Reflect.metadata('data3', 'test3')
-  getName() {
-    return '菩提祖师'
+function showData(target: typeof User) {
+  console.log(Reflect.getMetadata('data', target.prototype, 'getName')) // name
+  console.log(Reflect.getMetadata('data', target.prototype, 'getAge')) // age
+  console.log(Reflect.getMetadata('generData', target.prototype, 'getGender')) // gender
+}
+
+function setData(dataKey: string, msg: string) {
+  return function (target: User, key: string) {
+    Reflect.defineMetadata(dataKey, msg, target, key)
   }
 }
-console.log(Reflect.getMetadata('data', User)) // test
-console.log(Reflect.getMetadata('data2', User.prototype, 'name')) // test2
-console.log(Reflect.getMetadata('data3', User.prototype, 'getName')) // test3
+
+@showData
+class User {
+  @Reflect.metadata('data', 'name')
+  getName() {}
+  @Reflect.metadata('data', 'age')
+  getAge() {}
+  @setData('generData', 'gender')
+  getGender() {}
+}
