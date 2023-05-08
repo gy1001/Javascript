@@ -5,6 +5,12 @@ import Crowller from './crowller'
 
 const router = Router()
 
+interface RequestWithBody extends Request {
+  body: {
+    password: string | undefined
+  }
+}
+
 router.get('/', (req: Request, res: Response) => {
   res.send(`<html>
     <body>
@@ -17,7 +23,7 @@ router.get('/', (req: Request, res: Response) => {
   res.send('hello word')
 })
 
-router.post('/getData', (req: Request, res: Response) => {
+router.post('/getData', (req: RequestWithBody, res: Response) => {
   if (req.body.password === '123') {
     const sercret = 'serretKey'
     const url = `http://www.dell-lee.com/typescript/demo.html?secret=${sercret}`
