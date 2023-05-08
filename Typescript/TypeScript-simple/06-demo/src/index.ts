@@ -86,29 +86,69 @@
 // // }
 
 // 访问器装饰器
-function visiDecorator(
-  target: any,
-  key: string,
-  descriptor: PropertyDescriptor,
-) {
-  descriptor.writable = false
-}
+// function visiDecorator(
+//   target: any,
+//   key: string,
+//   descriptor: PropertyDescriptor,
+// ) {
+//   descriptor.writable = false
+// }
 
+// class Test {
+//   private _name: string
+//   constructor(name: string) {
+//     this._name = name
+//   }
+//   get name() {
+//     return this._name
+//   }
+//   @visiDecorator
+//   set name(name: string) {
+//     this._name = name
+//   }
+// }
+
+// const test = new Test('唐僧')
+// // 此时因为 descriptor.writable = false 所以这里运行会报错
+// // test.name = '1123'
+// console.log(test.name) // 1123
+
+// 属性装饰器
+// function nameDecorator(target: any, key: string): any {
+//   console.log(target, key)
+//   const descriptor: PropertyDescriptor = {
+//     writable: false,
+//   }
+//   return descriptor
+// }
+
+// class Test {
+//   @nameDecorator
+//   name = '唐僧'
+// }
+
+// const test = new Test()
+// setTimeout(() => {
+//   test.name = '猪八戒' // 这里会报错
+// }, 1000)
+// console.log(test.name)
+
+// 装饰器这里修改的是原型上的 name
+function nameDecorator(target: any, key: string): any {
+  // target[key] = '菩提祖师'
+  return {
+    writable: true,
+    // configurable: true,
+    value: '猪八戒',
+  }
+}
+// 这里的属性 name 是放在了实例中
 class Test {
-  private _name: string
-  constructor(name: string) {
-    this._name = name
-  }
-  get name() {
-    return this._name
-  }
-  @visiDecorator
-  set name(name: string) {
-    this._name = name
-  }
+  @nameDecorator
+  name = '唐僧'
 }
 
-const test = new Test('唐僧')
-// 此时因为 descriptor.writable = false 所以这里运行会报错
-// test.name = '1123'
-console.log(test.name) // 1123
+const test = new Test()
+// 这里调用时候肯定先从实例上寻找
+console.log(test.name) // 唐僧
+console.log((test as any).__proto__.name) // 猪八戒
