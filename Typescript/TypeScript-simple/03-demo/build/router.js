@@ -4,22 +4,57 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
 const Analyzer_1 = __importDefault(require("./Analyzer"));
 const crowller_1 = __importDefault(require("./crowller"));
 const router = (0, express_1.Router)();
 router.get('/', (req, res) => {
+    const isLogin = req.session ? req.session.login : undefined;
+    if (isLogin) {
+        res.send(`<html>
+      <body>
+      <a href="/getData">开始抓取内容</a>
+      <br />
+      <a href="/logout">退出</a>
+      </body>
+    </html>`);
+        return;
+    }
     res.send(`<html>
     <body>
-      <form action="/getData" method="post">
-        <input type="password" placeholder="请输入密码" />
+      <form action="/login" method="post">
+        <input name="password" type="password" placeholder="请输入密码" />
         <button type="submit">提交</button>
       </form>
     </body>
   </html>`);
     res.send('hello word');
 });
-router.post('/getData', (req, res) => {
-    if (req.body.password === '123') {
+router.get('/logout', (req, res) => {
+    if (req.session) {
+        req.session.login = false;
+    }
+    res.redirect('/');
+});
+router.post('/login', (req, res) => {
+    const { password } = req.body;
+    const isLogin = req.session ? req.session.login : undefined;
+    if (isLogin) {
+        res.send('已经登录过了');
+        return;
+    }
+    if (password === '123' && req.session) {
+        req.session.login = true;
+        res.send('登录成功');
+    }
+    else {
+        res.send('登录失败');
+    }
+});
+router.get('/getData', (req, res) => {
+    const isLogin = req.session ? req.session.login : undefined;
+    if (isLogin) {
         const sercret = 'serretKey';
         const url = `http://www.dell-lee.com/typescript/demo.html?secret=${sercret}`;
         // const analyzer = new Analyzer()
@@ -28,7 +63,17 @@ router.post('/getData', (req, res) => {
         res.send('getData successful');
     }
     else {
-        res.send('Password Error !');
+        res.send('请登录后在进行爬取内容');
+    }
+});
+router.get('/showData', (req, res) => {
+    try {
+        const filePath = path_1.default.resolve(__dirname, '../data/course.json');
+        const content = fs_1.default.readFileSync(filePath, 'utf-8');
+        res.json(JSON.parse(content));
+    }
+    catch (error) {
+        res.send('还没有爬取到内容');
     }
 });
 exports.default = router;
