@@ -169,30 +169,38 @@
 // console.log(test.getInfo('孙悟空', 500))
 
 // 装饰器实际使用的小例子
-function catchError(msg: string) {
-  return function (target: any, key: string, descriptor: PropertyDescriptor) {
-    const fn = descriptor.value
-    descriptor.value = function () {
-      try {
-        fn()
-      } catch (e) {
-        console.log(msg)
-      }
-    }
-  }
-}
-const userInfo: any = undefined
-class Test {
-  @catchError('userInfo.name 不存在')
-  getName() {
-    return userInfo.name
-  }
-  @catchError('userInfo.age 不存在')
-  getAge() {
-    return userInfo.age
-  }
-}
+// function catchError(msg: string) {
+//   return function (target: any, key: string, descriptor: PropertyDescriptor) {
+//     const fn = descriptor.value
+//     descriptor.value = function () {
+//       try {
+//         fn()
+//       } catch (e) {
+//         console.log(msg)
+//       }
+//     }
+//   }
+// }
+// const userInfo: any = undefined
+// class Test {
+//   @catchError('userInfo.name 不存在')
+//   getName() {
+//     return userInfo.name
+//   }
+//   @catchError('userInfo.age 不存在')
+//   getAge() {
+//     return userInfo.age
+//   }
+// }
 
-const test = new Test()
-console.log(test.getName())
-console.log(test.getAge())
+// const test = new Test()
+// console.log(test.getName())
+// console.log(test.getAge())
+
+import 'reflect-metadata'
+
+const user = {
+  name: '唐僧',
+}
+Reflect.defineMetadata('data', 'test', user)
+console.log(Reflect.getMetadata('data', user)) // test
