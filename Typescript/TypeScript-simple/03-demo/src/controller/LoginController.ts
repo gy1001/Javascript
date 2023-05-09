@@ -53,9 +53,7 @@ class LoginController {
   logout(req: RequestWithBody, res: Response) {
     if (req.session) {
       req.session.login = false
-      res.json(getResponseData(true))
-    } else {
-      res.json(getResponseData(false, '退出失败'))
     }
+    res.json(getResponseData(true))
   }
 }
