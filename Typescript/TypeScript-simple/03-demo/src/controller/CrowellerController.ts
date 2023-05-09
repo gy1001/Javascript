@@ -12,7 +12,11 @@ interface RequestWithBody extends Request {
   }
 }
 
-function checkLogin(req: RequestWithBody, res: Response, next: NextFunction) {
+function checkLogin(
+  req: RequestWithBody,
+  res: Response,
+  next: NextFunction,
+): void {
   const isLogin = req.session ? req.session.login : undefined
   if (isLogin) {
     next()
@@ -25,7 +29,7 @@ function checkLogin(req: RequestWithBody, res: Response, next: NextFunction) {
 export default class CroweController {
   @get('/getData')
   @useMiddleware(checkLogin)
-  getData(req: RequestWithBody, res: Response) {
+  getData(req: RequestWithBody, res: Response): void {
     const sercret = 'serretKey'
     const url = `http://www.dell-lee.com/typescript/demo.html?secret=${sercret}`
     const analyzer = Analyzer.getInstance()
@@ -35,7 +39,7 @@ export default class CroweController {
 
   @useMiddleware(checkLogin)
   @get('/showData')
-  showData(req: RequestWithBody, res: Response) {
+  showData(req: RequestWithBody, res: Response): void {
     try {
       const filePath = path.resolve(__dirname, '../../data/course.json')
       const content = fs.readFileSync(filePath, 'utf-8')

@@ -11,9 +11,13 @@ interface RequestWithBody extends Request {
 
 @decoratorController
 class LoginController {
+  static isLogin(req: RequestWithBody) {
+    return !!(req.session ? req.session.login : undefined)
+  }
+
   @get('/')
-  home(req: Request, res: Response) {
-    const isLogin = req.session ? req.session.login : undefined
+  home(req: RequestWithBody, res: Response): void {
+    const isLogin = LoginController.isLogin(req)
     if (isLogin) {
       res.send(`<html>
         <body>
@@ -35,9 +39,9 @@ class LoginController {
     res.send('hello word')
   }
   @post('/login')
-  login(req: RequestWithBody, res: Response) {
+  login(req: RequestWithBody, res: Response): void {
     const { password } = req.body
-    const isLogin = req.session ? req.session.login : undefined
+    const isLogin = LoginController.isLogin(req)
     if (isLogin) {
       res.json(getResponseData(false, '已经登录过了'))
       return
@@ -50,7 +54,7 @@ class LoginController {
     }
   }
   @get('/logout')
-  logout(req: RequestWithBody, res: Response) {
+  logout(req: RequestWithBody, res: Response): void {
     if (req.session) {
       req.session.login = false
     }
