@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express'
 import { getResponseData } from '../utils/index'
 import 'reflect-metadata'
-import { loginDecorator, get, post } from './decorator'
+import { decoratorController, get, post } from './decorator'
 
 interface RequestWithBody extends Request {
   body: {
@@ -9,7 +9,7 @@ interface RequestWithBody extends Request {
   }
 }
 
-@loginDecorator
+@decoratorController
 class LoginController {
   @get('/')
   home(req: Request, res: Response) {

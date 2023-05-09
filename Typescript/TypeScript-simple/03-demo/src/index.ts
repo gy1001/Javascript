@@ -4,6 +4,7 @@ import CookieSession from 'cookie-session'
 import type { Request, Response, NextFunction } from 'express'
 // import router from './router'
 import './controller/LoginController' // 引入触发一次 装饰器
+import './controller/CrowellerController'
 import { router } from './controller/decorator'
 
 const app = express()
