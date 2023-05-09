@@ -9,7 +9,7 @@ interface RequestWithBody extends Request {
   }
 }
 
-@decoratorController
+@decoratorController('/')
 class LoginController {
   static isLogin(req: RequestWithBody) {
     return !!(req.session ? req.session.login : undefined)

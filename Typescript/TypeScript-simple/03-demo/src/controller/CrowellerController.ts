@@ -25,7 +25,7 @@ function checkLogin(
   }
 }
 
-@decoratorController
+@decoratorController('/abc')
 export default class CroweController {
   @get('/getData')
   @useMiddleware(checkLogin)
