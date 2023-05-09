@@ -1,6 +1,17 @@
-import type { Request, Response, NextFunction } from 'express'
+import type { Request, Response } from 'express'
+import { getResponseData } from '../utils/index'
+import 'reflect-metadata'
+import { loginDecorator, get } from './decorator'
 
+interface RequestWithBody extends Request {
+  body: {
+    password: string | undefined
+  }
+}
+
+@loginDecorator
 class LoginController {
+  @get('/')
   home(req: Request, res: Response) {
     const isLogin = req.session ? req.session.login : undefined
     if (isLogin) {
@@ -22,5 +33,20 @@ class LoginController {
       </body>
     </html>`)
     res.send('hello word')
+  }
+  @get('/login')
+  login(req: RequestWithBody, res: Response) {
+    const { password } = req.body
+    const isLogin = req.session ? req.session.login : undefined
+    if (isLogin) {
+      res.json(getResponseData(false, '已经登录过了'))
+      return
+    }
+    if (password === '123' && req.session) {
+      req.session.login = true
+      res.json(getResponseData(true))
+    } else {
+      res.json(getResponseData(false, '登录失败'))
+    }
   }
 }
