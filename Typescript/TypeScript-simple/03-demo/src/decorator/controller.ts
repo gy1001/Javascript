@@ -12,15 +12,15 @@ export function decoratorController(rootPath: string) {
         target.prototype,
         key,
       )
-      const middleware: RequestHandler = Reflect.getMetadata(
+      const middlewares: RequestHandler[] = Reflect.getMetadata(
         'middleware',
         target.prototype,
         key,
       )
       const handler = target.prototype[key]
       if (fullPath && method && handler) {
-        if (middleware) {
-          router[method](fullPath, middleware, handler)
+        if (middlewares) {
+          router[method](fullPath, ...middlewares, handler)
         } else {
           router[method](fullPath, handler)
         }

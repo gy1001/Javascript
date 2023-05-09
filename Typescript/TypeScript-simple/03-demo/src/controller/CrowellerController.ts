@@ -18,6 +18,7 @@ function checkLogin(
   next: NextFunction,
 ): void {
   const isLogin = req.session ? req.session.login : undefined
+  console.log('checkLogin middleware')
   if (isLogin) {
     next()
   } else {
@@ -25,10 +26,16 @@ function checkLogin(
   }
 }
 
+function test(req: RequestWithBody, res: Response, next: NextFunction) {
+  console.log('test middleware')
+  next()
+}
+
 @decoratorController('/abc')
 export default class CroweController {
   @get('/getData')
   @useMiddleware(checkLogin)
+  @useMiddleware(test)
   getData(req: RequestWithBody, res: Response): void {
     const sercret = 'serretKey'
     const url = `http://www.dell-lee.com/typescript/demo.html?secret=${sercret}`
