@@ -4,7 +4,7 @@ import path from 'path'
 import Analyzer from '../Analyzer'
 import Crowller from '../crowller'
 import { getResponseData } from '../utils/index'
-import { get, decoratorController, useMiddleware } from './decorator'
+import { get, decoratorController, useMiddleware } from '../decorator'
 
 interface RequestWithBody extends Request {
   body: {

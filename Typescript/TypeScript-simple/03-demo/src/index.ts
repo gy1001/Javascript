@@ -5,7 +5,7 @@ import type { Request, Response, NextFunction } from 'express'
 // import router from './router'
 import './controller/LoginController' // 引入触发一次 装饰器
 import './controller/CrowellerController'
-import { router } from './controller/decorator'
+import router from './router'
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
