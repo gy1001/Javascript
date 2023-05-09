@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express'
 import { getResponseData } from '../utils/index'
 import 'reflect-metadata'
-import { loginDecorator, get } from './decorator'
+import { loginDecorator, get, post } from './decorator'
 
 interface RequestWithBody extends Request {
   body: {
@@ -34,7 +34,7 @@ class LoginController {
     </html>`)
     res.send('hello word')
   }
-  @get('/login')
+  @post('/login')
   login(req: RequestWithBody, res: Response) {
     const { password } = req.body
     const isLogin = req.session ? req.session.login : undefined
