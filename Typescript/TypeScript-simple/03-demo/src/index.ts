@@ -1,8 +1,10 @@
 import express from 'express'
-import router from './router'
 import bodyParser from 'body-parser'
 import CookieSession from 'cookie-session'
 import type { Request, Response, NextFunction } from 'express'
+// import router from './router'
+import './controller/LoginController' // 引入触发一次 装饰器
+import { router } from './controller/decorator'
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))

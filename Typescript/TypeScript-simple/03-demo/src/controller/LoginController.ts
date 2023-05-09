@@ -49,4 +49,13 @@ class LoginController {
       res.json(getResponseData(false, '登录失败'))
     }
   }
+  @get('/logout')
+  logout(req: RequestWithBody, res: Response) {
+    if (req.session) {
+      req.session.login = false
+      res.json(getResponseData(true))
+    } else {
+      res.json(getResponseData(false, '退出失败'))
+    }
+  }
 }
