@@ -111,3 +111,34 @@ let info2: InfoFunType = function (name, age, ...rest) {
   return rest
 }
 info2('孙悟空', 500, 122, '撒旦法撒旦', '如来佛祖')
+
+class Pay {
+  // 支付父类
+  bank_card_no: string // 捆绑银行卡
+  balance: number // 银行卡余额
+  const: number // 消费费用
+  tokenid: string // 登录后用户访问令牌
+  pay() {}
+}
+
+enum PayType {
+  WebChat = 1,
+  AliPay = 2,
+  CloundFlashPayment = 3,
+}
+
+class BankPay extends Pay {
+  bank_network: string // 银行网点
+  bankno_type // 银行卡类型
+  bank_card_psw // 银行卡密码
+  custname // 顾客姓名
+}
+
+class MobilePay extends Pay {
+  type: PayType
+  change: number // 支付平台零钱
+  opendid: string // 用户识别身份 id
+  appid: string // 微信小程序 appid
+}
+
+let webChatPay = new MobilePay()
