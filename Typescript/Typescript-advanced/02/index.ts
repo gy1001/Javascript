@@ -216,3 +216,16 @@ p.doEat('我', '苹果')
 // }
 
 // let webChatPay = new MobilePay()
+
+class ObjectRefImpl<T extends object, K extends keyof T> {
+  public readonly __v_isRef = true
+  constructor(private readonly _object: T, private readonly _key: K) {}
+  get value() {
+    return this._object[this._key]
+  }
+  set value(newVal) {
+    this._object[this._key] = newVal
+  }
+}
+const obj = new ObjectRefImpl({ username: '孙悟空', age: 100 }, 'age')
+console.log(obj.value) // 100
