@@ -229,3 +229,17 @@ class ObjectRefImpl<T extends object, K extends keyof T> {
 }
 const obj = new ObjectRefImpl({ username: '孙悟空', age: 100 }, 'age')
 console.log(obj.value) // 100
+
+const chineseArr = ['武汉', '石家庄', '郑州', '太原', '济南', '沈阳', '大连']
+
+function sortChinese(arr: Array<string>): Array<string> {
+  return arr.sort(function (preStr, curStr) {
+    return preStr.localeCompare(curStr, 'zh-CN')
+  })
+}
+
+console.log(sortChinese(chineseArr)) // [ '大连', '济南','沈阳', '石家庄','太原', '武汉','郑州']
+function isChinese(arr: Array<string>): boolean {
+  var pattern = /[\u4e00-\u9fa5]/g
+  return chineseArr.some((item) => pattern.test(item))
+}
