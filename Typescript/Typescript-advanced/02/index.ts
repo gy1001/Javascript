@@ -95,19 +95,93 @@
 // function fn(data?: string) {}
 // fn()
 
-let obj: object = { username: '唐僧', age: 240 }
-const username = 'username'
-let u = obj[username] // 推到出来：u: any
+// let obj: object = { username: '唐僧', age: 240 }
+// const username = 'username'
+// let u = obj[username] // 推到出来：u: any
 
-// 返回值类型可以省略，因为会推导出类
-function info(name: string, age: number): number {
-  return 3
-}
+// // 返回值类型可以省略，因为会推导出类
+// // function info(name: string, age: number): number {
+// //   return 3
+// // }
 
-info('唐僧', 100)
+// info('唐僧', 100)
 
 type InfoFunType = (name: string, age: number, ...rest: any) => any
 let info2: InfoFunType = function (name, age, ...rest) {
   return rest
 }
 info2('孙悟空', 500, 122, '撒旦法撒旦', '如来佛祖')
+
+type TypeStuobj = { username: string; age: number; phone: string }
+function info(stuObj: TypeStuobj) {
+  console.log('name', stuObj.username, 'age', stuObj.age)
+  return 3
+}
+let stuObj: TypeStuobj = { username: '唐僧', age: 100, phone: '11122' }
+info(stuObj)
+
+// 函数解构
+function subInfo({ username, age }: TypeStuobj) {
+  console.log('name:', username, 'age: ', age)
+}
+subInfo({ username: '李四', age: 22, phone: '33333' })
+
+// type 定义基础类型
+type num = number
+// type 定义联合类型
+type baseType = string | number | symbol
+
+interface Car {
+  branNo: string
+}
+interface Plane {
+  No: string
+  brandNo: string
+}
+type baseTyp2 = Car | Plane
+
+interface Car {
+  branNo: string
+}
+
+interface Plane {
+  No: string
+  brandNo: string
+}
+type TypeChild = [Car, Plane]
+
+class People {
+  name: string
+  age: number
+  address: string
+  // 静态属性
+  static count: number = 10
+  constructor(_name: string, _age: number, _address: string) {
+    this.name = _name
+    this.age = _age
+    this.address = _address
+    People.count++
+  }
+  doEat(who: string, where: string) {
+    console.log(`who: ${who},where: ${where}`)
+  }
+  doStep() {}
+}
+
+const dateProp = Object.getOwnPropertyDescriptor(People.prototype, 'doEat')
+const tragetMethod = dateProp?.value
+dateProp!.value = function (...args: any[]) {
+  console.log('前置拦截')
+  tragetMethod.apply(this, args)
+  console.log('后置拦截')
+}
+// dateProp?.value('传参数')
+
+Object.defineProperty(People.prototype, 'doEat', dateProp!)
+
+const p = new People('名字', 100, '四惠东')
+p.doEat('我', '苹果')
+
+// 前置拦截
+// who: 我,where: 苹果
+// 后置拦截
