@@ -243,3 +243,79 @@ function isChinese(arr: Array<string>): boolean {
   var pattern = /[\u4e00-\u9fa5]/g
   return chineseArr.some((item) => pattern.test(item))
 }
+
+function quickSort(arr: Array<any>): Array<any> {
+  if (arr.length < 2) {
+    return arr
+  }
+  const left: Array<any> = []
+  const right: Array<any> = []
+  const middle = arr.splice(Math.floor(arr.length / 2), 1)[0]
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] < middle) {
+      left.push(arr[i])
+    } else {
+      right.push(arr[i])
+    }
+  }
+  return quickSort(left).concat(middle, quickSort(right))
+}
+
+function strSelfSort(str: string) {
+  const strArr = str.split('')
+  const strSortArr = quickSort(strArr)
+  return strSortArr.join('')
+}
+function sort<T>(data: T): Array<any> | string | undefined {
+  if (data instanceof Array) {
+    if (isChinese(data)) {
+      return sortChinese(data)
+    } else {
+      return quickSort(data)
+    }
+  } else if (typeof data === 'string') {
+    return strSelfSort(data)
+  }
+}
+
+console.log(sort(chineseArr))
+console.log(sort('srcfgfdf'))
+
+class CommercialBank {
+  public address: string = '北京'
+  public name: string = '王五'
+  static count: number
+  constructor(name: string, address: string) {
+    this.address = address
+    this.name = name
+  }
+  loan(): void {
+    console.log(this.name + ' 银行贷款')
+  }
+}
+// 注意这里的 new
+type ConstructorType = new (...args: any) => any
+interface ConstructroInter {
+  new (...args: any): any
+}
+// function createFactoryConstructor(constructorType: new (...args: any) => any) {
+// function createFactoryConstructor(constructorType: ConstructorType) {
+function createFactoryConstructor(constructorType: ConstructroInter) {
+  console.log(constructorType.name + ' 被创建了')
+  new constructorType()
+}
+
+createFactoryConstructor(CommercialBank)
+
+class Subject {
+  constructor(public subid: number, public subname: string) {}
+}
+
+let chineseSubject = new Subject(100, '语文')
+const mathSubject = new Subject(101, '数学')
+const englishSubject = new Subject(101, '英语')
+const setZhangSanSubject = new Set([chineseSubject, mathSubject])
+
+type zhangSanType = typeof setZhangSanSubject // type zhangSanType = Set<Subject>
+type inferSetType<T> = T extends Set<infer P> ? P : never
+type setType = inferSetType<zhangSanType> // type setType = Subject
