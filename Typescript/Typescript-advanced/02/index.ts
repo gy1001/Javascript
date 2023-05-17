@@ -319,3 +319,19 @@ const setZhangSanSubject = new Set([chineseSubject, mathSubject])
 type zhangSanType = typeof setZhangSanSubject // type zhangSanType = Set<Subject>
 type inferSetType<T> = T extends Set<infer P> ? P : never
 type setType = inferSetType<zhangSanType> // type setType = Subject
+
+// type Exclude<T, U> = T extends U ? never : T;
+type TestExclude = Exclude<string, string | number> // type TestExclude = never
+type TestExclude2 = Exclude<string | number, string | number> // type TestExclude2 = never
+type TestExclude3 = Exclude<string | number | boolean, string | number> // type TestExclude3 = boolean
+interface Todo {
+  readonly title: string
+  completed: boolean
+  description: string
+  date?: Date
+  publishers?: string // 发言人
+}
+
+type TestRequired<T> = {
+  [K in keyof T]-?: T[K]
+}
