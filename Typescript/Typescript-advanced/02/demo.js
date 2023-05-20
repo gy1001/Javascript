@@ -27,3 +27,36 @@ console.log(
 )
 console.log('sonObj2访问son对象原型上的name属性', sonObj2.name)
 console.log('sonObj2访问friends属性', sonObj2.friends)
+
+// People父类构造函数：看成是一个父类
+function People(name, sex, phone) {
+  this.name = name // 实例属性
+  this.sex = sex
+  this.phone = phone
+}
+
+People.prototype.doEat = function () {
+  console.log(this.name + '吃饭...')
+}
+
+// ChinesePeople 子构造函数【看成一个子类】
+function ChinesePeople(name, sex, phone, national) {
+  People.apply(this, [name, sex, phone]) // 借用父类构造函数
+  this.national = national // 名族
+}
+
+function _extends(parent, son) {
+  // 第一步：创建一个寄生构造函数
+  function Middle() {
+    // 此处毫无意义，只是为了测试
+    this.count = 1
+    this.constructor = son
+  }
+
+  Middle.prototype = parent.prototype
+  return new Middle()
+}
+ChinesePeople.prototype = _extends(People, ChinesePeople)
+
+const chinesePeopleOne = new ChinesePeople('王海', '女', 1111, '汉族')
+console.log(chinesePeopleOne)
