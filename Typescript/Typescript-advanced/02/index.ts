@@ -344,3 +344,101 @@ export function mounted(isStartUp: IncreaseBoolean) {
   }
 }
 mounted(1)
+
+// 父类 Vechile 交通工具类
+class Vechile {
+  public brand: string // 品牌
+  public vechileNo: string // 车牌号
+  public days: number //租赁天数
+  public total: number = 0 // 支付的租赁总费用
+  public deposit: number // 押金
+  constructor(
+    _brand: string,
+    _vechileNo: string,
+    _days: number,
+    _deposit: number,
+  ) {
+    this.brand = _brand
+    this.vechileNo = _vechileNo
+    this.days = _days
+    this.deposit = _deposit
+  }
+  // 计算租赁车的价格
+  public calculateRent() {
+    console.log(this.brand + ' 车牌号为：' + this.vechileNo + '开始被租')
+    return 0
+  }
+  // 支付押金的方法
+  public payDesposit() {
+    console.log(
+      this.brand + ' 车牌号：' + this.vechileNo + ' 支付了' + this.deposit,
+    )
+  }
+  // 安全监测方法
+  public safeShow() {
+    console.log('车违规了')
+    console.log(this.brand + ' 车牌号：' + this.vechileNo + '违规了')
+  }
+}
+
+class Car extends Vechile {
+  public type: string
+  constructor(
+    _brand: string,
+    _vechileNo: string,
+    _days: number,
+    _deposit: number,
+    _type: string,
+  ) {
+    super(_brand, _vechileNo, _days, _deposit) // 相当于之前的 call 方法
+    this.type = _type
+  }
+  //根据租车型号获取租赁一天的价格
+  public getPriceByType() {
+    let rentMoneyByDay: number = 0 // 每天的租金
+    if (this.type === '普拉多巡洋舰') {
+      rentMoneyByDay = 800
+    } else if (this.type === '凯美瑞旗舰版') {
+      rentMoneyByDay = 400
+    } else if (this.type === '威驰智行版') {
+      rentMoneyByDay = 200
+    }
+    return rentMoneyByDay
+  }
+
+  // 计算租赁车的价格
+  public calculateRent() {
+    return this.days * this.getPriceByType()
+  }
+}
+
+const car = new Car('普拉多', '京3A556', 3, 1000, '普拉多巡洋舰')
+console.log(car.calculateRent())
+
+class Bus extends Vechile {
+  public seatNum: number // 座位数
+  constructor(
+    _brand: string,
+    _vechileNo: string,
+    _days: number,
+    _deposit: number,
+    _seatNum: number,
+  ) {
+    super(_brand, _vechileNo, _days, _deposit)
+    this.seatNum = _seatNum
+  }
+
+  public getPriceBySeatNum() {
+    let rentMoneyByDay: number = 0 // 计算每天的租金
+    if (this.seatNum <= 16) {
+      rentMoneyByDay = 800
+    } else if (this.seatNum > 16) {
+      rentMoneyByDay = 1600
+    }
+    return rentMoneyByDay
+  }
+
+  public calculateRent(): number {
+    return this.days * this.getPriceBySeatNum()
+  }
+}

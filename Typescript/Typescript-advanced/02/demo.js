@@ -45,18 +45,23 @@ function ChinesePeople(name, sex, phone, national) {
   this.national = national // 名族
 }
 
-function _extends(parent, son) {
-  // 第一步：创建一个寄生构造函数
-  function Middle() {
-    // 此处毫无意义，只是为了测试
-    this.count = 1
-    this.constructor = son
-  }
+// function _extends(parent, son) {
+//   // 第一步：创建一个寄生构造函数
+//   function Middle() {
+//     // 此处毫无意义，只是为了测试
+//     this.count = 1
+//     this.constructor = son
+//   }
 
-  Middle.prototype = parent.prototype
-  return new Middle()
+//   Middle.prototype = parent.prototype
+//   return new Middle()
+// }
+
+function _extends(parent) {
+  let middle = { count: 1 }
+  return Object.setPrototypeOf(middle, parent.prototype)
 }
 ChinesePeople.prototype = _extends(People, ChinesePeople)
-
+ChinesePeople.prototype.constructor = ChinesePeople // 需要额外增加子构造函数指向
 const chinesePeopleOne = new ChinesePeople('王海', '女', 1111, '汉族')
 console.log(chinesePeopleOne)
