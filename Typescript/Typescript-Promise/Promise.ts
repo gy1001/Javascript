@@ -51,23 +51,38 @@ export default class MyPromise {
         const rejectValue = rejectInThen(this.reject_executor_value)
         reject(rejectValue)
       } else if (this.status === 'pending') {
-        this.resolve_then_callbacks.push(() => {
-          let result: any = resolveInThen(this.resolve_executor_value)
-          if (isMyPromise(result)) {
-            setTimeout(() => {
-              resolve(result.resolve_executor_value)
-            }, 5)
-          } else {
-            console.log('then中函数 resolve 参数执行的结果', result)
-            resolve(result)
-          }
-        })
-        this.reject_then_callbacks.push(() => {
-          let result = rejectInThen(this.reject_executor_value)
-          console.log('then中函数 reject 参数执行的结果', result)
-          reject(result)
-        })
+        this.processManyAsyncAndSync(
+          resolveInThen,
+          rejectInThen,
+          resolve,
+          reject,
+        )
       }
+    })
+  }
+
+  // 执行同步或者异步
+  processManyAsyncAndSync(
+    resolveInThen: ResolveType,
+    rejectInThen: RejectType,
+    resolve: ResolveType,
+    reject: RejectType,
+  ) {
+    this.resolve_then_callbacks.push(() => {
+      let result: any = resolveInThen(this.resolve_executor_value)
+      if (isMyPromise(result)) {
+        setTimeout(() => {
+          resolve(result.resolve_executor_value)
+        }, 5)
+      } else {
+        console.log('then中函数 resolve 参数执行的结果', result)
+        resolve(result)
+      }
+    })
+    this.reject_then_callbacks.push(() => {
+      let result = rejectInThen(this.reject_executor_value)
+      console.log('then中函数 reject 参数执行的结果', result)
+      reject(result)
     })
   }
 }
