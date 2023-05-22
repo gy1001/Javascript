@@ -71,9 +71,19 @@ export default class MyPromise {
     this.resolve_then_callbacks.push(() => {
       let result: any = resolveInThen(this.resolve_executor_value)
       if (isMyPromise(result)) {
-        setTimeout(() => {
-          resolve(result.resolve_executor_value)
-        }, 5)
+        // 第一种
+        // setTimeout(() => {
+        //   resolve(result.resolve_executor_value)
+        // }, 5)
+        // 第二种方法
+        result.then(
+          (resolveSuccess) => {
+            resolve(resolveSuccess)
+          },
+          (rejectFailed) => {
+            reject(rejectFailed)
+          },
+        )
       } else {
         console.log('then中函数 resolve 参数执行的结果', result)
         resolve(result)
