@@ -54,10 +54,12 @@ export default class Promiose<T = any> {
         this.resolve_then_callbacks.push(() => {
           let result = resolveInThen(this.resolve_executor_value)
           console.log('then中函数 resolve 参数执行的结果', result)
+          resolve(result)
         })
         this.reject_then_callbacks.push(() => {
           let result = rejectInThen(this.reject_executor_value)
           console.log('then中函数 reject 参数执行的结果', result)
+          reject(result)
         })
       }
     })
