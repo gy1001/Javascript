@@ -5,6 +5,8 @@ export default class Promiose<T = any> {
   public status!: string
   public resolve_executor_value!: any
   public reject_executor_value!: any
+  public resolve_then_callbacks: (() => void)[] = []
+  public reject_then_callbacks: (() => void)[] = []
   constructor(executor: Executor) {
     this.status = 'pending' // 起始等待状态
     this.resolve = (value: any): any => {
@@ -12,6 +14,9 @@ export default class Promiose<T = any> {
         this.status = 'success'
         this.resolve_executor_value = value
         console.log('status change: pending => resolve', value)
+        this.resolve_then_callbacks.forEach((callback) => {
+          callback()
+        })
       }
     }
     this.reject = (value: any): any => {
@@ -19,6 +24,9 @@ export default class Promiose<T = any> {
         this.status = 'fail'
         console.log('status change: pending => reject', value)
         this.reject_executor_value = value
+        this.reject_then_callbacks.forEach((callback) => {
+          callback()
+        })
       }
     }
     try {
@@ -42,6 +50,15 @@ export default class Promiose<T = any> {
         console.log('rejectInThen 被执行了')
         const rejectValue = rejectInThen(this.reject_executor_value)
         reject(rejectValue)
+      } else if (this.status === 'pending') {
+        this.resolve_then_callbacks.push(() => {
+          let result = resolveInThen(this.resolve_executor_value)
+          console.log('then中函数 resolve 参数执行的结果', result)
+        })
+        this.reject_then_callbacks.push(() => {
+          let result = rejectInThen(this.reject_executor_value)
+          console.log('then中函数 reject 参数执行的结果', result)
+        })
       }
     })
   }
