@@ -10,8 +10,9 @@ export default class Promiose<T = any> {
     this.resolve = (value: any): any => {
       if (this.status === 'pending') {
         this.status = 'success'
-        console.log('status change: pending => resolve', value)
         this.resolve_executor_value = value
+        value[10] = '100'
+        console.log('status change: pending => resolve', value)
       }
     }
     this.reject = (value: any): any => {
@@ -21,7 +22,15 @@ export default class Promiose<T = any> {
         this.reject_executor_value = value
       }
     }
-    executor(this.resolve, this.reject)
+    try {
+      // 执行函数
+      executor(this.resolve, this.reject)
+    } catch (error: any) {
+      this.status = 'pending'
+      // 失败则直接执行 reject 函数
+      this.reject(error.toString())
+      // throw new Error('程序终止...')
+    }
   }
 
   then(resolveInThen: ResolveType, rejectInThen: RejectType) {
