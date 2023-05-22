@@ -66,7 +66,7 @@
           throw reason
         }
       }
-      1
+
       if (typeof onResolved !== 'function') {
         onResolved = (value) => value
       }
@@ -81,7 +81,7 @@
                 },
                 (e) => {
                   reject(e)
-                }
+                },
               )
             } else {
               // 结果的对象状态为成功
@@ -127,7 +127,7 @@
             },
             (err) => {
               reject(err)
-            }
+            },
           )
         } else {
           resolve(resultVal)
@@ -160,8 +160,8 @@
     console.log(p1)
     const p2 = Promise.reject(
       new Promise((resolve, reject) => {
-        reject('error我是错误信息')
-      })
+        // reject('error我是错误信息')
+      }),
     )
     console.log(p2)
     const p3 = Promise.reject(Promise.resolve('我是resolve信息'))
