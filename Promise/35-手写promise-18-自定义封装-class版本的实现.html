@@ -70,7 +70,7 @@
             throw reason
           }
         }
-        1
+
         if (typeof onResolved !== 'function') {
           onResolved = (value) => value
         }
@@ -85,7 +85,7 @@
                   },
                   (e) => {
                     reject(e)
-                  }
+                  },
                 )
               } else {
                 // 结果的对象状态为成功
@@ -135,7 +135,7 @@
               },
               (err) => {
                 reject(err)
-              }
+              },
             )
           } else {
             resolve(resultVal)
@@ -168,7 +168,7 @@
               },
               (err) => {
                 reject(err)
-              }
+              },
             )
           }
         })
@@ -183,7 +183,7 @@
               },
               (error) => {
                 reject(error)
-              }
+              },
             )
           }
         })
