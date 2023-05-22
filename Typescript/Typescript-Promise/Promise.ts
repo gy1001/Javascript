@@ -11,7 +11,6 @@ export default class Promiose<T = any> {
       if (this.status === 'pending') {
         this.status = 'success'
         this.resolve_executor_value = value
-        value[10] = '100'
         console.log('status change: pending => resolve', value)
       }
     }
@@ -34,12 +33,16 @@ export default class Promiose<T = any> {
   }
 
   then(resolveInThen: ResolveType, rejectInThen: RejectType) {
-    if (this.status === 'success') {
-      console.log('resolveInThen 被执行了')
-      resolveInThen(this.resolve_executor_value)
-    } else if (this.status === 'fail') {
-      console.log('rejectInThen 被执行了')
-      rejectInThen(this.reject_executor_value)
-    }
+    return new Promise((resolve: ResolveType, reject: RejectType) => {
+      if (this.status === 'success') {
+        console.log('resolveInThen 被执行了')
+        const result = resolveInThen(this.resolve_executor_value)
+        resolve(result)
+      } else if (this.status === 'fail') {
+        console.log('rejectInThen 被执行了')
+        const rejectValue = rejectInThen(this.reject_executor_value)
+        reject(rejectValue)
+      }
+    })
   }
 }
