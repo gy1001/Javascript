@@ -1,5 +1,5 @@
 import { Executor, RejectType, ResolveType } from './actiontype'
-export default class Promiose<T = any> {
+export default class MyPromise {
   public resolve!: ResolveType
   public reject!: RejectType
   public status!: string
@@ -41,7 +41,7 @@ export default class Promiose<T = any> {
   }
 
   then(resolveInThen: ResolveType, rejectInThen: RejectType) {
-    return new Promise((resolve: ResolveType, reject: RejectType) => {
+    return new MyPromise((resolve: ResolveType, reject: RejectType) => {
       if (this.status === 'success') {
         console.log('resolveInThen 被执行了')
         const result = resolveInThen(this.resolve_executor_value)
@@ -52,9 +52,15 @@ export default class Promiose<T = any> {
         reject(rejectValue)
       } else if (this.status === 'pending') {
         this.resolve_then_callbacks.push(() => {
-          let result = resolveInThen(this.resolve_executor_value)
-          console.log('then中函数 resolve 参数执行的结果', result)
-          resolve(result)
+          let result: any = resolveInThen(this.resolve_executor_value)
+          if (isMyPromise(result)) {
+            setTimeout(() => {
+              resolve(result.resolve_executor_value)
+            }, 5)
+          } else {
+            console.log('then中函数 resolve 参数执行的结果', result)
+            resolve(result)
+          }
         })
         this.reject_then_callbacks.push(() => {
           let result = rejectInThen(this.reject_executor_value)
@@ -64,4 +70,16 @@ export default class Promiose<T = any> {
       }
     })
   }
+}
+
+function isMyPromise(val: any): val is MyPromise {
+  return isObject(val) && isFunction(val.then)
+}
+
+function isObject(val: any): val is Record<any, any> {
+  return !!(val !== null && typeof val === 'object')
+}
+
+function isFunction(data: any): data is Function {
+  return typeof data === 'function'
 }
