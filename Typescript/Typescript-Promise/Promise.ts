@@ -95,6 +95,31 @@ export default class MyPromise {
       reject(result)
     })
   }
+
+  static all(promises: MyPromise[]): MyPromise {
+    return new MyPromise((resolve, reject) => {
+      const resolveArr: any[] = []
+      promises.forEach((promise, index) => {
+        promise.then(
+          (resolveSuccess) => {
+            processData(resolveSuccess, index)
+          },
+          (rejectFail) => {
+            // 只要有一个失败就执行失败回调
+            reject(rejectFail)
+          },
+        )
+      })
+
+      function processData(resolveSuccess: any, index: number) {
+        resolveArr[index] = resolveSuccess
+        // 所有的 promise 对象全部 resolve 之后
+        if (index === promises.length - 1) {
+          resolve(resolveArr)
+        }
+      }
+    })
+  }
 }
 
 function isMyPromise(val: any): val is MyPromise {

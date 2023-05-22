@@ -43,3 +43,24 @@ promise
       return 'reject3'
     },
   )
+
+let promise1 = new MyPromise((resolve) => {
+  resolve('第一个promise')
+})
+
+let promise2 = new MyPromise((resolve) => {
+  resolve('第二个promise')
+})
+
+let promise3 = new MyPromise((resolve) => {
+  resolve('第三个promise')
+})
+
+MyPromise.all([promise1, promise2, promise3]).then(
+  (res) => {
+    console.log(res)
+  },
+  (error) => {
+    console.log(error)
+  },
+)
