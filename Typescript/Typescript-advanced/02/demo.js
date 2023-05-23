@@ -237,33 +237,33 @@ class Person {
 // console.log('sonObj2访问friends属性', sonObj2.friends)
 
 // People父类构造函数：看成是一个父类
-function People(name, sex, phone) {
-  this.name = name // 实例属性
-  this.sex = sex
-  this.phone = phone
-}
-const hasOwn = Object.hasOwnProperty
-const print = console.log
-const person = new Person()
-print('getName: ', hasOwn.call(person, 'getName')) // getName: true
-print('getAge: ', hasOwn.call(person, 'getAge')) // getAge: false
+// function People(name, sex, phone) {
+//   this.name = name // 实例属性
+//   this.sex = sex
+//   this.phone = phone
+// }
+// const hasOwn = Object.hasOwnProperty
+// const print = console.log
+// const person = new Person()
+// print('getName: ', hasOwn.call(person, 'getName')) // getName: true
+// print('getAge: ', hasOwn.call(person, 'getAge')) // getAge: false
 
 // getName 是实例属性
 // getAge 是原型属性
 
-const obj = {}
-Object.defineProperty(obj, 'name', {
-  vaulue: 1,
-  writable: false,
-  configurable: false,
-})
-// 尝试修改描述信息
-Object.defineProperty(obj, 'name', {
-  value: 2,
-  writable: false,
-})
-// 读取信息
-console.log(Object.getOwnPropertyDescriptor(obj, 'name'))
+// const obj = {}
+// Object.defineProperty(obj, 'name', {
+//   vaulue: 1,
+//   writable: false,
+//   configurable: false,
+// })
+// // 尝试修改描述信息
+// Object.defineProperty(obj, 'name', {
+//   value: 2,
+//   writable: false,
+// })
+// // 读取信息
+// console.log(Object.getOwnPropertyDescriptor(obj, 'name'))
 // { "writable": false, "enumerable": false, "configurable": false }
 
 // class Person {
@@ -284,9 +284,9 @@ console.log(Object.getOwnPropertyDescriptor(obj, 'name'))
 //   }
 // }
 
-const proto = Boolean.prototype
-console.log(typeof proto)
-console.log(Object.prototype.toString.call(proto))
+// const proto = Boolean.prototype
+// console.log(typeof proto)
+// console.log(Object.prototype.toString.call(proto))
 
 // 普通函数
 function a() {}
@@ -321,25 +321,25 @@ function instanceOf(instance, cclass) {
 // console.log(instanceOf(cchild, Date)) // false
 // console.log(instanceOf(cchild, Luren)) // false
 
-const getType = (val) => Object.prototype.toString.call(val)
-function getPrototypeChains(instance) {
-  const chains = []
-  let proto = instance.__proto__
-  chains.push(getType(proto))
-  while (proto) {
-    proto = proto.__proto__
-    chains.push(getType(proto))
-  }
-  return chains
-}
+// const getType = (val) => Object.prototype.toString.call(val)
+// function getPrototypeChains(instance) {
+//   const chains = []
+//   let proto = instance.__proto__
+//   chains.push(getType(proto))
+//   while (proto) {
+//     proto = proto.__proto__
+//     chains.push(getType(proto))
+//   }
+//   return chains
+// }
 
-console.log(getPrototypeChains(Function)) // ['[object Function]', '[object Object]', '[object Null]']
-console.log(getPrototypeChains(Object)) // ['[object Function]', '[object Object]', '[object Null]']
+// console.log(getPrototypeChains(Function)) // ['[object Function]', '[object Object]', '[object Null]']
+// console.log(getPrototypeChains(Object)) // ['[object Function]', '[object Object]', '[object Null]']
 
-console.log(Object.isPrototypeOf({})) // false
-console.log(Object.prototype.isPrototypeOf({})) // true
-console.log(Reflect.isPrototypeOf({})) // false
-console.log(Function.isPrototypeOf({})) // false
+// console.log(Object.isPrototypeOf({})) // false
+// console.log(Object.prototype.isPrototypeOf({})) // true
+// console.log(Reflect.isPrototypeOf({})) // false
+// console.log(Function.isPrototypeOf({})) // false
 
 // const symbolSay = Symbol.for('say1')
 // class Person {
