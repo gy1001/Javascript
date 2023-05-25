@@ -1,5 +1,8 @@
 Array.isArray = function (obj) {
-  return Object.prototype.toString.call(obj) === '[object Array]'
+  if (typeof obj !== 'object' || obj === null) {
+    return false
+  }
+  return obj instanceof Array
 }
 
 const arr = ['1']

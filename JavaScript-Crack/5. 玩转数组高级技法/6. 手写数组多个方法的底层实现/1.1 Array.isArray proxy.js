@@ -1,8 +1,6 @@
-const arr = ["1"];
+const arr = ['1']
 
-const proxy = new Proxy(arr, {});
-const log = console.log;
+const proxy = new Proxy(arr, {})
+const log = console.log
 
-log("isArray:", Array.isArray(proxy))
-
-
+log('isArray:', Array.isArray(proxy))

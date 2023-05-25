@@ -1,12 +1,11 @@
-const arr = [1,undefined, null, {}];
+const arr = [1, undefined, null, {}]
 
-console.log(arr.entries());
+console.log(arr.entries())
 // next访问
-const iter = arr.entries();
-console.log("next:", iter.next());
+const iter = arr.entries()
+console.log('next:', iter.next())
 
 // for of迭代
-for(let [k, v] of arr.entries()){
-    console.log(k, v)
+for (let [k, v] of arr.entries()) {
+  console.log(k, v)
 }
-
