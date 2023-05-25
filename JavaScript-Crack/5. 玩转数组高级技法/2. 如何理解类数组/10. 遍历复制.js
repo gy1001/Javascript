@@ -1,12 +1,12 @@
-var arr = [];
+var arr = []
 var arrayLikeObj = {
-    length: 2,
-    0: 1,
-    1: 2
-};
-
-for(let i=0; i< arrayLikeObj.length; i++){
-    arr[i] = arrayLikeObj[i];
+  length: 2,
+  0: 1,
+  1: 2,
 }
 
-console.log(arr); //  [1, 2]
+for (let i = 0; i < arrayLikeObj.length; i++) {
+  arr[i] = arrayLikeObj[i]
+}
+
+console.log(arr) //  [1, 2]

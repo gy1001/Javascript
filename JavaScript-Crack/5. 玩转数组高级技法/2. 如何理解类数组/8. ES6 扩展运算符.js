@@ -2,7 +2,7 @@
 // [...document.body.childNodes]  // [div, script, script]
 
 // arguments
-function argumentsTest(){
-    console.log([...arguments], arguments)
+function argumentsTest() {
+  console.log([...arguments], arguments)
 }
-argumentsTest(1,2,3)
+argumentsTest(1, 2, 3)
