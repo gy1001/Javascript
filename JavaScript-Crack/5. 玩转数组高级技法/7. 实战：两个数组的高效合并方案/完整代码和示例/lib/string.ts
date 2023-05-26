@@ -1,21 +1,24 @@
-
 // https://github.com/lodash/lodash/blob/master/.internal/stringToPath.js
 
-const charCodeOfDot = '.'.charCodeAt(0);
-const reEscapeChar = /\\(\\)?/g;
+const charCodeOfDot = '.'.charCodeAt(0)
+const reEscapeChar = /\\(\\)?/g
 const rePropName = RegExp(
-    // Match anything that isn't a dot or bracket.
-    '[^.[\\]]+' + '|' +
+  // Match anything that isn't a dot or bracket.
+  '[^.[\\]]+' +
+    '|' +
     // Or match property names within brackets.
     '\\[(?:' +
     // Match a non-string expression.
-    '([^"\'][^[]*)' + '|' +
+    '([^"\'][^[]*)' +
+    '|' +
     // Or match strings (supports escaping characters).
     '(["\'])((?:(?!\\2)[^\\\\]|\\\\.)*?)\\2' +
-    ')\\]' + '|' +
+    ')\\]' +
+    '|' +
     // Or match "" as the space between consecutive dots or empty brackets.
-    '(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))'
-    , 'g');
+    '(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))',
+  'g',
+)
 
 /**
  * Converts `string` to a property path array.
@@ -25,21 +28,20 @@ const rePropName = RegExp(
  * @returns {Array} Returns the property path array.
  */
 const stringToPath = (string: string) => {
-    const result = [];
-    if (string.charCodeAt(0) === charCodeOfDot) {
-        result.push('');
+  const result = []
+  if (string.charCodeAt(0) === charCodeOfDot) {
+    result.push('')
+  }
+  string.replace(rePropName, ((match, expression, quote, subString) => {
+    let key = match
+    if (quote) {
+      key = subString.replace(reEscapeChar, '$1')
+    } else if (expression) {
+      key = expression.trim()
     }
-    string.replace(rePropName, ((match, expression, quote, subString) => {
-        let key = match;
-        if (quote) {
-            key = subString.replace(reEscapeChar, '$1');
-        }
-        else if (expression) {
-            key = expression.trim();
-        }
-        result.push(key);
-    }) as any);
-    return result;
-};
+    result.push(key)
+  }) as any)
+  return result
+}
 
-export default stringToPath;
+export default stringToPath
