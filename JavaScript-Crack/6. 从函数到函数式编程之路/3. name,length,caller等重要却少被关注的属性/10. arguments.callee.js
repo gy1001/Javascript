@@ -1,12 +1,9 @@
 function sumTotal(n) {
-    if (n == 1) return 1;
-    return sumTotal(n - 1) + n;
-};
+  if (n == 1) return 1
+  return sumTotal(n - 1) + n
+}
 
-console.log([5, 10, 20].map(sumTotal));
-
-
-
+console.log([5, 10, 20].map(sumTotal))
 
 // [5, 10, 20].map(function (n) {
 //     if (n == 1) return 1;
