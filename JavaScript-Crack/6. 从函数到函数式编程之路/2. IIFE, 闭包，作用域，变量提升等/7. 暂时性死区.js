@@ -1,5 +1,5 @@
-var num=1;
+var num = 1
 {
-    num = 2;
-    var num;
+  num = 2
+  let num
 }

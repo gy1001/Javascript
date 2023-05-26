@@ -1,10 +1,9 @@
-
-var a = 1;
+var a = 1
 function test() {
-    console.log(a);
+  console.log(a)
 }
 function test1() {
-    var a = 2;
-    test();
+  var a = 2
+  test()
 }
-test1() 
+test1()

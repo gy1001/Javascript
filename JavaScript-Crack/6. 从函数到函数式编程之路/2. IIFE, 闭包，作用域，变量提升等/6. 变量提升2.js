@@ -1,7 +1,6 @@
+console.log('name:', name)
 
-console.log("name:", name);
-
-var name = "name";
-function name(){
-    console.log("name")
+var name = 'name'
+function name() {
+  console.log('name')
 }
