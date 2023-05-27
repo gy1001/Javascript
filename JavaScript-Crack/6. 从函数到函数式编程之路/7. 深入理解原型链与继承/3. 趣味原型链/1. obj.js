@@ -1,5 +1,5 @@
-var obj = {};
+var obj = {}
 
-var log = console.log;
+var log = console.log
 
 log(obj.__proto__.__proto__)

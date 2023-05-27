@@ -1,3 +1,3 @@
-var obj = {};
+var obj = {}
 
-console.log(obj.constructor === Object);
+console.log(obj.constructor === Object)
