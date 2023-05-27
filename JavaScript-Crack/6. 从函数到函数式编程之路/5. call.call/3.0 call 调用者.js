@@ -1,13 +1,13 @@
-function getName(){
-	return this.name;
+function getName() {
+  return this.name
 }
 
 var obj = {
-	name: 'name'
+  name: 'name',
 }
 
-getName.call(obj);
+getName.call(obj)
 
 // 等同于
-obj.getName = getName;
-obj.getName();
+obj.getName = getName
+obj.getName()
