@@ -1,6 +1,6 @@
-var hasStrictMode = (function(){ 
- "use strict";
- return this == undefined;
-}());
+var hasStrictMode = (function () {
+  'use strict'
+  return this == undefined
+})()
 
-console.log(hasStrictMode);
+console.log(hasStrictMode)
