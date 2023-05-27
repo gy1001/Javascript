@@ -1,10 +1,9 @@
-
-global.name = "global的name";
-var fn = new Function(`console.log("name:", this.name)`,);
+global.name = 'global的name'
+var fn = new Function(`console.log("name:", this.name)`)
 
 var obj = {
-    name: "obj的name",
-    fn
+  name: 'obj的name',
+  fn,
 }
-fn();
-obj.fn();
+fn()
+obj.fn()

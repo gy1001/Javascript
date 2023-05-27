@@ -1,8 +1,7 @@
-
-var AsyncFunction = Object.getPrototypeOf(async function () { }).constructor;
+var AsyncFunction = Object.getPrototypeOf(async function () {}).constructor
 
 function createAsyncFun(...args) {
-    return new AsyncFunction(...args);
+  return new AsyncFunction(...args)
 }
 
 var fn = createAsyncFun(`
@@ -11,10 +10,10 @@ var fn = createAsyncFun(`
     return res.text();
 `)
 
-fn().then((res) => {
-    console.log("res:", res);
-}).catch((err) => {
-    console.log("err:", err);
-})
-
-
+fn()
+  .then((res) => {
+    console.log('res:', res)
+  })
+  .catch((err) => {
+    console.log('err:', err)
+  })

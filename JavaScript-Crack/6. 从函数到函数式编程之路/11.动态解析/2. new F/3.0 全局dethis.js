@@ -1,4 +1,3 @@
+var globalObj = new Function('return this')()
 
-var globalObj = new Function('return this')();
-
-console.log(globalObj === global);
+console.log(globalObj === global)

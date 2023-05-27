@@ -9,13 +9,12 @@
 </head>
 
 <body>
-
   <script>
-    var name = "全局的name";
+    var name = "全局的name"
     function test() {
       var name = "local的name"
-      console.log(eval(`name`));
-      console.log(window.eval(`name`))
+      console.log(eval(`name`)) // 直接调用, 直接调用时有正常的作用域链
+      console.log(window.eval(`name`)) // 间接调用，只有全局的作用域
     }
 
     test();
