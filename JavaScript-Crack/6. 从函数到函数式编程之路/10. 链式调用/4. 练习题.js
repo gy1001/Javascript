@@ -1,4 +1,4 @@
-MyQuery(".myclass")
-    .addClass("classA")
-    .style({ height: "100px" })
-    .attr("title", "哈哈")
+MyQuery('.myclass')
+  .addClass('classA')
+  .style({ height: '100px' })
+  .attr('title', '哈哈')

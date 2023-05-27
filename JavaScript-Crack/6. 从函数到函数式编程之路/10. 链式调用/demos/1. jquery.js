@@ -1,8 +1,1 @@
-$(".testNode")
-    .css('color','red')
-    .show(200)
-    .removeClass('class1');
-
-
-
-    
+$('.testNode').css('color', 'red').show(200).removeClass('class1')
