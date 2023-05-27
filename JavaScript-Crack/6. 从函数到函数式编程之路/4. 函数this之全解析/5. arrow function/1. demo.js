@@ -1,24 +1,23 @@
-
 // 浏览器中执行
 
 var log = console.log
 
-var name = "全局的name";
-var getName = () => this.name;
-log(getName());
+var name = '全局的name'
+var getName = () => this.name
+log(getName())
 
 var person = {
-    name: "person的name",
-    getName: () => this.name
+  name: 'person的name',
+  getName: () => this.name,
 }
-log(person.getName());
+log(person.getName())
 
 var person2 = {
-    name: "person2的name",
-    getPerson() {
-        return {
-            getName: () => this.name
-        }
+  name: 'person2的name',
+  getPerson() {
+    return {
+      getName: () => this.name,
     }
+  },
 }
-log(person2.getPerson().getName());
+log(person2.getPerson().getName())

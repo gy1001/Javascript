@@ -1,16 +1,16 @@
 // 连续使用
-function getPerson(){
-	return this.person
+function getPerson() {
+  return this.person
 }
 
-function getName(){
+function getName() {
   return this.name
 }
 
 var obj = {
-	person: {
-  	name: "Tom",
-  }
+  person: {
+    name: 'Tom',
+  },
 }
 
 obj::getPerson()::getName()

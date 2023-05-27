@@ -1,6 +1,6 @@
-var obj = { name: "张三" };
+var obj = { name: '张三' }
 
 function logName() {
-    console.log(this.name, this)
+  console.log(this.name, this)
 }
-logName.call(obj);
+logName.call(obj)

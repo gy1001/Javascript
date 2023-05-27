@@ -1,14 +1,14 @@
 // 浏览器中执行
-var name = "global.name";
+var name = 'global.name'
 var person = {
-  name: "person.name",
+  name: 'person.name',
   getName() {
-    return () => this.name;
-  }
+    return () => this.name
+  },
 }
 
-var log = console.log;
+var log = console.log
 
-log(person.getName()());
+log(person.getName()())
 
-log(person.getName.call({ name: "name" })())
+log(person.getName.call({ name: 'name' })())
