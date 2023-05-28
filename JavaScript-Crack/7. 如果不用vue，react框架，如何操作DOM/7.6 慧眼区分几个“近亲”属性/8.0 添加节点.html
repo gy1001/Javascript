@@ -12,11 +12,11 @@
     <div id="root"></div>
     <script>
         function createEl(type, innerHTML) {
-            const el = document.createElement(type);
-            el.innerHTML = innerHTML;
-            return el;
+            const el = document.createElement(type)
+            el.innerHTML = innerHTML
+            return el
         }
-        const rootEl = document.getElementById("root");
+        const rootEl = document.getElementById("root")
 
         rootEl.append("我们", createEl("div", "都是"), "好孩子");
     </script>

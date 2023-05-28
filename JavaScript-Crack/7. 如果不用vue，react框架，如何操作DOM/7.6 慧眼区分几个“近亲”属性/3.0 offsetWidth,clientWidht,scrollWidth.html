@@ -19,7 +19,6 @@
       border-radius: 3px;
       background: #0e2e6a;
     } */
-
     .box {
         box-sizing: content-box;
         position: relative;
@@ -44,13 +43,13 @@
 
 <body>
     <div id="box" class="box scrollbar">
-        <div class="content">
-            内容展示-js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战</div>
+        <div class="content"> 内容展示-js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战，js进阶实战
+        </div>
     </div>
     <script>
-        const box = document.getElementById("box");
-        console.log("clientWidth==", box.clientWidth);
-        console.log("offsetWidth==", box.offsetWidth);
+        const box = document.getElementById("box")
+        console.log("clientWidth==", box.clientWidth)
+        console.log("offsetWidth==", box.offsetWidth)
         console.log("scrollWidth==", box.scrollWidth);
     </script>
 </body>
