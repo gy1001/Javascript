@@ -14,20 +14,19 @@
         <li class="item">list-two</li>
         <li class="item">list-three</li>
     </ul>
-
-    <script> 
+    <script>
 
         function clearChildNodes(node) {
             // node.firstChild
             while (node.hasChildNodes()) {
-                node.removeChild(node.firstChild);
+                node.removeChild(node.firstChild)
             }
         }
 
-        const ul = document.querySelector(".list");
-        console.log("nodes:", ul.childNodes.length);  // 7
-        clearChildNodes(ul);
-        console.log("nodes:", ul.childNodes.length);  // 0
+        const ul = document.querySelector(".list")
+        console.log("nodes:", ul.childNodes.length)  // 7
+        clearChildNodes(ul)
+        console.log("nodes:", ul.childNodes.length)  // 0
     </script>
 </body>
 
