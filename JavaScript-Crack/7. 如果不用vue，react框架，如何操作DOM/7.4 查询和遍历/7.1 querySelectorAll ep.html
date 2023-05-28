@@ -15,15 +15,14 @@
       </div>
     </div>
   </div>
-
   <script>
-    var select = document.querySelector('.select');
-    var inner = select.querySelectorAll('.outer .inner');
-    console.log("inner.length:", inner.length); // 1, not 0!
+    var select = document.querySelector('.select')
+    var inner = select.querySelectorAll('.outer .inner')
+    console.log("inner.length:", inner.length) // 1, not 0!
 
-    var select2 = document.querySelector('.select');
-    var inner2 = select.querySelectorAll(':scope .outer .inner');
-    console.log("inner2.length:", inner2.length); // 0
+    var select2 = document.querySelector('.select')
+    var inner2 = select.querySelectorAll(':scope .outer .inner')
+    console.log("inner2.length:", inner2.length) // 0
   </script>
 </body>
 

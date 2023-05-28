@@ -18,15 +18,14 @@
     </div>
     <div class="outer2" id="outer"></div>
     <ccc name="ccc">ccc</ccc>
-
     <script>
-        var log = console.log;
+        var log = console.log
         // Element 上不存在调用
         var getElementsByName = document.getElementById("outer").getElementsByName
         console.log("getElementsByName:", getElementsByName)
         // 查询能被解析的节点
         var items3 = document.getElementsByName("ccc")
-
+        console.log(items3)
     </script>
 </body>
 

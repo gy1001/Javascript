@@ -18,13 +18,12 @@
     </div>
     <div class="outer2" id="outer"></div>
     <div id="foo\bar">ccc</div>
-
     <script>
-        var log = console.log;
+        var log = console.log
 
-        var outerEl = document.getElementById("outer");
+        var outerEl = document.getElementById("outer")
         // Element也有此方法
-        var items2 = outerEl.querySelector("li");
+        var items2 = outerEl.querySelector("li")
         // 你必须将它转义两次（一次是为 JavaScript 字符串转义，另一次是为 querySelector 转义）
         var items3 = document.querySelector("#foo\\\\bar")
 

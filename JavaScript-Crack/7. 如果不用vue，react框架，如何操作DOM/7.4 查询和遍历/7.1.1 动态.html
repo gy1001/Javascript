@@ -18,18 +18,17 @@
     </div>
     <div class="outer2" id="outer"></div>
     <div id="foo\bar">ccc</div>
-
     <script>
-        var nodeList = document.getElementsByClassName("item");
-        console.log("len:", nodeList.length);  // 3
+        var nodeList = document.getElementsByClassName("item")
+        console.log("len:", nodeList.length)  // 3
 
         // 添加新的元素
-        var liEl = document.createElement("li");
-        liEl.className = "item";
+        var liEl = document.createElement("li")
+        liEl.className = "item"
         liEl.innerHTML = "list-for"
-        document.querySelector(".list").appendChild(liEl);
+        document.querySelector(".list").appendChild(liEl)
 
-        console.log("len:", nodeList.length); //4 
+        console.log("len:", nodeList.length) //4 
 
     </script>
 </body>
