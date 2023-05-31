@@ -27,7 +27,6 @@
       var messageEl = document.getElementById("inputMessage");
       var btnSend = document.getElementById("btnSend");
       //
-
       if (!window.SharedWorker) {
         alert("浏览器不支持SharedWorkder!");
       } else {
@@ -42,9 +41,6 @@
 
         btnSend.addEventListener("click", function() {
           var message = messageEl.value;
-
-          var message = messageEl.value;
-
           myWorker.port.postMessage({
             date: new Date().toLocaleString(),
             message,

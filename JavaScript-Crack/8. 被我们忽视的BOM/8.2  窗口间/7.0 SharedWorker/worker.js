@@ -4,6 +4,7 @@ onconnect = function(e) {
   var port = e.ports[0];
   ensurePorts(port);
   port.onmessage = function(e) {
+    console.log(e, "e")
     var data = e.data;
     disptach(port, data);
   };
