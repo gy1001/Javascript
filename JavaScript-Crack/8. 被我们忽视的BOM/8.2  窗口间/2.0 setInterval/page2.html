@@ -8,7 +8,7 @@
   </head>
   <body>
     <h3>Page 2</h3>
-    <section style="margin-top:50px; text-align: center">
+    <section style="margin-top: 50px; text-align: center">
       <input id="inputMessage" value="page 2的测试消息" />
       <input type="button" value="发送消息" id="btnSend" />
       <section id="messages">
@@ -17,44 +17,44 @@
     </section>
 
     <script>
-      var messagesEle = document.getElementById("messages");
-      var messageEl = document.getElementById("inputMessage");
-      var btnSend = document.getElementById("btnSend");
-      var lastMessage = null;
+      var messagesEle = document.getElementById('messages')
+      var messageEl = document.getElementById('inputMessage')
+      var btnSend = document.getElementById('btnSend')
+      var lastMessage = null
 
       setInterval(() => {
-        var message = sessionStorage.getItem("ls-message1");
+        var message = sessionStorage.getItem('ls-message1')
         try {
           if (message) {
-            message = JSON.parse(message);
+            message = JSON.parse(message)
             if (!lastMessage || lastMessage.date != message.date) {
-              appendMessage(message);
-              lastMessage = message;
+              appendMessage(message)
+              lastMessage = message
             }
           }
         } catch (err) {
-          console.log(err);
+          console.log(err)
         }
-      }, 200);
+      }, 200)
 
       function appendMessage(data) {
-        var msgEl = document.createElement("p");
-        msgEl.innerText = data.date + " " + data.from + ":" + data.message;
-        messagesEle.appendChild(msgEl);
+        var msgEl = document.createElement('p')
+        msgEl.innerText = data.date + ' ' + data.from + ':' + data.message
+        messagesEle.appendChild(msgEl)
       }
 
-      btnSend.addEventListener("click", function() {
-        var message = messageEl.value;
+      btnSend.addEventListener('click', function () {
+        var message = messageEl.value
 
         sessionStorage.setItem(
-          "ls-message2",
+          'ls-message2',
           JSON.stringify({
             date: Date.now(),
             message,
-            from: "page 2"
-          })
-        );
-      });
+            from: 'page 2',
+          }),
+        )
+      })
     </script>
   </body>
 </html>
