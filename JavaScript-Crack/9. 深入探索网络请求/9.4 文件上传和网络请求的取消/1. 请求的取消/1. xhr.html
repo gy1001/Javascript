@@ -17,27 +17,32 @@
     <button id="btnSend">发送请求</button>
     <button id="btnCancel">取消请求</button>
     <script>
-      var xhrObj;
+      var xhrObj
       function sendRequest() {
-        xhrObj = new XMLHttpRequest();
-        xhrObj.withCredentials = true;
+        xhrObj = new XMLHttpRequest()
+        xhrObj.withCredentials = true
         xhrObj.onreadystatechange = function () {
-          console.log("onreadystatechange: status=", xhrObj.status, xhrObj.readyState, xhrObj );
+          console.log(
+            'onreadystatechange: status=',
+            xhrObj.status,
+            xhrObj.readyState,
+            xhrObj,
+          )
           if (xhrObj.readyState == 4 && xhrObj.status == 200) {
-            console.log(xhrObj.responseText);
+            console.log(xhrObj.responseText)
           }
-        };
-        xhrObj.open("post", "http://127.0.0.1:3000/xhr", true);
+        }
+        xhrObj.open('post', 'http://127.0.0.1:3000/xhr', true)
         // xhrObj.setRequestHeader("headera","b");
-        xhrObj.send();
+        xhrObj.send()
       }
 
       btnSend.onclick = function () {
-        sendRequest();
-      };
+        sendRequest()
+      }
 
-      btnCancel.onclick = function(){
-        xhrObj && xhrObj.abort();
+      btnCancel.onclick = function () {
+        xhrObj && xhrObj.abort()
       }
     </script>
   </body>

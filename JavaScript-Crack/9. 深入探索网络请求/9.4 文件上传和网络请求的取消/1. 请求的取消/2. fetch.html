@@ -16,27 +16,27 @@
     <button id="btnSend">发送请求</button>
     <button id="btnCancel">取消请求</button>
     <script>
-      const controller = new AbortController();
-      const signal = controller.signal;
+      const controller = new AbortController()
+      const signal = controller.signal
 
       function sendFetch(test) {
-        fetch("http://127.0.0.1:3000/fetch", { signal })
+        fetch('http://127.0.0.1:3000/fetch', { signal })
           .then((response) => {
-            return response.text();
+            return response.text()
           })
           .then((text) => {
-            console.log(text);
-          });
+            console.log(text)
+          })
       }
 
       btnSend.onclick = function () {
-        sendFetch();
-      };
+        sendFetch()
+      }
 
       btnCancel.onclick = function () {
-        console.log("取消请求");
-        controller.abort();
-      };
+        console.log('取消请求')
+        controller.abort()
+      }
     </script>
   </body>
 </html>
