@@ -25,32 +25,32 @@
     <script>
       const resourcesInfo = [
         {
-          key: "flower.webm",
-          url: "./resources/flower.webm",
+          key: 'flower.webm',
+          url: './resources/flower.webm',
         },
         {
-          key: "img.png",
-          url: "./resources/img.png",
-        }
-      ];
-  
-      const rl = new ResourceLoader(resourcesInfo, idb);
-      rl.reset();
-      rl.startLoad();
+          key: 'img.png',
+          url: './resources/img.png',
+        },
+      ]
 
+      const rl = new ResourceLoader(resourcesInfo, idb)
+      rl.reset()
+      rl.startLoad()
 
-      btnCreateImg.onclick = function(){
+      btnCreateImg.onclick = function () {
         container.innerHTML += `
-          <img src="${rl.get("img.png")}" width="300px"/>        
+          <img src="${rl.get('img.png')}" width="300px"/>        
         `
       }
 
-      btnCreateVideo.onclick = function(){
+      btnCreateVideo.onclick = function () {
         container.innerHTML += `
-          <video src="${rl.get("flower.webm")}" autoplay controls width="300px"/>        
+          <video src="${rl.get(
+            'flower.webm',
+          )}" autoplay controls width="300px"/>        
         `
       }
-     
     </script>
   </body>
 </html>
