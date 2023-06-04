@@ -10,3 +10,6 @@ function* numGenerator() {
 console.log(numGenerator.constructor === GeneratorFunction)
 // 不推荐
 console.log(numGenerator instanceof GeneratorFunction.__proto__)
+
+
+(async function aaa(){}).constructor
