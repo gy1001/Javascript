@@ -1,30 +1,24 @@
-console.log("main start");
+console.log('main start')
 
 setTimeout(function setTimeout0() {
-    console.log("T1:宏任务");
-    Promise.resolve().then(() => {
-        console.log("T2:微任务");
-    });
-});
+  console.log('T1:宏任务')
+  Promise.resolve().then(() => {
+    console.log('T2:微任务')
+  })
+})
 
 new Promise(function (resolve, reject) {
-    console.log("T3:Promise 构造");
-    setTimeout(function setTimeout300() {
-        console.log("T4:宏任务");
-        resolve("T6");
-        Promise.resolve().then(() => {
-            console.log("T5:微任务");
-        });
-    }, 300);
+  console.log('T3:Promise 构造')
+  setTimeout(function setTimeout300() {
+    console.log('T4:宏任务')
+    resolve('T6')
+    Promise.resolve().then(() => {
+      console.log('T5:微任务')
+    })
+  }, 300)
 }).then((res) => {
-    console.log("T6:微任务");
-});
-
-
-
-
-
-
+  console.log('T6:微任务')
+})
 
 //--------------1--------------------
 // js 主线程 ： “main start”
