@@ -1,4 +1,4 @@
-import { createTimeoutGenerator } from "../";
+import { createTimeoutGenerator } from "..";
 
 const nextFactory = createTimeoutGenerator();
 
