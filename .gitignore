@@ -4,3 +4,4 @@ dist
 .temp
 Typescript/TypeScript-simple/03-demo/build
 Typescript/TypeScript-simple/03-demo/data/course.json
+.history
