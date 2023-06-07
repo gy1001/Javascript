@@ -1,4 +1,4 @@
-import { createStepUpGenerator } from "../";
+import { createStepUpGenerator } from "..";
 
 const nextFactory = createStepUpGenerator(100);
 
