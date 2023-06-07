@@ -1,19 +1,24 @@
-import { createTimeoutGenerator } from "..";
+import { createTimeoutGenerator } from '..'
 
-const nextFactory = createTimeoutGenerator();
+const nextFactory = createTimeoutGenerator()
 
 let context = {
-    counts: 0
-};
+  counts: 0,
+}
 
-nextFactory.start(function cb(this: any, next: Function, ...args: any[]) {
-    this.counts++;
-    console.log("counts:", this.counts);
-    console.log("args:", ...args);
+nextFactory.start(
+  function cb(this: any, next: Function, ...args: any[]) {
+    this.counts++
+    console.log('counts:', this.counts)
+    console.log('args:', ...args)
     if (this.counts > 3) {
-        nextFactory.cancel();
+      nextFactory.cancel()
     }
-    next(this, 3, 4, 5);
-
-}, context, 1, 2, 3, 4);
-
+    next(this, 3, 4, 5)
+  },
+  context,
+  1,
+  2,
+  3,
+  4,
+)
