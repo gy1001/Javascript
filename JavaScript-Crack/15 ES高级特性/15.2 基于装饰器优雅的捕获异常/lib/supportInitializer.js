@@ -1,14 +1,11 @@
-const {catchInitializer} = require("./createErrorCatch.js");
+const { catchInitializer } = require('./createErrorCatch.js')
 
 class Test {
-
-
-    @catchInitializer("nono")
-    doSomethings = ()=> {
-        throw Error("doSomethings error")
-    }
-    
+  @catchInitializer('nono')
+  doSomethings = () => {
+    throw Error('doSomethings error')
+  }
 }
 
-const test=new Test();
-test.doSomethings();
+const test = new Test()
+test.doSomethings()
