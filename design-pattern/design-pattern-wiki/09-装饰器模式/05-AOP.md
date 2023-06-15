@@ -14,20 +14,20 @@ PS：AOP 和 OOP 并不冲突
 
 ```ts
 function log(target: any, key: string, descriptor: PropertyDescriptor) {
-    const oldValue = descriptor.value // fn1 函数
+  const oldValue = descriptor.value // fn1 函数
 
-    // 重新定义 fn1 函数
-    descriptor.value = function () {
-        console.log(`记录日志...`)
-        return oldValue.apply(this, arguments)
-    }
+  // 重新定义 fn1 函数
+  descriptor.value = function () {
+    console.log(`记录日志...`)
+    return oldValue.apply(this, arguments)
+  }
 }
 
 class Foo {
-    @log // 不影响业务功能的代码，只是加了一个 log 的“切面”
-    fn1() {
-        console.log('业务功能1')
-    }
+  @log // 不影响业务功能的代码，只是加了一个 log 的“切面”
+  fn1() {
+    console.log('业务功能1')
+  }
 }
 
 const f = new Foo()
