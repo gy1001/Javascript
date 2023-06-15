@@ -6,9 +6,9 @@
 
 ```js
 function* genNums() {
-    yield 10
-    yield 20
-    yield 30
+  yield 10
+  yield 20
+  yield 30
 }
 
 const numsIterator = genNums()
@@ -22,13 +22,13 @@ numsIterator.next() // {value: undefined, done: true}
 // }
 ```
 
-## yield* 语法
+## yield\* 语法
 
 上一节说过，有序结构可用于 `yield*`
 
 ```js
 function* genNums() {
-    yield* [100, 200, 300] // 相当于：循环数组，分别 yield
+  yield* [100, 200, 300] // 相当于：循环数组，分别 yield
 }
 const numsIterator = genNums()
 numsIterator.next() // {value: 100, done: false}
@@ -68,26 +68,26 @@ for (let n of iterator) {
 
 ```js
 function* traverse(elemList: Element[]): any {
-    for (const elem of elemList) {
-        yield elem
+  for (const elem of elemList) {
+    yield elem
 
-        const children = Array.from(elem.children)
-        if (children.length) {
-            yield* traverse(children)
-        }
+    const children = Array.from(elem.children)
+    if (children.length) {
+      yield* traverse(children)
     }
+  }
 }
 
 const container = document.getElementById('container')
 if (container) {
-    for (let node of traverse([container])) {
-        console.log(node)
-    }
+  for (let node of traverse([container])) {
+    console.log(node)
+  }
 }
 ```
 
 ## 总结
 
 - 基本使用
-- yield* 语法
+- yield\* 语法
 - 遍历 DOM 树
