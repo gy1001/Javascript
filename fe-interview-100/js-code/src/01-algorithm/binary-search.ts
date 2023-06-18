@@ -45,7 +45,7 @@ export function binarySearch2(arr: number[], target: number, startIndex?: number
     if (length === 0) return -1
 
     // 开始和结束的范围
-    if (startIndex == null) startIndex = 0
+    if (startIndex == null) startIndex = 0 
     if (endIndex == null) endIndex = length - 1
 
     // 如果 start 和 end 相遇，则结束
@@ -67,12 +67,12 @@ export function binarySearch2(arr: number[], target: number, startIndex?: number
     }
 }
 
-// // // 功能测试
+// // 功能测试
 // const arr = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
 // const target = 40
 // // console.info(binarySearch2(arr, target))
 
-// // 性能测试
+// 性能测试
 // console.time('binarySearch1')
 // for (let i = 0; i < 100 * 10000; i++) {
 //     binarySearch1(arr, target)
