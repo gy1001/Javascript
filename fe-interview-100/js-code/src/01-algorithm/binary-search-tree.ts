@@ -4,23 +4,23 @@
  */
 
 export interface ITreeNode {
-    value: number
-    left: ITreeNode | null
-    right: ITreeNode | null
+    value: number;
+    left: ITreeNode | null;
+    right: ITreeNode | null;
 }
 
-const arr: number[] = []
+const arr: number[] = [];
 
 /**
  * 二叉树前序遍历
  * @param node tree node
  */
 function preOrderTraverse(node: ITreeNode | null) {
-    if (node == null) return
+    if (node == null) return;
     // console.log(node.value)
-    arr.push(node.value)
-    preOrderTraverse(node.left)
-    preOrderTraverse(node.right)
+    arr.push(node.value);
+    preOrderTraverse(node.left);
+    preOrderTraverse(node.right);
 }
 
 /**
@@ -28,11 +28,11 @@ function preOrderTraverse(node: ITreeNode | null) {
  * @param node tree node
  */
 function inOrderTraverse(node: ITreeNode | null) {
-    if (node == null) return
-    inOrderTraverse(node.left)
+    if (node == null) return;
+    inOrderTraverse(node.left);
     // console.log(node.value)
-    arr.push(node.value)
-    inOrderTraverse(node.right)
+    arr.push(node.value);
+    inOrderTraverse(node.right);
 }
 
 /**
@@ -40,11 +40,11 @@ function inOrderTraverse(node: ITreeNode | null) {
  * @param node tree node
  */
 function postOrderTraverse(node: ITreeNode | null) {
-    if (node == null) return
-    postOrderTraverse(node.left)
-    postOrderTraverse(node.right)
+    if (node == null) return;
+    postOrderTraverse(node.left);
+    postOrderTraverse(node.right);
     // console.log(node.value)
-    arr.push(node.value)
+    arr.push(node.value);
 }
 
 /**
@@ -53,8 +53,8 @@ function postOrderTraverse(node: ITreeNode | null) {
  * @param k 第几个值
  */
 export function getKthValue(node: ITreeNode, k: number): number | null {
-    inOrderTraverse(node)
-    return arr[k - 1] || null
+    inOrderTraverse(node);
+    return arr[k - 1] || null;
 }
 
 const bst: ITreeNode = {
@@ -64,31 +64,31 @@ const bst: ITreeNode = {
         left: {
             value: 2,
             left: null,
-            right: null
+            right: null,
         },
         right: {
             value: 4,
             left: null,
             right: null,
-        }
+        },
     },
     right: {
         value: 7,
         left: {
             value: 6,
             left: null,
-            right: null
+            right: null,
         },
         right: {
             value: 8,
             left: null,
-            right: null
-        }
-    }
-}
+            right: null,
+        },
+    },
+};
 
 // preOrderTraverse(bst)
 // inOrderTraverse(bst)
 // postOrderTraverse(bst)
 
-console.log(getKthValue(bst, 3))
+console.log(getKthValue(bst, 3));
