@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>链表反转</title>
+  </head>
+  <body></body>
+  <script>
+    function createLinkList(arr) {
+      let currentVNode = {
+        value: arr[arr.length - 1],
+      }
+      for (let index = arr.length - 2; index >= 0; index--) {
+        currentVNode = {
+          value: arr[index],
+          next: currentVNode,
+        }
+      }
+      return currentVNode
+    }
+
+    function reverseLinkList(linkList) {
+      let prev = undefined
+      let current = linkList
+      let next = current.next
+      while (current) {
+        if (!prev) {
+          delete current.next
+        }
+        let originNext
+        if (next) {
+          if (next.next) {
+            originNext = next.next
+          }
+          next.next = current
+        }
+        prev = current
+        current = next
+        next = originNext
+      }
+      return prev
+    }
+  </script>
+
+  <script>
+    const arr = [100, 200, 300, 400, 500]
+    const list = createLinkList(arr)
+    console.info('list:', list)
+
+    const list1 = reverseLinkList(list)
+    console.info('list1:', list1)
+  </script>
+</html>
