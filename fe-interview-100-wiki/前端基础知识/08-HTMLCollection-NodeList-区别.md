@@ -32,13 +32,14 @@ class HTMLDivElement extends HTMLElement {}
 
 ## HTMLCollection 和 NodeList
 
-HTMLCollection 是 Element 集合，它由获取 Element 的 API 返回
-- `elem.children`
-- `document.getElementsByTagName('p')`
+- HTMLCollection 是 Element 集合，它由获取 Element 的 API 返回
 
-NodeList 是 Node 集合，它由获取 Node 的 API 返回
-- `document.querySelectorAll('p')`
-- `elem.childNodes`
+  - `elem.children`
+  - `document.getElementsByTagName('p')`
+
+- NodeList 是 Node 集合，它由获取 Node 的 API 返回
+  - `document.querySelectorAll('p')`
+  - `elem.childNodes`
 
 ## 答案
 
