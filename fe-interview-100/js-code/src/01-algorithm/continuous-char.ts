@@ -4,8 +4,8 @@
  */
 
 interface IRes {
-    char: string
-    length: number
+    char: string;
+    length: number;
 }
 
 /**
@@ -14,41 +14,41 @@ interface IRes {
  */
 export function findContinuousChar1(str: string): IRes {
     const res: IRes = {
-        char: '',
-        length: 0
-    }
+        char: "",
+        length: 0,
+    };
 
-    const length = str.length
-    if (length === 0) return res
+    const length = str.length;
+    if (length === 0) return res;
 
-    let tempLength = 0 // 临时记录当前连续字符的长度
+    let tempLength = 0; // 临时记录当前连续字符的长度
 
     // O(n)
     for (let i = 0; i < length; i++) {
-        tempLength = 0 // 重置
+        tempLength = 0; // 重置
 
         for (let j = i; j < length; j++) {
             if (str[i] === str[j]) {
-                tempLength++
+                tempLength++;
             }
 
             if (str[i] !== str[j] || j === length - 1) {
                 // 不相等，或者已经到了最后一个元素。要去判断最大值
                 if (tempLength > res.length) {
-                    res.char = str[i]
-                    res.length = tempLength
+                    res.char = str[i];
+                    res.length = tempLength;
                 }
 
                 if (i < length - 1) {
-                    i = j - 1 // 跳步
+                    i = j - 1; // 跳步
                 }
 
-                break
+                break;
             }
         }
     }
 
-    return res
+    return res;
 }
 
 /**
@@ -57,40 +57,40 @@ export function findContinuousChar1(str: string): IRes {
  */
 export function findContinuousChar2(str: string): IRes {
     const res: IRes = {
-        char: '',
-        length: 0
-    }
+        char: "",
+        length: 0,
+    };
 
-    const length = str.length
-    if (length === 0) return res
+    const length = str.length;
+    if (length === 0) return res;
 
-    let tempLength = 0 // 临时记录当前连续字符的长度
-    let i = 0
-    let j = 0
+    let tempLength = 0; // 临时记录当前连续字符的长度
+    let i = 0;
+    let j = 0;
 
     // O(n)
     for (; i < length; i++) {
         if (str[i] === str[j]) {
-            tempLength++
+            tempLength++;
         }
 
         if (str[i] !== str[j] || i === length - 1) {
             // 不相等，或者 i 到了字符串的末尾
             if (tempLength > res.length) {
-                res.char = str[j]
-                res.length = tempLength
+                res.char = str[j];
+                res.length = tempLength;
             }
-            tempLength = 0 // reset
+            tempLength = 0; // reset
 
             if (i < length - 1) {
-                j = i // 让 j “追上” i
-                i-- // 细节
+                j = i; // 让 j “追上” i
+                i--; // 细节
             }
         }
     }
 
-    return res
- }
+    return res;
+}
 
 // // 功能测试
 // const str = 'aabbcccddeeee11223'

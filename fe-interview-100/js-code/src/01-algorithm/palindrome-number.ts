@@ -7,7 +7,7 @@
  * 查询 1-max 的所有对称数（数组反转）
  * @param max 最大值
  */
-export function findPalindromeNumbers1(max: number): number[] {
+ function findPalindromeNumbers1(max: number): number[] {
     const res: number[] = []
     if (max <= 0) return res
 
@@ -26,7 +26,7 @@ export function findPalindromeNumbers1(max: number): number[] {
  * 查询 1-max 的所有对称数（字符串前后比较）
  * @param max 最大值
  */
-export function findPalindromeNumbers2(max: number): number[] {
+ function findPalindromeNumbers2(max: number): number[] {
     const res: number[] = []
     if (max <= 0) return res
 
@@ -59,7 +59,7 @@ export function findPalindromeNumbers2(max: number): number[] {
  * 查询 1-max 的所有对称数（翻转数字）
  * @param max 最大值
  */
-export function findPalindromeNumbers3(max: number): number[] {
+ function findPalindromeNumbers3(max: number): number[] {
     const res: number[] = []
     if (max <= 0) return res
 
@@ -81,7 +81,7 @@ export function findPalindromeNumbers3(max: number): number[] {
 
 
 // 功能测试
-// console.info(findPalindromeNumbers3(200))
+console.info(findPalindromeNumbers3(200))
 
 // 性能测试
 console.time('findPalindromeNumbers1')

@@ -74,4 +74,52 @@
     moveZero(arr1)
     console.log(arr1)
   </script>
+  <script>
+    const str = 'ab' // abbcccddddeeee1122333336
+    let j = 0,
+      maxNumber = 1,
+      maxWord = str[0] || ''
+    // for (let i = 1; i < str.length; i++) {
+    //   if (str[j] !== str[i]) {
+    //     if (i - j > maxNumber) {
+    //       maxNumber = i - j
+    //       maxWord = str[i - 1]
+    //     }
+    //     j = i
+    //   } else if (i === str.length - 1) {
+    //     if (i - j + 1 > maxNumtber) {
+    //       maxNumber = i - j + 1
+    //       maxWord = str[i]
+    //     }
+    //   }
+    // }
+    // 优化解法：遍历长度 + 1
+    for (let i = 1; i < str.length + 1; i++) {
+      if (str[j] !== str[i]) {
+        if (i - j > maxNumber) {
+          maxNumber = i - j
+          maxWord = str[i - 1]
+        }
+        j = i
+      }
+    }
+    console.log(maxWord, maxNumber)
+  </script>
+  <script>
+    const str1 = '1178100200300'
+    function thousandsFormat(str) {
+      let tempStr = '' // 每三位暂存一次
+      let result = ''
+      for (let i = str.length - 1; i >= 0; i--) {
+        if (tempStr.length < 3) {
+          tempStr = str[i] + tempStr
+        } else {
+          result = tempStr + (result ? ',' + result : '')
+          tempStr = str[i]
+        }
+      }
+      return tempStr ? tempStr + ',' + result : result
+    }
+    console.log(thousandsFormat(str1))
+  </script>
 </html>

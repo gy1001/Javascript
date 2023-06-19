@@ -3,17 +3,17 @@
  * @author 双越老师
  */
 
-const str = '100abc'
-const reg = /^\d+/
+const str = "100abc";
+const reg = /^\d+/;
 
-console.time('reg')
+console.time("reg");
 for (let i = 0; i < 100 * 10000; i++) {
-    reg.test(str)
+    reg.test(str);
 }
-console.timeEnd('reg')
+console.timeEnd("reg");
 
-console.time('indexOf')
+console.time("indexOf");
 for (let i = 0; i < 100 * 10000; i++) {
-    str.indexOf('100')
+    str.indexOf("100");
 }
-console.timeEnd('indexOf')
+console.timeEnd("indexOf");
