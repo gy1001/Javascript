@@ -51,4 +51,27 @@
     const list1 = reverseLinkList(list)
     console.info('list1:', list1)
   </script>
+  <script>
+    // 移动 0 到数组的末尾
+    const arr1 = [1, 0, 2, 0, 3, 0, 6, 0, 4, 5, 0, 0]
+    function moveZero(arr) {
+      const length = arr.length
+      let i = 0
+      let j = -1 // 指向 0 的位置
+      for (i = 0; i < length; i++) {
+        if (arr[i] === 0 && j === -1) {
+          j = i
+        }
+        if (arr[i] !== 0 && j !== -1) {
+          console.log(arr[i], j)
+          const n = arr[i]
+          arr[i] = arr[j]
+          arr[j] = n
+          j++
+        }
+      }
+    }
+    moveZero(arr1)
+    console.log(arr1)
+  </script>
 </html>
