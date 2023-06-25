@@ -16,51 +16,51 @@ export default class EventBus {
      * }
      */
     private events: {
-        [key: string]: Array<{fn: Function; isOnce: boolean}>
-    }
+        [key: string]: Array<{ fn: Function; isOnce: boolean }>;
+    };
 
     constructor() {
-        this.events = {}
+        this.events = {};
     }
 
     on(type: string, fn: Function, isOnce: boolean = false) {
-        const events = this.events
+        const events = this.events;
         if (events[type] == null) {
-            events[type] = [] // 初始化 key 的 fn 数组
+            events[type] = []; // 初始化 key 的 fn 数组
         }
-        events[type].push({ fn, isOnce })
+        events[type].push({ fn, isOnce });
     }
 
     once(type: string, fn: Function) {
-        this.on(type, fn, true)
+        this.on(type, fn, true);
     }
 
     off(type: string, fn?: Function) {
         if (!fn) {
             // 解绑所有 type 的函数
-            this.events[type] = []
+            this.events[type] = [];
         } else {
             // 解绑单个 fn
-            const fnList = this.events[type]
+            const fnList = this.events[type];
             if (fnList) {
-                this.events[type] = fnList.filter(item => item.fn !== fn)
+                this.events[type] = fnList.filter((item) => item.fn !== fn);
             }
         }
     }
 
     emit(type: string, ...args: any[]) {
-        const fnList = this.events[type]
-        if (fnList == null) return
+        const fnList = this.events[type];
+        if (fnList == null) return;
 
         // 注意
-        this.events[type] = fnList.filter(item => {
-            const { fn, isOnce } = item
-            fn(...args)
+        this.events[type] = fnList.filter((item) => {
+            const { fn, isOnce } = item;
+            fn(...args);
 
             // once 执行一次就要被过滤掉
-            if (!isOnce) return true
-            return false
-        })
+            if (!isOnce) return true;
+            return false;
+        });
     }
 }
 
