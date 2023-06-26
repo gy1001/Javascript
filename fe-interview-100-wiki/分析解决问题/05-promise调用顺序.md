@@ -5,24 +5,31 @@
 以下代码，执行会输出什么
 
 ```js
-Promise.resolve().then(() => {
+Promise.resolve()
+  .then(() => {
     console.log(0)
     return Promise.resolve(4)
-}).then((res) => {
+  })
+  .then((res) => {
     console.log(res)
-})
+  })
 
-Promise.resolve().then(() => {
+Promise.resolve()
+  .then(() => {
     console.log(1)
-}).then(() => {
+  })
+  .then(() => {
     console.log(2)
-}).then(() => {
+  })
+  .then(() => {
     console.log(3)
-}).then(() => {
+  })
+  .then(() => {
     console.log(5)
-}).then(() =>{
+  })
+  .then(() => {
     console.log(6)
-})
+  })
 ```
 
 ## 这道题很难
@@ -43,35 +50,47 @@ Promise.resolve().then(() => {
 这是编译器的优化，防止一个 promise 持续占据事件
 
 ```js
-Promise.resolve().then(() => {
+Promise.resolve()
+  .then(() => {
     console.log(1)
-}).then(() => {
+  })
+  .then(() => {
     console.log(2)
-}).then(() => {
+  })
+  .then(() => {
     console.log(3)
-}).then(() => {
+  })
+  .then(() => {
     console.log(4)
-})
+  })
 
-Promise.resolve().then(() => {
+Promise.resolve()
+  .then(() => {
     console.log(10)
-}).then(() => {
+  })
+  .then(() => {
     console.log(20)
-}).then(() => {
+  })
+  .then(() => {
     console.log(30)
-}).then(() => {
+  })
+  .then(() => {
     console.log(40)
-})
+  })
 
-Promise.resolve().then(() => {
+Promise.resolve()
+  .then(() => {
     console.log(100)
-}).then(() => {
+  })
+  .then(() => {
     console.log(200)
-}).then(() => {
+  })
+  .then(() => {
     console.log(300)
-}).then(() => {
+  })
+  .then(() => {
     console.log(400)
-})
+  })
 ```
 
 ## then 返回 promise 对象
@@ -79,28 +98,37 @@ Promise.resolve().then(() => {
 当 then 返回 promise 对象时，可以认为是多出一个 promise 实例。
 
 ```js
-Promise.resolve().then(() => {
+Promise.resolve()
+  .then(() => {
     console.log(1)
     return Promise.resolve(100) // 相当于多处一个 promise 实例，如下注释的代码
-}).then(res => {
+  })
+  .then((res) => {
     console.log(res)
-}).then(() => {
+  })
+  .then(() => {
     console.log(200)
-}).then(() => {
+  })
+  .then(() => {
     console.log(300)
-}).then(() => {
+  })
+  .then(() => {
     console.log(300)
-})
+  })
 
-Promise.resolve().then(() => {
+Promise.resolve()
+  .then(() => {
     console.log(10)
-}).then(() => {
+  })
+  .then(() => {
     console.log(20)
-}).then(() => {
+  })
+  .then(() => {
     console.log(30)
-}).then(() => {
+  })
+  .then(() => {
     console.log(40)
-})
+  })
 
 // // 相当于新增一个 promise 实例 —— 但这个执行结果不一样，后面解释
 // Promise.resolve(100).then(res => {
@@ -117,6 +145,7 @@ Promise.resolve().then(() => {
 ## “慢两拍”
 
 then 返回 promise 实例和直接执行 `Promise.resolve()` 不一样，它需要等待两个过程
+
 - promise 状态由 pending 变为 fulfilled
 - then 函数挂载到 microTaskQueue
 
@@ -124,34 +153,41 @@ then 返回 promise 实例和直接执行 `Promise.resolve()` 不一样，它需
 
 ```js
 Promise.resolve().then(() => {
-    console.log(1)
+  console.log(1)
 })
 
-Promise.resolve().then(() => {
+Promise.resolve()
+  .then(() => {
     console.log(10)
-}).then(() => {
+  })
+  .then(() => {
     console.log(20)
-}).then(() => {
+  })
+  .then(() => {
     console.log(30)
-}).then(() => {
+  })
+  .then(() => {
     console.log(40)
-})
+  })
 
 Promise.resolve().then(() => {
-    // 第一拍
-    const p = Promise.resolve(100)
-    Promise.resolve().then(() => {
-        // 第二拍
-        p.then(res => {
-            console.log(res)
-        }).then(() => {
-            console.log(200)
-        }).then(() => {
-            console.log(300)
-        }).then(() => {
-            console.log(400)
-        })
+  // 第一拍
+  const p = Promise.resolve(100)
+  Promise.resolve().then(() => {
+    // 第二拍
+    p.then((res) => {
+      console.log(res)
     })
+      .then(() => {
+        console.log(200)
+      })
+      .then(() => {
+        console.log(300)
+      })
+      .then(() => {
+        console.log(400)
+      })
+  })
 })
 ```
 
