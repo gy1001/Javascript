@@ -11,7 +11,10 @@
 
     <!-- <AdvancedUse/> -->
 
-    <CartDemo/>
+    <CartDemo />
+    <index1 text="1"></index1>
+    <index2 text="2"></index2>
+    <button id="destroy" @click="handle">点击</button>
   </div>
 </template>
 
@@ -27,7 +30,8 @@
 // import AdvancedUse from './components/AdvancedUse/index'
 
 import CartDemo from './components/Cart/index'
-
+import index1 from './index1.vue'
+import index2 from './index2.vue'
 export default {
   name: 'app',
   components: {
@@ -35,8 +39,44 @@ export default {
     // EventDemo
     // ComponentDemo
     // AdvancedUse
-    CartDemo
-  }
+    CartDemo,
+    index2,
+    index1,
+  },
+  data() {
+    return {
+      text: '',
+    }
+  },
+  methods: {
+    handle() {
+      this.$destroy()
+    },
+  },
+  beforeCreate() {
+    console.log('父组件————beforeCreate...')
+  },
+  created() {
+    console.log('父组件————create...')
+  },
+  beforeMount() {
+    console.log('父组件————beforeMount...')
+  },
+  mounted() {
+    console.log('父组件————mounted...')
+  },
+  beforeUpdate() {
+    console.log('父组件————beforeUpdate...')
+  },
+  updated() {
+    console.log('父组件————updated...')
+  },
+  beforeDestroy() {
+    console.log('父组件————beforeDestroy...')
+  },
+  destroyed() {
+    console.log('父组件————destroyed...')
+  },
 }
 </script>
 
