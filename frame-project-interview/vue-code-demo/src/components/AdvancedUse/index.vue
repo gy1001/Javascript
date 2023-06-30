@@ -55,7 +55,7 @@ export default {
   },
   data() {
     return {
-      name: '双越',12
+      name: '双越',
       website: {
         url: 'http://imooc.com/',
         title: 'imooc',
