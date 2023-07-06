@@ -1,28 +1,28 @@
 import { reactive, ref, onMounted, onUnmounted } from 'vue'
 
 function useMousePosition() {
-    const x = ref(0)
-    const y = ref(0)
+  const x = ref(0)
+  const y = ref(0)
 
-    function update(e) {
-        x.value = e.pageX
-        y.value = e.pageY
-    }
+  function update(e) {
+    x.value = e.pageX
+    y.value = e.pageY
+  }
 
-    onMounted(() => {
-        console.log('useMousePosition mounted')
-        window.addEventListener('mousemove', update)
-    })
+  onMounted(() => {
+    console.log('useMousePosition mounted')
+    window.addEventListener('mousemove', update)
+  })
 
-    onUnmounted(() => {
-        console.log('useMousePosition unMounted')
-        window.removeEventListener('mousemove', update)
-    })
+  onUnmounted(() => {
+    console.log('useMousePosition unMounted')
+    window.removeEventListener('mousemove', update)
+  })
 
-    return {
-        x,
-        y
-    }
+  return {
+    x,
+    y,
+  }
 }
 
 // function useMousePosition2() {
