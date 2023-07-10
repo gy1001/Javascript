@@ -1,3 +1,3 @@
 export default {
-    message: 'this is dynamic data'
+  message: 'this is dynamic data',
 }
