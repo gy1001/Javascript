@@ -8,10 +8,12 @@ interface ButtonProps {
   type?: 'primary' | 'dangerous' | 'dashed' | 'text' | 'link'
   children?: ReactNode
   style?: React.CSSProperties
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
+  onBlur?: React.FocusEventHandler<HTMLButtonElement>
 }
 
 const Button = (props: ButtonProps) => {
-  const { className, type, children, style } = props
+  const { className, type, children, style, onClick, onBlur } = props
   const classObj = {
     'ant-btn': true,
     [`ant-btn-${type}`]: type,
@@ -21,7 +23,7 @@ const Button = (props: ButtonProps) => {
   }
   const cls = classNames(classObj)
   return (
-    <button className={cls} style={style}>
+    <button className={cls} style={style} onClick={onClick} onBlur={onBlur}>
       {children}
     </button>
   )
