@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "jest": "^29.6.2"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.22.10"
   }
 }
