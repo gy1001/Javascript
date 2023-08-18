@@ -1,7 +1,7 @@
-import $ from "jquery"
+import $ from 'jquery'
 
 const addDivToBody = () => {
-  $("body").append("<div></div>")
+  $('body').append('<div></div>')
 }
 
 export default addDivToBody
