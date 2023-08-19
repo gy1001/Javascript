@@ -1,6 +1,5 @@
 <template>
   <div class="hello">
-    1111
     <input
       type="text"
       data-test="input"

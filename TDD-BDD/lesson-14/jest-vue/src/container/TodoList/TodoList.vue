@@ -1,6 +1,7 @@
 <template>
   <div>
-    <TodoHeader></TodoHeader>
+    <TodoHeader @add="addItem"></TodoHeader>
+    {{ undoList }}
   </div>
 </template>
 
@@ -10,6 +11,16 @@ export default {
   name: 'todo-list',
   components: {
     TodoHeader,
+  },
+  data() {
+    return {
+      undoList: [],
+    }
+  },
+  methods: {
+    addItem(value) {
+      this.undoList.push(value)
+    },
   },
 }
 </script>
