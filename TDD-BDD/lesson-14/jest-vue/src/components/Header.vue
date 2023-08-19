@@ -1,11 +1,16 @@
 <template>
-  <div class="hello">
-    <input
-      type="text"
-      data-test="input"
-      v-model="inputValue"
-      @keyup.enter="handlerAdd"
-    />
+  <div class="header">
+    <div class="header-content">
+      TodoList
+      <input
+        class="header-input"
+        placeholder="请输入待办事项"
+        type="text"
+        data-test="input"
+        v-model="inputValue"
+        @keyup.enter="handlerAdd"
+      />
+    </div>
   </div>
 </template>
 
@@ -30,3 +35,23 @@ export default {
   },
 }
 </script>
+<style scoped lang="stylus">
+.header{
+  background-color: #666;
+  line-height: 60px;
+  .header-content{
+    width: 600px;
+    margin: 0 auto;
+    color: #fff;
+    font-size: 24px;
+    .header-input{
+      float: right;
+      width: 360px;
+      margin-top :16px;
+      height: 30px;
+      line-height: 30px;
+      padding-left: 10px;
+    }
+  }
+}
+</style>

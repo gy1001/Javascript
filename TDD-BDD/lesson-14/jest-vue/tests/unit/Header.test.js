@@ -4,7 +4,7 @@ import Header from '@/components/Header.vue'
 const wrapper = shallowMount(Header)
 const input = wrapper.find('input[data-test="input"]')
 
-describe('TodoList.vue', () => {
+describe('Header.vue', () => {
   it('Header 包含 input', () => {
     expect(input.exists()).toBe(true)
   })
@@ -31,5 +31,9 @@ describe('TodoList.vue', () => {
     input.trigger('keyup.enter')
     expect(wrapper.emitted().add).toBeTruthy()
     expect(wrapper.vm.inputValue).toBe('')
+  })
+
+  it('header 样式发生改变，做提示', () => {
+    expect(wrapper).toMatchSnapshot()
   })
 })

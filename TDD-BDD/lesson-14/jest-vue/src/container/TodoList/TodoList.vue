@@ -21,6 +21,7 @@ export default {
     addItem(value) {
       this.undoList.push(value)
     },
+
   },
 }
 </script>
