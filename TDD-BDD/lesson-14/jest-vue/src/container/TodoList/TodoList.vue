@@ -45,7 +45,6 @@ export default {
     },
     resetList() {
       this.undoList = this.undoList.map((item) => ({ ...item, status: 'div' }))
-      console.log(this.undoList)
     },
     changeValue(index, value) {
       this.$set(this.undoList, index, { value, status: 'div' })
