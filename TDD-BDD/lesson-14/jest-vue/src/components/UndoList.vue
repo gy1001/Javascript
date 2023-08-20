@@ -8,16 +8,27 @@
         class="item"
         data-test="item"
         v-for="(item, index) in list"
-        :key="item"
+        :key="item.value"
+        @click="handleChang(index)"
       >
-        {{ item.value }}
-        <span
-          class="delete-icon"
-          data-test="delete"
-          @click="handleDelete(index)"
-        >
-          X
-        </span>
+        <input
+          :value="item.value"
+          type="text"
+          data-test="input"
+          v-if="item.status === 'input'"
+          @blur="handleBlur"
+          @keyup.enter="(e) => handlerValueChange(index, e.target.value)"
+        />
+        <template v-else>
+          {{ item.value }}
+          <span
+            class="delete-icon"
+            data-test="delete"
+            @click="handleDelete(index)"
+          >
+            X
+          </span>
+        </template>
       </li>
     </ul>
   </div>
@@ -40,6 +51,15 @@ export default {
   methods: {
     handleDelete(index) {
       this.$emit('delete', index)
+    },
+    handleChang(index) {
+      this.$emit('change', index)
+    },
+    handleBlur() {
+      this.$emit('reset')
+    },
+    handlerValueChange(index, value) {
+      this.$emit('changeValue', index, value)
     },
   },
 }
@@ -78,6 +98,10 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    input{
+      line-height: 42px;
+      margin-left: 10px;
+    }
     .delete-icon{
       height: 20px;
       width: 20px;

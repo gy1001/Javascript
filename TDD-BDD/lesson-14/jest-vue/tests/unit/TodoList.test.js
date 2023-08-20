@@ -35,4 +35,52 @@ describe('测试 TodoList 组件', () => {
       { value: 3, status: 'div' },
     ])
   })
+
+  it('TodoList 中 changItemStatus 事件被调用时，undoList 数据会发生变化', () => {
+    wrapper.setData({
+      undoList: [
+        { value: 1, status: 'div' },
+        { value: 2, status: 'div' },
+        { value: 3, status: 'div' },
+      ],
+    })
+    wrapper.vm.changItemStatus(1)
+    expect(wrapper.vm.undoList).toEqual([
+      { value: 1, status: 'div' },
+      { value: 2, status: 'input' },
+      { value: 3, status: 'div' },
+    ])
+  })
+
+  it('TodoList 中触发 resetList事件时，input框消失', () => {
+    wrapper.setData({
+      undoList: [
+        { value: 1, status: 'div' },
+        { value: 2, status: 'input' },
+        { value: 3, status: 'div' },
+      ],
+    })
+    wrapper.vm.resetList()
+    expect(wrapper.vm.undoList).toEqual([
+      { value: 1, status: 'div' },
+      { value: 2, status: 'div' },
+      { value: 3, status: 'div' },
+    ])
+  })
+
+  it('TodoList 触发 changeValue事件，数据变化', () => {
+    wrapper.setData({
+      undoList: [
+        { value: 1, status: 'div' },
+        { value: 2, status: 'input' },
+        { value: 3, status: 'div' },
+      ],
+    })
+    wrapper.vm.changeValue(1, 'test')
+    expect(wrapper.vm.undoList).toEqual([
+      { value: 1, status: 'div' },
+      { value: 'test', status: 'div' },
+      { value: 3, status: 'div' },
+    ])
+  })
 })
