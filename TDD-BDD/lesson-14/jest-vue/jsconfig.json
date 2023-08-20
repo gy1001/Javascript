@@ -14,6 +14,11 @@
       "dom",
       "dom.iterable",
       "scripthost"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/*.{js,vue}",
+      "!**/node_modules/**"
     ]
-  }
+  },
 }
