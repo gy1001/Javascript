@@ -10,13 +10,14 @@
         v-for="(item, index) in list"
         :key="item"
       >
-        {{ item }}
+        {{ item.value }}
         <span
           class="delete-icon"
           data-test="delete"
           @click="handleDelete(index)"
-          >X</span
         >
+          X
+        </span>
       </li>
     </ul>
   </div>

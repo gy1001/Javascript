@@ -13,7 +13,7 @@ describe('测试 TodoList 组件', () => {
     const str = 'i am first todo'
     wrapper.vm.addItem(str)
     expect(wrapper.vm.undoList.length).toBe(1)
-    expect(wrapper.vm.undoList[0]).toBe(str)
+    expect(wrapper.vm.undoList[0]).toEqual({ value: str, status: 'div' })
   })
 
   it('Todo list 调用 undoList 组件时候，应该传递 list 参数', () => {
@@ -22,8 +22,17 @@ describe('测试 TodoList 组件', () => {
   })
 
   it('TodoList 中 deleteItem 事件被调用时，undoList 数据应该减少一个', () => {
-    wrapper.setData({ undoList: [1, 2, 3] })
+    wrapper.setData({
+      undoList: [
+        { value: 1, status: 'div' },
+        { value: 2, status: 'div' },
+        { value: 3, status: 'div' },
+      ],
+    })
     wrapper.vm.deleteItem(1)
-    expect(wrapper.vm.undoList).toEqual([1, 3])
+    expect(wrapper.vm.undoList).toEqual([
+      { value: 1, status: 'div' },
+      { value: 3, status: 'div' },
+    ])
   })
 })

@@ -18,7 +18,11 @@ describe('测试 undoList组件', () => {
   it('undo-list 参数为 [1,2,3时候], count 应该为3，且列表有内容,且存在删除按钮', () => {
     const wrapper = shallowMount(undoList, {
       propsData: {
-        list: [1, 2, 3],
+        list: [
+          { value: 1, status: 'div' },
+          { value: 2, status: 'div' },
+          { value: 3, status: 'div' },
+        ],
       },
     })
     const countEl = wrapper.find('[data-test="count"]')
@@ -34,7 +38,11 @@ describe('测试 undoList组件', () => {
   it('undo-list 存在删除按钮时触发 delete 事件', () => {
     const wrapper = shallowMount(undoList, {
       propsData: {
-        list: [1, 2, 3],
+        list: [
+          { value: 1, status: 'div' },
+          { value: 2, status: 'div' },
+          { value: 3, status: 'div' },
+        ],
       },
     })
     const deleteBtnEl = wrapper.findAll('[data-test="delete"]').at(1)

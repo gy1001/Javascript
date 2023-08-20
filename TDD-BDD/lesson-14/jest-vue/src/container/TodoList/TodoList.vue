@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     addItem(value) {
-      this.undoList.push(value)
+      this.undoList.push({ value, status: 'div' })
     },
     deleteItem(index) {
       this.undoList.splice(index, 1)
