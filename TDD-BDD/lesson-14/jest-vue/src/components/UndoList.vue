@@ -20,7 +20,7 @@
           @keyup.enter="(e) => handlerValueChange(index, e.target.value)"
         />
         <template v-else>
-          {{ item.value }}
+          <span class="text">{{ item.value }}</span>
           <span
             class="delete-icon"
             data-test="delete"
