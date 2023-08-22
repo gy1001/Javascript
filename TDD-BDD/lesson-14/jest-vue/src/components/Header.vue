@@ -7,31 +7,36 @@
         placeholder="请输入待办事项"
         type="text"
         data-test="input"
-        v-model="inputValue"
+        :value="inputValue"
         @keyup.enter="handlerAdd"
+        @input="(e) => changeInputValue(e.target.value)"
       />
     </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'hello-world',
   props: {
     msg: String,
   },
-  data() {
-    return {
-      inputValue: '',
-    }
+  computed: {
+    ...mapState({
+      inputValue: (state) => state.inputValue,
+    }),
   },
   methods: {
     handlerAdd() {
       if (this.inputValue) {
         this.$emit('add', this.inputValue)
-        this.inputValue = ''
+        this.changeInputValue('')
       }
     },
+    ...mapMutations({
+      changeInputValue: 'changeInputValue',
+    }),
   },
 }
 </script>

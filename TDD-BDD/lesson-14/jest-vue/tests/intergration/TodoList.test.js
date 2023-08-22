@@ -1,13 +1,14 @@
 import { mount } from '@vue/test-utils'
 import TodoList from '@/container/TodoList/TodoList.vue'
 import { nextTick } from 'vue'
+import store from '@/store'
 
 it(`
   1. 用户会在 header 输入框输入内容
   2. 用户会点击回车按钮
   3. 列表项应该增加用户输入内容的列表项 
 `, async () => {
-  const wrapper = mount(TodoList)
+  const wrapper = mount(TodoList, { store })
   const inputEl = wrapper.find('input.header-input')
   const content = '我是代办事项1'
   inputEl.setValue(content)
