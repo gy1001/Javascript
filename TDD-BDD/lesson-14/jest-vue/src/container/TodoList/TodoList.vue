@@ -12,8 +12,10 @@
 </template>
 
 <script>
+import axios from 'axios'
 import TodoHeader from '@/components/Header.vue'
 import UndoList from '@/components/UndoList.vue'
+
 export default {
   name: 'todo-list',
   components: {
@@ -49,6 +51,19 @@ export default {
     changeValue(index, value) {
       this.$set(this.undoList, index, { value, status: 'div' })
     },
+  },
+  mounted() {
+    /**
+     * { success: true, data: [ {status: 'div', value: '孙悟空' } ] }
+     */
+    axios
+      .get('./getUndoList.json')
+      .then((res) => {
+        this.undoList = res.data
+      })
+      .catch((e) => {
+        console.log(e)
+      })
   },
 }
 </script>
