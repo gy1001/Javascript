@@ -1,0 +1,13 @@
+{
+  "name": "02-gulp",
+  "packageManager": "yarn@3.6.2",
+  "devDependencies": {
+    "@babel/core": "^7.22.17",
+    "@babel/preset-env": "^7.22.15",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0"
+  },
+  "scripts": {
+    "build": "gulp"
+  }
+}
