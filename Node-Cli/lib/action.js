@@ -1,7 +1,8 @@
 const inquirer = require('inquirer')
-const { framework } = require('../config')
+const { framework, frameworkUrl } = require('../config')
+const { downloadFunc } = require('./download')
+
 const createAction = (project, other) => {
-  // console.log(project, other)
   inquirer
     .prompt([
       {
@@ -12,7 +13,8 @@ const createAction = (project, other) => {
       },
     ])
     .then((answers) => {
-      console.log('then', answers)
+      const url = frameworkUrl[answers.framework]
+      downloadFunc('direct:' + url, project)
     })
     .catch((error) => {
       console.log('catch', error)
