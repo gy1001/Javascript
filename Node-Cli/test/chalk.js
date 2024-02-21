@@ -1,0 +1,6 @@
+const chalk = require('chalk')
+console.log(chalk.green('Hello'))
+console.log(chalk.red('Hello'))
+console.log(chalk.rgb(123, 45, 67)('内容'))
+console.log(chalk.bold('加粗内容'))
+console.log(chalk.rgb(123, 45, 67).underline('内容'))
