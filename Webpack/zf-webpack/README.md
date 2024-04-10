@@ -37,3 +37,6 @@ zf-webpack/self-babel-loader
 - @babel/core
 - @babel/preset-env
 - loader-utils: loader-utils 是一个能够帮助开发者编写自定义 Webpack loader 的 npm 包
+- schema-utils: 一个用于校验 JSON Schema 的 npm 包
+
+## 手动实现 banner-loader

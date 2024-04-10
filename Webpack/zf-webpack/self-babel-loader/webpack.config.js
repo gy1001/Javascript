@@ -18,6 +18,12 @@ module.exports = {
         exclude: /node_modules/, // 排除node_modules文件夹
         use: [
           {
+            loader: 'banner-loader',
+            options: {
+              text: '这是一个自定义的banner',
+            },
+          },
+          {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env'],
