@@ -1,0 +1,22 @@
+{
+  "name": "gy-webpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "gy-webpack": "bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/generator": "^7.24.4",
+    "@babel/parser": "^7.24.4",
+    "@babel/traverse": "^7.24.1",
+    "@babel/types": "^7.24.0",
+    "ejs": "^3.1.9"
+  }
+}
