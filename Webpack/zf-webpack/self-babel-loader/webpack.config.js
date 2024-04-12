@@ -31,6 +31,22 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.jpeg$/, // 匹配所有的js文件
+        exclude: /node_modules/, // 排除node_modules文件夹
+        use: [
+          // {
+          //   // 目的就是根据图片生成一个 md5 发射到 dist 目录下， file-loader 还会返回当前的图片路径
+          //   loader: 'file-loader',
+          // },
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 20 * 1024,
+            },
+          },
+        ],
+      },
     ],
   },
 }

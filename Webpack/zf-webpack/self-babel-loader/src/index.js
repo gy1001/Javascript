@@ -12,3 +12,8 @@ class Person {
 
 const p = new Person('zf', 10)
 console.log(p.sayHello())
+
+import personImg from './img/person.jpeg'
+let img = document.createElement('img')
+img.src = personImg
+document.body.appendChild(img)
