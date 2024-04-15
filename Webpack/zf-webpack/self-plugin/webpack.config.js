@@ -5,6 +5,7 @@ const FileListPlugin = require('./plugins/FileListPlugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const InlineSourcePlugin = require('./plugins/InlineSourcePlugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const UploadPlugin = require('./plugins/UploadPlugin')
 
 module.exports = {
   mode: 'development',
@@ -26,6 +27,12 @@ module.exports = {
     // ...
     new MiniCssExtractPlugin({
       filename: '[name].css',
+    }),
+    new UploadPlugin({
+      bucket: 'xxx',
+      domain: 'xxx',
+      accessKey: '',
+      secretKey: '',
     }),
     new DonePlugin(),
     new AsyncPlugin(),
